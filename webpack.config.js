@@ -1,4 +1,5 @@
 const Encore = require('@symfony/webpack-encore');
+const webpack = require('webpack');
 
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
 // It's useful when you use tools that rely on webpack.config.js file.
@@ -72,4 +73,13 @@ Encore
     //.autoProvidejQuery()
 ;
 
-module.exports = Encore.getWebpackConfig();
+// Ajout de DefinePlugin pour définir process.env.NODE_ENV de manière explicite
+const config = Encore.getWebpackConfig();
+
+config.plugins.push(
+    new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify(Encore.isProduction() ? 'production' : 'development')
+    })
+);
+
+module.exports = config;
