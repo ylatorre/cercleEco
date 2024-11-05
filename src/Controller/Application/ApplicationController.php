@@ -8,11 +8,12 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class ApplicationController extends AbstractController
 {
-    #[Route('/back', name: 'app_back')]
+    #[Route('/', name: 'app_back')]
     public function index(): Response
     {
+        $user = $this->getUser();
         return $this->render('Application/index.html.twig', [
-            'controller_name' => 'BackController',
+            'user' => $user,
         ]);
     }
 }
