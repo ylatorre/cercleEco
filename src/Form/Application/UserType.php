@@ -23,6 +23,7 @@ class UserType extends AbstractType
                 ],
                 'multiple' => true,
                 'expanded' => true,
+                'required' => true,
             ])
             ->add('email')
             ->add('password')
