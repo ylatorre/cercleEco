@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/application/quest')]
 final class QuestController extends AbstractController
 {
-    #[Route(name: 'app_application_quest_index', methods: ['GET'])]
+    #[Route(name:'app_application_quest_index', methods: ['GET'])]
     public function index(QuestRepository $questRepository): Response
     {
         return $this->render('application/quest/index.html.twig', [

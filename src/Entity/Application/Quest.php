@@ -21,7 +21,7 @@ class Quest
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $dateDeCréation = null;
+    private ?\DateTimeInterface $DateDeCreation = null;
 
     #[ORM\Column(length: 255)]
     private ?string $niveau = null;
@@ -55,14 +55,14 @@ class Quest
         return $this;
     }
 
-    public function getDateDeCréation(): ?\DateTimeInterface
+    public function getDateDeCreation(): ?\DateTimeInterface
     {
-        return $this->dateDeCréation;
+        return $this->DateDeCreation;
     }
 
-    public function setDateDeCréation(\DateTimeInterface $dateDeCréation): static
+    public function setDateDeCreation(\DateTimeInterface $DateDeCreation): static
     {
-        $this->dateDeCréation = $dateDeCréation;
+        $this->DateDeCreation = $DateDeCreation;
 
         return $this;
     }
