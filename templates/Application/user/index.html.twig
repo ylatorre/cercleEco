@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{% block body %}
+<div class="min-h-screen bg-gray-100 flex flex-col justify-center items-center">
+    <div class="bg-white shadow-md rounded-lg p-8 max-w-4xl w-full">
+        <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">User index</h1>
+
+        <table class="min-w-full bg-white">
+            <thead>
+                <tr>
+                    <th class="py-2 px-4 bg-gray-200 text-gray-600 font-bold uppercase text-sm text-left">Nom</th>
+                    <th class="py-2 px-4 bg-gray-200 text-gray-600 font-bold uppercase text-sm text-left">Prenom</th>
+                    <th class="py-2 px-4 bg-gray-200 text-gray-600 font-bold uppercase text-sm text-left">Email</th>
+                    <th class="py-2 px-4 bg-gray-200 text-gray-600 font-bold uppercase text-sm text-left">Roles</th>
+                    <th class="py-2 px-4 bg-gray-200 text-gray-600 font-bold uppercase text-sm text-left">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr class="border-b">
+                    <td class="py-2 px-4">{{ user.nom }}</td>
+                    <td class="py-2 px-4">{{ user.prenom }}</td>
+                    <td class="py-2 px-4">{{ user.email }}</td>
+                    <td class="py-2 px-4">{{ user.roles ? user.roles|json_encode : '' }}</td>
+                    <td class="py-2 px-4">
+                        <a href="{{ path('app_application_user_show', {'id': user.id}) }}" class="text-blue-500 hover:underline"><i class="fas fa-eye"></i></a>
+                        <a href="{{ path('app_application_user_edit', {'id': user.id}) }}" class="text-blue-500 hover:underline ml-2"><i class="fas fa-edit"></i></a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="8" class="py-2 px-4 text-center">No records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="mt-4">
+            <a href="{{ path('app_application_user_new') }}" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">Create new</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
