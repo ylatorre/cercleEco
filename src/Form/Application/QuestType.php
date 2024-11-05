@@ -20,16 +20,16 @@ class QuestType extends AbstractType
             ->add('DateDeCreation', null, [
                 'widget' => 'single_text',
             ])
-            ->add('niveau')
-            ->add('addContent', CheckboxType::class, [
-                'required' => false,
-                'label' => 'Ajouter du contenu supplémentaire',
-            ])
-            ->add('contenuSupplementaire', TextType::class, [
-                'required' => false,
-                'label' => 'Contenu Supplémentaire',
-                'attr' => ['placeholder' => 'Entrez le contenu ici...'],
-            ]);
+            ->add('niveau');
+//            ->add('addContent', CheckboxType::class, [
+//                'required' => false,
+//                'label' => 'Ajouter du contenu supplémentaire',
+//            ])
+//            ->add('contenuSupplementaire', TextType::class, [
+//                'required' => false,
+//                'label' => 'Contenu Supplémentaire',
+//                'attr' => ['placeholder' => 'Entrez le contenu ici...'],
+//            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

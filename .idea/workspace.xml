@@ -5,13 +5,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="477e4efb-cf15-41ff-bafa-b53b2c44fad9" name="Changes" comment="QuestController.php">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env.local" beforeDir="false" afterPath="$PROJECT_DIR$/.env.local" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Application/Quest.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Application/Quest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/acorn" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/acorn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/browserslist" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/browserslist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/cssesc" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/cssesc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/envinfo" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/envinfo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/flat" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/glob" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/glob" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/import-local-fixture" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/import-local-fixture" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/jiti" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/jiti" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/nanoid" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/nanoid" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/node-which" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/node-which" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/resolve" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/resolve" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/sucrase" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/sucrase" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/sucrase-node" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/sucrase-node" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/tailwind" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/tailwind" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/tailwindcss" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/tailwindcss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/terser" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/terser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/update-browserslist-db" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/update-browserslist-db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/webpack" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/webpack" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/webpack-cli" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/webpack-cli" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/yaml" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.bin/yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Application/QuestController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Application/QuestController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Form/Application/QuestType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Application/QuestType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/QuestRepository.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/Application/quest/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/Application/quest/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/Application/quest/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/Application/quest/show.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -145,6 +163,19 @@
       <path value="$PROJECT_DIR$/vendor/nikic/php-parser" />
       <path value="$PROJECT_DIR$/vendor/twig/twig" />
       <path value="$PROJECT_DIR$/vendor/twig/extra-bundle" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-factory" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-client" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/vendor/symfony/http-client-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/http-client" />
+      <path value="$PROJECT_DIR$/vendor/php-http/multipart-stream-builder" />
+      <path value="$PROJECT_DIR$/vendor/php-http/discovery" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/promises" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/psr7" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/guzzle" />
+      <path value="$PROJECT_DIR$/vendor/ralouphie/getallheaders" />
+      <path value="$PROJECT_DIR$/vendor/openai-php/client" />
+      <path value="$PROJECT_DIR$/vendor/nyholm/psr7" />
     </include_path>
   </component>
   <component name="ProjectColorInfo">{
