@@ -8,8 +8,14 @@ class ChatGPTService
 {
     private $client;
 
-    public function __construct(string $apiKey)
+    public function __construct()
     {
+        // Récupère la clé API depuis l'environnement
+        $apiKey = $_ENV['OPENAI_API_KEY'] ?? null;
+
+        if (!$apiKey) {
+            throw new \RuntimeException('L’API Key OpenAI est manquante. Veuillez la définir dans le fichier .env');
+        }
         $this->client = OpenAI::client($apiKey);
     }
 

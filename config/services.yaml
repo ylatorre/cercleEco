@@ -3,7 +3,6 @@
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 parameters:
-    openai_api_key: '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'
 
 services:
   # default configuration for services in *this* file
@@ -19,10 +18,6 @@ services:
       - "../src/DependencyInjection/"
       - "../src/Entity/"
       - "../src/Kernel.php"
-
-  App\Service\ChatGPTService:
-    arguments:
-      $apiKey: '%openai_api_key%'
 
   # add more service definitions when explicit configuration is needed
   # please note that last definitions always *replace* previous ones
