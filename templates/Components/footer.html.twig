@@ -1,25 +1,5 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
-
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
-</html>
-
-
 {# templates/components/_footer.html.twig #}
-<footer class="bg-[#2E3105] text-white px-6 py-12">
+<footer class="bg-[#3B4419] text-white px-6 py-12">
     <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
         {# Logo Section #}
         <div class="space-y-4">
@@ -31,10 +11,10 @@
         <div class="space-y-4">
             <h3 class="text-xl text-[#B8BC86] font-serif">Informations légal</h3>
             <div class="space-y-2">
-                <a href="{{ path('app_front') }}" class="block hover:text-[#B8BC86] transition-colors">
+                <a href="{{ path('app_cgu') }}" class="block hover:text-[#B8BC86] transition-colors">
                     Conditions générale d'utilisation
                 </a>
-                <a href="{{ path('app_front') }}" class="block hover:text-[#B8BC86] transition-colors">
+                <a href="{{ path('app_rgpd') }}" class="block hover:text-[#B8BC86] transition-colors">
                     RGPD
                 </a>
             </div>
@@ -69,10 +49,10 @@
         <div class="space-y-4">
             <h3 class="text-xl text-[#B8BC86] font-serif">Navigation</h3>
             <div class="space-y-2">
-                <a href="{{ path('app_front') }}" class="block hover:text-[#B8BC86] transition-colors">Accueil</a>
-                <a href="{{ path('app_front') }}" class="block hover:text-[#B8BC86] transition-colors">Dons</a>
-                <a href="{{ path('app_front') }}" class="block hover:text-[#B8BC86] transition-colors">Quêtes</a>
-                <a href="{{ path('app_front') }}" class="block hover:text-[#B8BC86] transition-colors">Actualités</a>
+                <a href="{{ path('app_home') }}" class="block hover:text-[#B8BC86] transition-colors">Accueil</a>
+                <a href="{{ path('app_dons') }}" class="block hover:text-[#B8BC86] transition-colors">Dons</a>
+                <a href="{{ path('app_quetes') }}" class="block hover:text-[#B8BC86] transition-colors">Quêtes</a>
+                <a href="{{ path('app_actualites') }}" class="block hover:text-[#B8BC86] transition-colors">Actualités</a>
             </div>
         </div>
     </div>
@@ -82,32 +62,3 @@
         <p class="text-center text-sm">© 2024 Greenify, tout droit réservé</p>
     </div>
 </footer>
-
-
-
-
-
-
-
-
-{# templates/components/header.html.twig #}
-{# <header class="bg-[#3B4419] px-6 py-4">
-    <div class="max-w-7xl mx-auto flex items-center justify-between">
-        <a href="{{ path('app_front') }}" class="text-2xl font-serif text-white">
-            Greenify
-        </a>
-
-        <nav class="hidden md:flex items-center space-x-8">
-            <a href="{{ path('app_front') }}" class="text-white hover:text-[#B8BC86] transition-colors">Accueil</a>
-            <a href="{{ path('app_front') }}" class="text-white hover:text-[#B8BC86] transition-colors">Dons</a>
-            <a href="{{ path('app_front') }}" class="text-white hover:text-[#B8BC86] transition-colors">Quêtes</a>
-            <a href="{{ path('app_front') }}" class="text-white hover:text-[#B8BC86] transition-colors">Actualités</a>
-        </nav>
-
-        <a href="{{ path('app_front') }}" class="border border-white rounded-full px-6 py-2 text-white hover:bg-white hover:text-[#3B4419] transition-colors">
-            Chat with AI
-        </a>
-    </div>
-</header> #}
-
-
