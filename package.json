@@ -1,0 +1,25 @@
+{
+  "name": "cercleEco",
+  "version": "1.0.0",
+  "description": "Projet Symfony avec Tailwind CSS",
+  "main": "index.js",
+  "scripts": {
+    "build:css": "postcss src/styles/tailwind.css -o src/styles/output.css",
+    "watch:css": "postcss src/styles/tailwind.css -o src/styles/output.css --watch",
+    "build": "webpack --mode production",
+    "watch": "webpack --watch"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@symfony/webpack-encore": "^5.0.1",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.47",
+    "postcss-loader": "^8.1.1",
+    "webpack": "^5.96.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-notifier": "^1.15.0"
+  },
+  "dependencies": {
+    "tailwindcss": "^3.4.14"
+  }
+}
