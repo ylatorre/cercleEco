@@ -11,7 +11,7 @@
                 <th>Id</th>
                 <th>Nom</th>
                 <th>Description</th>
-                <th>DateDeCréation</th>
+                <th>DateDeCreation</th>
                 <th>Niveau</th>
                 <th>actions</th>
             </tr>
@@ -22,7 +22,7 @@
                 <td>{{ quest.id }}</td>
                 <td>{{ quest.nom }}</td>
                 <td>{{ quest.description }}</td>
-                <td>{{ quest.dateDeCréation ? quest.dateDeCréation|date('Y-m-d') : '' }}</td>
+                <td>{{ quest.DateDeCreation ? quest.DateDeCreation|date('Y-m-d') : '' }}</td>
                 <td>{{ quest.niveau }}</td>
                 <td>
                     <a href="{{ path('app_application_quest_show', {'id': quest.id}) }}">show</a>
