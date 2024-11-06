@@ -24,121 +24,54 @@
         </div>
     </nav>
 
-    {# Hero Section #}
-    <div class="max-w-7xl mx-auto px-6 py-20">
-        <h1 class="text-5xl md:text-7xl text-white font-serif text-center leading-tight mb-20">
-            Voici nos dons
-        </h1>
-
-        {# Cards Grid #}
-        <div class="relative">
-            <div id="cards-container" class="grid grid-cols-1 md:grid-cols-3 gap-8 overflow-x-auto scroll-smooth">
-                {# ECOLO JUNIOR Card #}
-                <div class="bg-[#DFE777] p-8 rounded-lg flex flex-col items-center text-center">
-                    <h2 class="text-2xl font-serif mb-6">MISSION</h2>
-                    <p class="text-gray-700 mb-8">
-                        Passionné(e) d'écologie mais vous ne savez pas par où commencer ?
-                    </p>
-                    <a href="{{ path('app_front') }}" class="border border-[#3B4419] text-[#3B4419] rounded-full px-6 py-2 hover:bg-[#3B4419] hover:text-white transition-colors">
-                        PARCOUREZ NOS MISSIONS
-                    </a>
-                </div>
-
-                {# ECOLO MEDIUM Card #}
-                <div class="bg-[#DFE777] p-8 rounded-lg flex flex-col items-center text-center">
-                    <h2 class="text-2xl font-serif mb-6">MISSION</h2>
-                    <p class="text-gray-700 mb-8">
-                        Vous connaissez déjà les bases de l'écologie, Découvrez avec nous d'autres options écologiques
-                    </p>
-                    <a href="{{ path('app_front') }}" class="border border-[#3B4419] text-[#3B4419] rounded-full px-6 py-2 hover:bg-[#3B4419] hover:text-white transition-colors">
-                        PARCOUREZ NOS MISSIONS
-                    </a>
-                </div>
-
-                {# ECOLO CONFIRME Card #}
-                <div class="bg-[#DFE777] p-8 rounded-lg flex flex-col items-center text-center">
-                    <h2 class="text-2xl font-serif mb-6">MISSION</h2>
-                    <p class="text-gray-700 mb-8">
-                        L'écologie n'a plus aucun secret pour vous, venez vous challenger avec des missions adaptées.
-                    </p>
-                    <a href="{{ path('app_front') }}" class="border border-[#3B4419] text-[#3B4419] rounded-full px-6 py-2 hover:bg-[#3B4419] hover:text-white transition-colors">
-                        PARCOUREZ NOS MISSIONS
-                    </a>
-                </div>
-
-                {# ECOLO EXPERT Card #}
-                <div class="bg-[#DFE777] p-8 rounded-lg flex flex-col items-center text-center">
-                    <h2 class="text-2xl font-serif mb-6">MISSION</h2>
-                    <p class="text-gray-700 mb-8">
-                        Vous êtes un expert en écologie ? Relevez des défis avancés et inspirez les autres.
-                    </p>
-                    <a href="{{ path('app_front') }}" class="border border-[#3B4419] text-[#3B4419] rounded-full px-6 py-2 hover:bg-[#3B4419] hover:text-white transition-colors">
-                        PARCOUREZ NOS MISSIONS
-                    </a>
-                </div>
-
-                {# ECOLO LEADER Card #}
-                <div class="bg-[#DFE777] p-8 rounded-lg flex flex-col items-center text-center">
-                    <h2 class="text-2xl font-serif mb-6">MISSION</h2>
-                    <p class="text-gray-700 mb-8">
-                        Devenez un leader en écologie et guidez les autres vers un avenir plus vert.
-                    </p>
-                    <a href="{{ path('app_front') }}" class="border border-[#3B4419] text-[#3B4419] rounded-full px-6 py-2 hover:bg-[#3B4419] hover:text-white transition-colors">
-                        PARCOUREZ NOS MISSIONS
-                    </a>
-                </div>
-            </div>
-            <button id="scroll-left" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-[#3B4419] text-white p-4 rounded-full">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                </svg>
-            </button>
-            <button id="scroll-right" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-[#3B4419] text-white p-4 rounded-full">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                </svg>
-            </button>
-        </div>
+  {# Section de filtre #}
+    <div class="max-w-7xl mx-auto px-6 py-6 flex justify-end">
+        <button class="flex items-center space-x-2 bg-[#DFE777] text-[#3B4419] px-4 py-2 rounded-full hover:bg-[#B8BC86] transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 000 2h18a1 1 0 100-2H3zm0 6a1 1 0 100 2h18a1 1 0 100-2H3zm0 6a1 1 0 000 2h18a1 1 0 100-2H3z" />
+            </svg>
+            <span>Filtrer les produits</span>
+        </button>
     </div>
 
-  
+    {# Section principale pour les dons #}
+    <div class="max-w-7xl mx-auto px-6 py-10">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {# {% for item in items %} #}
+                <div class="bg-[#DFE777] p-6 rounded-lg flex flex-col items-center text-center text-[#3B4419]">
+                    <img src="{{ item.image }}" alt="{{ item.nom }}" class="w-full h-48 object-cover mb-4 rounded-lg">
+                    <h2 class="text-2xl font-serif mb-4">{{ item.nom }}</h2>
+                    <p class="text-gray-700 mb-4">{{ item.description }}</p>
+                    <p class="text-gray-600 mb-4">Emplacement : {{ item.emplacement }}</p> 
+                    <a href="{{ path('app_reserver', {id: item.id}) }}" class="border border-[#3B4419] text-[#3B4419] rounded-full px-6 py-2 hover:bg-[#3B4419] hover:text-white transition-colors">
+                        Réserver
+                    </a>
+                </div>
+            {# {% else %} #}
+                <p class="text-center col-span-full text-gray-300">Aucun objet disponible pour le moment.</p>
+            {% endfor %}
+            
+            {# Produits supplémentaires - Exemple #}
+            <div class="bg-[#DFE777] p-6 rounded-lg flex flex-col items-center text-center text-[#3B4419]">
+                <img src="/path/to/image1.jpg" alt="Objet 1" class="w-full h-48 object-cover mb-4 rounded-lg">
+                <h2 class="text-2xl font-serif mb-4">Chaise en bois</h2>
+                <p class="text-gray-700 mb-4">Chaise en bon état, idéale pour les étudiants.</p>
+                <p class="text-gray-600 mb-4">Emplacement : Campus Nord</p>
+                <a href="#" class="border border-[#3B4419] text-[#3B4419] rounded-full px-6 py-2 hover:bg-[#3B4419] hover:text-white transition-colors">
+                    Réserver
+                </a>
+            </div>
 
-{# Section pour sensibiliser à l’écologie #}
-    <section class="bg-[#B8BC86] p-6 mb-6 rounded-lg max-w-7xl mx-auto">
-        <h2 class="text-2xl font-bold mb-4 text-center">Sensibiliser à l’écologie</h2>
-        <p class="mb-4 text-center">La nature est un trésor fragile que nous devons protéger pour les générations futures. En adoptant des gestes simples, comme réduire nos déchets, économiser l’eau, et limiter l’utilisation de produits polluants, nous pouvons contribuer à préserver notre planète. Chaque action, si petite soit-elle, a un impact positif. Ensemble, faisons de la protection de l’environnement une priorité pour un avenir durable. Chaque geste compte, chaque personne a un rôle à jouer. Protéger la Terre, c'est protéger notre vie et celle des générations à venir.</p>
-        <p class="mb-4 text-center">En savoir plus sur les défis environnementaux actuels, les solutions durables et les actions que vous pouvez entreprendre pour faire une différence.</p>
-        <a href="https://www.notre-environnement.gouv.fr/" class="text-white bg-[#3B4419] px-4 py-2 rounded-full hover:bg-[#B8BC86] hover:text-[#3B4419] transition-colors block text-center">En savoir plus</a>
-    </section>
-
-    {# Section pour promouvoir les comportements vertueux #}
-    <section class="bg-[#B8BC86] p-6 mb-6 rounded-lg max-w-7xl mx-auto">
-        <h2 class="text-2xl font-bold mb-4 text-center">Promouvoir les comportements vertueux</h2>
-        <p class="mb-4 text-center">Chaque petit geste compte pour préserver notre planète ! Adoptez des comportements vertueux : éteignez les lumières en quittant une pièce, privilégiez les produits locaux et de saison, triez vos déchets et réduisez votre consommation de plastique. En changeant nos habitudes de consommation et en respectant l’environnement au quotidien, nous faisons tous partie de la solution pour un monde plus sain et plus durable. Ensemble, transformons ces gestes en une habitude, pour protéger la beauté et la richesse de notre Terre. Soyons des acteurs de changement pour aujourd'hui et pour les générations à venir.</p>
-        <p class="mb-4 text-center">En savoir plus sur les gestes simples du quotidien, les initiatives locales et les projets écologiques qui peuvent inspirer et motiver à agir pour la planète.</p>
-        <a href="https://blog.natureandus.org/fr/sensibilisation-a-lecologie/ce-que-vous-devez-savoir-sur-la-sensibilisation-a-lecologie" class="text-white bg-[#3B4419] px-4 py-2 rounded-full hover:bg-[#B8BC86] hover:text-[#3B4419] transition-colors block text-center">En savoir plus</a>
-    </section>
+            <div class="bg-[#DFE777] p-6 rounded-lg flex flex-col items-center text-center text-[#3B4419]">
+                <img src="/path/to/image2.jpg" alt="Objet 2" class="w-full h-48 object-cover mb-4 rounded-lg">
+                <h2 class="text-2xl font-serif mb-4">Table basse</h2>
+                <p class="text-gray-700 mb-4">Table basse minimaliste pour le salon.</p>
+                <p class="text-gray-600 mb-4">Emplacement : Campus Sud</p>
+                <a href="#" class="border border-[#3B4419] text-[#3B4419] rounded-full px-6 py-2 hover:bg-[#3B4419] hover:text-white transition-colors">
+                    Réserver
+                </a>
+            </div>
+        </div>
+    </div>
 </div>
-</div>
-
-
-{% endblock %}
-{% block javascripts %}
-<script>
-    document.getElementById('scroll-left').addEventListener('click', function() {
-        const container = document.getElementById('cards-container');
-        container.scrollBy({
-            left: -container.clientWidth,
-            behavior: 'smooth'
-        });
-    });
-
-    document.getElementById('scroll-right').addEventListener('click', function() {
-        const container = document.getElementById('cards-container');
-        container.scrollBy({
-            left: container.clientWidth,
-            behavior: 'smooth'
-        });
-    });
-    </script>
 {% endblock %}
