@@ -28,10 +28,11 @@ class FrontController extends AbstractController
     }
 
     #[Route('/', name: 'app_front')]
-    public function index(): Response
+    public function index(QuestsRepository $questsRepository): Response
     {
+        $quests = $questsRepository->findAll();
         return $this->render('Front/index.html.twig', [
-
+            'quests' => $quests,
         ]);
     }
 
@@ -130,12 +131,8 @@ class FrontController extends AbstractController
         $form->handleRequest($request);               
         $responseText = '';          
         if ($form->isSubmitted() && $form->isValid()) {
-            // Récupère les données du formulaire sous forme de tableau.
             $data = $form->getData();
-            // Récupère la valeur du champ 'userInput', soit la question de l'utilisateur.
             $userInput = $data['userInput'];
-            // Appelle le service ChatGPTService pour générer une réponse à partir de l'entrée utilisateur.
-            // La réponse générée est stockée dans la variable $responseText.
             $responseText = $this->chatGPTService->generateResponse($userInput);
         }                 
         return $this->render('Front/chatAi.html.twig', [
