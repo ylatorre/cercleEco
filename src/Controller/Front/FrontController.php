@@ -12,7 +12,15 @@ class FrontController extends AbstractController
     public function index(): Response
     {
         return $this->render('Front/index.html.twig', [
-            'controller_name' => 'FrontController',
+
+        ]);
+    }
+
+    #[Route('/dons', name: 'app_dons')]
+    public function dons(): Response
+    {
+        return $this->render('Front/dons.html.twig', [
+
         ]);
     }
 }
