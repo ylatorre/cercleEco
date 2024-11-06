@@ -27,35 +27,14 @@
                     {% endif %}
                     <h2 class="text-2xl font-serif mb-4">{{ d.titre }}</h2>
                     <p class="text-gray-700 mb-4">{{ d.description }}</p>
-                    <p class="text-gray-600 mb-4">Emplacement : </p> {# {{ d.emplacement }} #}
-                    <a href="#" class="border border-[#3B4419] text-[#3B4419] rounded-full px-6 py-2 hover:bg-[#3B4419] hover:text-white transition-colors">
+                    <p class="text-gray-600 mb-4">Emplacement : {{ d.localisation ? d.localisation : 'Non spécifié' }}</p>
+                    <a href=" {{ path('app_don_detail', {'token':d.token}) }} " class="border border-[#3B4419] text-[#3B4419] rounded-full px-6 py-2 hover:bg-[#3B4419] hover:text-white transition-colors">
                         Réserver
                     </a>
                 </div>
             {% else %}
                 <p class="text-center col-span-full text-gray-300">Aucun objet disponible pour le moment.</p>
             {% endfor %}
-            
-            {# Produits supplémentaires - Exemple #}
-            <div class="bg-[#DFE777] p-6 rounded-lg flex flex-col items-center text-center text-[#3B4419]">
-                <img src="/path/to/image1.jpg" alt="Objet 1" class="w-full h-48 object-cover mb-4 rounded-lg">
-                <h2 class="text-2xl font-serif mb-4">Chaise en bois</h2>
-                <p class="text-gray-700 mb-4">Chaise en bon état, idéale pour les étudiants.</p>
-                <p class="text-gray-600 mb-4">Emplacement : Campus Nord</p>
-                <a href="#" class="border border-[#3B4419] text-[#3B4419] rounded-full px-6 py-2 hover:bg-[#3B4419] hover:text-white transition-colors">
-                    Réserver
-                </a>
-            </div>
-
-            <div class="bg-[#DFE777] p-6 rounded-lg flex flex-col items-center text-center text-[#3B4419]">
-                <img src="/path/to/image2.jpg" alt="Objet 2" class="w-full h-48 object-cover mb-4 rounded-lg">
-                <h2 class="text-2xl font-serif mb-4">Table basse</h2>
-                <p class="text-gray-700 mb-4">Table basse minimaliste pour le salon.</p>
-                <p class="text-gray-600 mb-4">Emplacement : Campus Sud</p>
-                <a href="#" class="border border-[#3B4419] text-[#3B4419] rounded-full px-6 py-2 hover:bg-[#3B4419] hover:text-white transition-colors">
-                    Réserver
-                </a>
-            </div>
         </div>
     </div>
 </div>

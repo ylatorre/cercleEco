@@ -38,7 +38,18 @@ class FrontController extends AbstractController
         ]);
     }
 
-    #[Route('/quetes', name: 'app_quetes')]
+    #[Route('/front/donsdetail/{token}', name: 'app_don_detail')]
+    public function donsDetail(Request $request, DonsRepository $donsRepository): Response
+    {
+        $token = $request->get('token');
+        $don = $donsRepository->findOneBy(['token' => $token]);
+
+        return $this->render('Front/donsDetail.html.twig', [
+            'don' => $don
+        ]);
+    }
+
+    #[Route('/front/quetes', name: 'app_quetes')]
     public function quetes(QuestsRepository $questsRepository): Response
     {
         $quests = $questsRepository->findBy([], ['ordre' => 'ASC']); // Tri par 'ordre'
