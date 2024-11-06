@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="477e4efb-cf15-41ff-bafa-b53b2c44fad9" name="Changes" comment="QuestController.php">
-      <change afterPath="$PROJECT_DIR$/migrations/Version20241106095954.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/Front/quests.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Application/QuestsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Application/QuestsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/Front/quetes.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/Front/quetes.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
