@@ -25,7 +25,7 @@
     </nav>
 
     {# Hero Section #}
-   <div class="max-w-7xl mx-auto px-6 py-20">
+    <div class="max-w-7xl mx-auto px-6 py-20">
         <h1 class="text-5xl md:text-7xl text-white font-serif text-center leading-tight mb-20">
             Trouvez la mission<br>qui vous correspond
         </h1>
@@ -88,18 +88,19 @@
                     </a>
                 </div>
             </div>
-            <a href="#scroll-left" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-[#3B4419] text-white p-4 rounded-full">
+            <button id="scroll-left" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-[#3B4419] text-white p-4 rounded-full">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                 </svg>
-            </a>
-            <a href="#scroll-right" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-[#3B4419] text-white p-4 rounded-full">
+            </button>
+            <button id="scroll-right" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-[#3B4419] text-white p-4 rounded-full">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                 </svg>
-            </a>
+            </button>
         </div>
     </div>
+
   
 
 {# Section pour sensibiliser à l’écologie #}
@@ -119,4 +120,25 @@
     </section>
 </div>
 </div>
+
+
+{% endblock %}
+{% block javascripts %}
+<script>
+    document.getElementById('scroll-left').addEventListener('click', function() {
+        const container = document.getElementById('cards-container');
+        container.scrollBy({
+            left: -container.clientWidth,
+            behavior: 'smooth'
+        });
+    });
+
+    document.getElementById('scroll-right').addEventListener('click', function() {
+        const container = document.getElementById('cards-container');
+        container.scrollBy({
+            left: container.clientWidth,
+            behavior: 'smooth'
+        });
+    });
+    </script>
 {% endblock %}

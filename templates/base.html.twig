@@ -10,10 +10,13 @@
 
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
+             <script src="{{ asset('build/app.js') }}"></script>
+             <script src="{{ asset('js/scroll.js') }}"></script> 
         {% endblock %}
     </head>
     <body>
         {% block body %}{% endblock %}
+   
     </body>
 </html>
 
@@ -82,7 +85,6 @@
         <p class="text-center text-sm">© 2024 Greenify, tout droit réservé</p>
     </div>
 </footer>
-
 
 
 
