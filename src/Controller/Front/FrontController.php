@@ -19,7 +19,7 @@ class FrontController extends AbstractController
         ]);
     }
 
-    #[Route('/dons', name: 'app_dons')]
+    #[Route('/front/dons', name: 'app_dons')]
     public function dons(): Response
     {
         return $this->render('Front/dons.html.twig', [
@@ -27,7 +27,7 @@ class FrontController extends AbstractController
         ]);
     }
 
-    #[Route('/quetes', name: 'app_quetes')]
+    #[Route('/front/quetes', name: 'app_quetes')]
     public function quetes(QuestsRepository $questsRepository): Response
     {
         $quests = $questsRepository->findBy([], ['ordre' => 'ASC']); // Tri par 'ordre'
@@ -46,8 +46,7 @@ class FrontController extends AbstractController
         }
         return $this->render('Front/quetes_show.html.twig', [
             'quest' => $quest,
-        ]);
-    }
+
 
     #[Route('/quetes/{id}/repondre', name: 'app_quetes_repondre', methods: ['POST'])]
     public function repondre(int $id, Request $request, QuestsRepository $questsRepository, EtatRepository $etatRepository): Response
@@ -69,7 +68,7 @@ class FrontController extends AbstractController
     }
 
 
-    #[Route('/actualités', name: 'app_actualites')]
+    #[Route('/front/actualités', name: 'app_actualites')]
     public function actualites(): Response
     {
         return $this->render('Front/actualites.html.twig', [
@@ -77,7 +76,7 @@ class FrontController extends AbstractController
         ]);
     }
 
-    #[Route('/quetes-journalières', name: 'app_day_quests')]
+    #[Route('/front/quetes-journalières', name: 'app_day_quests')]
     public function day_quests(): Response
     {
         return $this->render('Front/day_quest.html.twig', [
@@ -85,7 +84,7 @@ class FrontController extends AbstractController
         ]);
     }
 
-    #[Route('/chatAi', name: 'app_chatAi')]
+    #[Route('/front/chatAi', name: 'app_chatAi')]
     public function chatAi(): Response
     {
         return $this->render('Front/chatAi.html.twig', [
