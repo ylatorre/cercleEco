@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DayQuest index{% endblock %}
+
+{% block body %}
+    <h1>DayQuest index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titre</th>
+                <th>Description</th>
+                <th>Xp</th>
+                <th>Date_de_creation</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for day_quest in day_quests %}
+            <tr>
+                <td>{{ day_quest.id }}</td>
+                <td>{{ day_quest.titre }}</td>
+                <td>{{ day_quest.description }}</td>
+                <td>{{ day_quest.xp }}</td>
+                <td>{{ day_quest.dateDeCreation ? day_quest.dateDeCreation|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_application_day_quest_show', {'id': day_quest.id}) }}">show</a>
+                    <a href="{{ path('app_application_day_quest_edit', {'id': day_quest.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_application_day_quest_new') }}">Create new</a>
+{% endblock %}

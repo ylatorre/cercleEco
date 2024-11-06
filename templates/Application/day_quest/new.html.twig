@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New DayQuest{% endblock %}
+
+{% block body %}
+    <h1>Create new DayQuest</h1>
+
+    {{ include('application/day_quest/_form.html.twig') }}
+
+    <a href="{{ path('app_application_day_quest_index') }}">back to list</a>
+{% endblock %}
