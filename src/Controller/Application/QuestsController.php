@@ -14,11 +14,13 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/application/quests')]
 final class QuestsController extends AbstractController
 {
+
     #[Route(name: 'app_application_quests_index', methods: ['GET'])]
     public function index(QuestsRepository $questsRepository): Response
     {
+        $quests = $questsRepository->findBy([], ['ordre' => 'ASC']);
         return $this->render('application/quests/index.html.twig', [
-            'quests' => $questsRepository->findAll(),
+            'quests' => $quests,
         ]);
     }
 
