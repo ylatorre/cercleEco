@@ -20,6 +20,9 @@
                 <th>ReponseC</th>
                 <th>ReponseD</th>
                 <th>ReponseCorrecte</th>
+                <th>Ordre</th>
+                <th>Xp_give</th>
+                <th>Token</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -38,6 +41,9 @@
                 <td>{{ quest.reponseC }}</td>
                 <td>{{ quest.reponseD }}</td>
                 <td>{{ quest.reponseCorrecte }}</td>
+                <td>{{ quest.ordre }}</td>
+                <td>{{ quest.xpGive }}</td>
+                <td>{{ quest.token }}</td>
                 <td>
                     <a href="{{ path('app_application_quests_show', {'id': quest.id}) }}">show</a>
                     <a href="{{ path('app_application_quests_edit', {'id': quest.id}) }}">edit</a>
@@ -45,7 +51,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="13">no records found</td>
+                <td colspan="16">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
