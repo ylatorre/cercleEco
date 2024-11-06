@@ -2,6 +2,8 @@
 
 namespace App\Controller\Front;
 
+
+use App\Repository\Application\DonsRepository;
 use App\Entity\Application\Quests;
 use App\Repository\Application\etatRepository;
 use App\Repository\Application\QuestsRepository;
@@ -10,7 +12,8 @@ use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use App\Entity\Application\Etat; // Assurez-vous d'importer l'entité Etat
+use App\Entity\Application\Etat; 
+
 #[Route('/front')]
 class FrontController extends AbstractController
 {
@@ -27,10 +30,12 @@ class FrontController extends AbstractController
     }
 
     #[Route('/front/dons', name: 'app_dons')]
-    public function dons(): Response
+    public function dons(DonsRepository $donsRepository): Response
     {
-        return $this->render('Front/dons.html.twig', [
+        $dons = $donsRepository->findAll();
 
+        return $this->render('Front/dons.html.twig', [
+            'dons' => $dons
         ]);
     }
 
