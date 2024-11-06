@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/front')]
 class FrontController extends AbstractController
 {
     #[Route('/', name: 'app_front')]
@@ -17,7 +16,7 @@ class FrontController extends AbstractController
         ]);
     }
 
-    #[Route('/dons', name: 'app_dons')]
+    #[Route('/front/dons', name: 'app_dons')]
     public function dons(): Response
     {
         return $this->render('Front/dons.html.twig', [
@@ -25,7 +24,7 @@ class FrontController extends AbstractController
         ]);
     }
 
-    #[Route('/quetes', name: 'app_quetes')]
+    #[Route('/front/quetes', name: 'app_quetes')]
     public function quetes(): Response
     {
         return $this->render('Front/quetes.html.twig', [
@@ -33,7 +32,7 @@ class FrontController extends AbstractController
         ]);
     }
 
-    #[Route('/actualités', name: 'app_actualites')]
+    #[Route('/front/actualités', name: 'app_actualites')]
     public function actualites(): Response
     {
         return $this->render('Front/actualites.html.twig', [
@@ -41,7 +40,7 @@ class FrontController extends AbstractController
         ]);
     }
 
-    #[Route('/quetes-journalières', name: 'app_day_quests')]
+    #[Route('/front/quetes-journalières', name: 'app_day_quests')]
     public function day_quests(): Response
     {
         return $this->render('Front/day_quest.html.twig', [
@@ -49,7 +48,7 @@ class FrontController extends AbstractController
         ]);
     }
 
-    #[Route('/chatAi', name: 'app_chatAi')]
+    #[Route('/front/chatAi', name: 'app_chatAi')]
     public function chatAi(): Response
     {
         return $this->render('Front/chatAi.html.twig', [
