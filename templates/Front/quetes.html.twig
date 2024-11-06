@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+{% block title %}Greenify - Quests{% endblock %}
+
+{% block body %}
+    <h1>Quêtes Disponibles</h1>
+
+    <div class="quests-list">
+        {% for quest in quests %}
+            <div class="quest-item">
+                <h2>{{ quest.nom }}</h2>
+                <p>{{ quest.description }}</p>
+                <p>Niveau : {{ quest.level }}</p>
+                <p>XP Gagnée : {{ quest.xpGive }}</p>
+                <a href="{{ path('app_quetes_show', {'id': quest.id}) }}" class="btn btn-primary">Voir Détails</a>
+
+            </div>
+        {% else %}
+            <p>Aucune quête disponible pour le moment.</p>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{#    {% include 'Components/footer.html.twig' %}#}
