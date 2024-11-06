@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use Exception;
 use OpenAI;
 
 class ChatGPTService

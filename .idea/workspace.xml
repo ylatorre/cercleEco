@@ -4,19 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="477e4efb-cf15-41ff-bafa-b53b2c44fad9" name="Changes" comment="Modif env pour bdd">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/Application/QuestController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Entity/Application/Quest.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Form/Application/QuestType.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Repository/Application/QuestRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Repository/QuestRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/Application/quest/_delete_form.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/Application/quest/_form.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/Application/quest/edit.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/Application/quest/index.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/Application/quest/new.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/Application/quest/show.html.twig" afterDir="false" />
+    <list default="true" id="477e4efb-cf15-41ff-bafa-b53b2c44fad9" name="Changes" comment="QuestController.php">
+      <change beforePath="$PROJECT_DIR$/.env.local" beforeDir="false" afterPath="$PROJECT_DIR$/.env.local" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Application/QuestContentController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Application/QuestController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Application/Quest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Application/QuestContent.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/Application/quest/_delete_form.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/Application/quest/_form.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/Application/quest/edit.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/Application/quest/index.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/Application/quest/new.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/Application/quest/show.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/Application/quest_content/_delete_form.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/Application/quest_content/_form.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/Application/quest_content/edit.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/Application/quest_content/index.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/Application/quest_content/new.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/Application/quest_content/show.html.twig" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,27 +44,27 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="UPDATE_TYPE" value="REBASE" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "history": [
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;history&quot;: [
     {
-      "state": "OPEN"
+      &quot;state&quot;: &quot;OPEN&quot;
     }
   ],
-  "lastFilter": {
-    "state": "OPEN"
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;
   }
-}]]></component>
-  <component name="GitHubPullRequestState"><![CDATA[{
-  "prStates": [
+}</component>
+  <component name="GitHubPullRequestState">{
+  &quot;prStates&quot;: [
     {
-      "id": {
-        "id": "PR_kwDONKG-iM6A7IS0",
-        "number": 4
+      &quot;id&quot;: {
+        &quot;id&quot;: &quot;PR_kwDONKG-iM6A7IS0&quot;,
+        &quot;number&quot;: 4
       },
-      "lastSeen": 1730810190707
+      &quot;lastSeen&quot;: 1730810190707
     }
   ]
-}]]></component>
+}</component>
   <component name="GithubProjectSettings">
     <option name="branchProtectionPatterns">
       <list>
@@ -73,6 +79,9 @@
     &quot;accountId&quot;: &quot;f76a737c-212f-4733-9ab0-080ed9447504&quot;
   }
 }</component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/package.json" />
+  </component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="/opt/homebrew/Cellar/php/8.3.2/bin/php">
     <include_path>
       <path value="$PROJECT_DIR$/vendor/symfony/cache-contracts" />
@@ -147,6 +156,19 @@
       <path value="$PROJECT_DIR$/vendor/nikic/php-parser" />
       <path value="$PROJECT_DIR$/vendor/twig/twig" />
       <path value="$PROJECT_DIR$/vendor/twig/extra-bundle" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-factory" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-client" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/vendor/symfony/http-client-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/http-client" />
+      <path value="$PROJECT_DIR$/vendor/php-http/multipart-stream-builder" />
+      <path value="$PROJECT_DIR$/vendor/php-http/discovery" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/promises" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/psr7" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/guzzle" />
+      <path value="$PROJECT_DIR$/vendor/ralouphie/getallheaders" />
+      <path value="$PROJECT_DIR$/vendor/openai-php/client" />
+      <path value="$PROJECT_DIR$/vendor/nyholm/psr7" />
     </include_path>
   </component>
   <component name="ProjectColorInfo">{
@@ -157,18 +179,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "quest",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "yarn",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;quest&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -188,7 +210,7 @@
       <workItem from="1730732421370" duration="4929000" />
       <workItem from="1730793391960" duration="3754000" />
       <workItem from="1730797758292" duration="1119000" />
-      <workItem from="1730799040081" duration="3051000" />
+      <workItem from="1730799040081" duration="9609000" />
     </task>
     <task id="LOCAL-00001" summary="Modif env pour bdd">
       <option name="closed" value="true" />
@@ -198,7 +220,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730754395203</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="QuestController.php">
+      <option name="closed" value="true" />
+      <created>1730810476306</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1730810476306</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -217,6 +247,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Modif env pour bdd" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modif env pour bdd" />
+    <MESSAGE value="QuestController.php" />
+    <option name="LAST_COMMIT_MESSAGE" value="QuestController.php" />
   </component>
 </project>
