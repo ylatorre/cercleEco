@@ -1,41 +1,57 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}DayQuest index{% endblock %}
+{% block title %}DayQuest index
+{% endblock %}
 
 {% block body %}
-    <h1>DayQuest index</h1>
+	<div class="min-h-screen bg-gray-100 flex flex-col justify-center items-center">
+		<div class="bg-white shadow-md rounded-lg p-8 max-w-4xl w-full">
+			<h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">DayQuest index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Titre</th>
-                <th>Description</th>
-                <th>Xp</th>
-                <th>Date_de_creation</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for day_quest in day_quests %}
-            <tr>
-                <td>{{ day_quest.id }}</td>
-                <td>{{ day_quest.titre }}</td>
-                <td>{{ day_quest.description }}</td>
-                <td>{{ day_quest.xp }}</td>
-                <td>{{ day_quest.dateDeCreation ? day_quest.dateDeCreation|date('Y-m-d') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_application_day_quest_show', {'id': day_quest.id}) }}">show</a>
-                    <a href="{{ path('app_application_day_quest_edit', {'id': day_quest.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+			<div class="mb-4">
+				<a href="{{ path('app_admin_index') }}" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">Retour</a>
+			</div>
+			<table class="min-w-full bg-white">
+				<thead>
+					<tr>
+						<th class="py-2 px-4 bg-gray-200 text-gray-600 font-bold uppercase text-sm text-left">Id</th>
+						<th class="py-2 px-4 bg-gray-200 text-gray-600 font-bold uppercase text-sm text-left">Titre</th>
+						<th class="py-2 px-4 bg-gray-200 text-gray-600 font-bold uppercase text-sm text-left">Description</th>
+						<th class="py-2 px-4 bg-gray-200 text-gray-600 font-bold uppercase text-sm text-left">Xp</th>
+						<th class="py-2 px-4 bg-gray-200 text-gray-600 font-bold uppercase text-sm text-left">Date_de_creation</th>
+						<th class="py-2 px-4 bg-gray-200 text-gray-600 font-bold uppercase text-sm text-left">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for d in day_quests %}
+						<tr class="border-b">
+							<td class="py-2 px-4">{{ d.id }}</td>
+							<td class="py-2 px-4">{{ d.titre }}</td>
+							<td class="py-2 px-4">{{ d.description }}</td>
+							<td class="py-2 px-4">{{ d.xp }}</td>
+							<td class="py-2 px-4">{{ d.dateDeCreation ? d.dateDeCreation|date('Y-m-d H:i:s') : '' }}</td>
+							<td class="py-2 px-4">
+								<a href="{{ path('app_application_day_quest_show', {'id': d.id}) }}" class="text-blue-500 hover:underline">
+									<i class="fas fa-eye"></i>
+								</a>
+								<a href="{{ path('app_application_day_quest_edit', {'id': d.id}) }}" class="text-blue-500 hover:underline ml-2">
+									<i class="fas fa-edit"></i>
+								</a>
+							</td>
+						</tr>
+					{% else %}
+						<tr>
+							<td colspan="8" class="py-2 px-4 text-center">No records found</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
 
-    <a href="{{ path('app_application_day_quest_new') }}">Create new</a>
+			<div class="mt-4">
+				<a href="{{ path('app_application_day_quest_new') }}" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">
+					<i class="fas fa-plus"></i>
+				</a>
+			</div>
+		</div>
+	</div>
 {% endblock %}

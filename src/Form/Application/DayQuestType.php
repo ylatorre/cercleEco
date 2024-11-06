@@ -15,9 +15,6 @@ class DayQuestType extends AbstractType
             ->add('titre')
             ->add('description')
             ->add('xp')
-            ->add('date_de_creation', null, [
-                'widget' => 'single_text',
-            ])
         ;
     }
 
