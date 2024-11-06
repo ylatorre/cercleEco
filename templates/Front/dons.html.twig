@@ -43,7 +43,9 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             {% for d in dons %}
                 <div class="bg-[#DFE777] p-6 rounded-lg flex flex-col items-center text-center text-[#3B4419]">
-                    {# <img src="{{ d.image }}" alt="{{ d.nom }}" class="w-full h-48 object-cover mb-4 rounded-lg"> #}
+                    {% if d.image %}
+                        <img src="{{ asset('image/dons/' ~ d.image) }}" alt="{{ d.titre }}" class="w-full h-48 object-cover mb-4 rounded-lg">
+                    {% endif %}
                     <h2 class="text-2xl font-serif mb-4">{{ d.titre }}</h2>
                     <p class="text-gray-700 mb-4">{{ d.description }}</p>
                     <p class="text-gray-600 mb-4">Emplacement : </p> {# {{ d.emplacement }} #}
