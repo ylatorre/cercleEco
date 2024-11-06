@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="477e4efb-cf15-41ff-bafa-b53b2c44fad9" name="Changes" comment="QuestController.php" />
+    <list default="true" id="477e4efb-cf15-41ff-bafa-b53b2c44fad9" name="Changes" comment="QuestController.php">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Front/FrontController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Front/FrontController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Application/etat.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Application/etat.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

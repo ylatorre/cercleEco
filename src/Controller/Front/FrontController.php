@@ -3,14 +3,21 @@
 namespace App\Controller\Front;
 
 use App\Entity\Application\Quests;
+use App\Repository\Application\etatRepository;
 use App\Repository\Application\QuestsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-
+use App\Entity\Application\Etat; // Assurez-vous d'importer l'entité Etat
 #[Route('/front')]
 class FrontController extends AbstractController
 {
+    public function __construct(private Security $security)
+    {
+    }
+
     #[Route('/', name: 'app_front')]
     public function index(): Response
     {
@@ -27,7 +34,7 @@ class FrontController extends AbstractController
         ]);
     }
 
-    #[Route('/front/quetes', name: 'app_quetes')]
+    #[Route('/quetes', name: 'app_quetes')]
     public function quetes(QuestsRepository $questsRepository): Response
     {
         $quests = $questsRepository->findBy([], ['ordre' => 'ASC']); // Tri par 'ordre'
@@ -38,14 +45,24 @@ class FrontController extends AbstractController
     }
 
     #[Route('/quetes/{id}', name: 'app_quetes_show')]
-    public function QuetesShow(int $id, QuestsRepository $questsRepository): Response
+    public function QuetesShow(int $id, QuestsRepository $questsRepository, EtatRepository $etatRepository): Response
     {
         $quest = $questsRepository->find($id);
         if (!$quest) {
             throw $this->createNotFoundException('La quête demandée n\'existe pas.');
         }
+
+        // Récupération de l'utilisateur connecté
+        $user = $this->security->getUser();
+
+        // Rechercher l'état de la quête pour cet utilisateur (s'il existe)
+        $etat = $etatRepository->findOneBy(['quest' => $quest, 'user' => $user]);
+
         return $this->render('Front/quetes_show.html.twig', [
             'quest' => $quest,
+            'etat' => $etat, // On passe l'état à la vue
+        ]);
+    }
 
 
     #[Route('/quetes/{id}/repondre', name: 'app_quetes_repondre', methods: ['POST'])]
@@ -68,7 +85,7 @@ class FrontController extends AbstractController
     }
 
 
-    #[Route('/front/actualités', name: 'app_actualites')]
+    #[Route('/actualités', name: 'app_actualites')]
     public function actualites(): Response
     {
         return $this->render('Front/actualites.html.twig', [
@@ -76,7 +93,7 @@ class FrontController extends AbstractController
         ]);
     }
 
-    #[Route('/front/quetes-journalières', name: 'app_day_quests')]
+    #[Route('/quetes-journalières', name: 'app_day_quests')]
     public function day_quests(): Response
     {
         return $this->render('Front/day_quest.html.twig', [
@@ -84,7 +101,7 @@ class FrontController extends AbstractController
         ]);
     }
 
-    #[Route('/front/chatAi', name: 'app_chatAi')]
+    #[Route('/chatAi', name: 'app_chatAi')]
     public function chatAi(): Response
     {
         return $this->render('Front/chatAi.html.twig', [
