@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block body %}
+
+    <h1>{{ quest.nom }}</h1>
+    <div class="quest-item">
+        <p>{{ quest.description }}</p>
+        <p>Niveau : {{ quest.level }}</p>
+        <p>XP Gagnée : {{ quest.xpGive }}</p>
+    </div>
+
+    <h2>Question :</h2>
+    <p>{{ quest.question }}</p>
+
+    {% if etat.isFinish %}
+        <p>Vous avez déjà terminé cette quête !</p>
+    {% else %}
+        <form action="{{ path('app_quetes_repondre', {'id': quest.id}) }}" method="post">
+            <label for="reponse">Votre réponse :</label>
+            <select name="reponse" id="reponse" required>
+                <option value="{{ quest.reponseA }}">{{ quest.reponseA }}</option>
+                <option value="{{ quest.reponseB }}">{{ quest.reponseB }}</option>
+                <option value="{{ quest.reponseC }}">{{ quest.reponseC }}</option>
+                <option value="{{ quest.reponseD }}">{{ quest.reponseD }}</option>
+            </select>
+            <button type="submit" class="btn btn-primary">Soumettre</button>
+        </form>
+    {% endif %}
+
+{% endblock %}
+
+
