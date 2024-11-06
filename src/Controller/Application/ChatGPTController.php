@@ -34,10 +34,10 @@ class ChatGPTController extends AbstractController
 
         // Traite la requête HTTP actuelle pour pré-remplir le formulaire avec les données
         // soumises (si c'est une requête POST), et pour vérifier si le formulaire a été soumis.
-        $form->handleRequest($request);
+        $form->handleRequest($request);                 
 
         // Initialise une variable pour stocker la réponse qui sera affichée après l'envoi du formulaire.
-        $responseText = '';
+        $responseText = '';                            
 
 
         
