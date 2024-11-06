@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/application/day/quest')]
+#[Route('/administration/day/quest')]
 final class DayQuestController extends AbstractController
 {
     #[Route(name: 'app_application_day_quest_index', methods: ['GET'])]

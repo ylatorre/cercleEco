@@ -35,6 +35,15 @@ class Dons
     #[ORM\ManyToOne(inversedBy: 'dons')]
     private ?User $user = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $token = null;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+        $this->token = bin2hex(random_bytes(50));
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -120,6 +129,18 @@ class Dons
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(string $token): static
+    {
+        $this->token = $token;
 
         return $this;
     }

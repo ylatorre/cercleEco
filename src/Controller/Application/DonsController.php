@@ -7,6 +7,8 @@ use App\Form\Application\DonsType;
 use App\Repository\Application\DonsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -28,8 +30,27 @@ final class DonsController extends AbstractController
         $don = new Dons();
         $form = $this->createForm(DonsType::class, $don);
         $form->handleRequest($request);
+        $entityManager->persist($don);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('image')->getData();
+
+            if ($imageFile) {
+                $newFilename = $don->getToken().'.'.$imageFile->guessExtension();
+                $path = $this->getParameter('kernel.project_dir').'/public/image/dons';
+
+                try {
+                    $imageFile->move(
+                        $path,
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // handle exception if something happens during file upload
+                }
+
+                $don->setImage($newFilename);
+            }
+
             $entityManager->persist($don);
             $entityManager->flush();
 
@@ -38,7 +59,7 @@ final class DonsController extends AbstractController
 
         return $this->render('application/dons/new.html.twig', [
             'don' => $don,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -57,6 +78,24 @@ final class DonsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('image')->getData();
+
+            if ($imageFile) {
+                $newFilename = $don->getToken().'.'.$imageFile->guessExtension();
+                $path = $this->getParameter('kernel.project_dir').'/public/image/dons';
+
+                try {
+                    $imageFile->move(
+                        $path,
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // handle exception if something happens during file upload
+                }
+
+                $don->setImage($newFilename);
+            }
+
             $entityManager->flush();
 
             return $this->redirectToRoute('app_application_dons_index', [], Response::HTTP_SEE_OTHER);
@@ -64,7 +103,7 @@ final class DonsController extends AbstractController
 
         return $this->render('application/dons/edit.html.twig', [
             'don' => $don,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 
