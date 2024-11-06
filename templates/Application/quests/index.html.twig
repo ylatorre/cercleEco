@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Quests index{% endblock %}
+
+{% block body %}
+    <h1>Quests index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Description</th>
+                <th>CreatedAt</th>
+                <th>Level</th>
+                <th>Contenu</th>
+                <th>Question</th>
+                <th>ReponseA</th>
+                <th>ReponseB</th>
+                <th>ReponseC</th>
+                <th>ReponseD</th>
+                <th>ReponseCorrecte</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for quest in quests %}
+            <tr>
+                <td>{{ quest.id }}</td>
+                <td>{{ quest.nom }}</td>
+                <td>{{ quest.description }}</td>
+                <td>{{ quest.CreatedAt ? quest.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ quest.level }}</td>
+                <td>{{ quest.contenu }}</td>
+                <td>{{ quest.question }}</td>
+                <td>{{ quest.reponseA }}</td>
+                <td>{{ quest.reponseB }}</td>
+                <td>{{ quest.reponseC }}</td>
+                <td>{{ quest.reponseD }}</td>
+                <td>{{ quest.reponseCorrecte }}</td>
+                <td>
+                    <a href="{{ path('app_application_quests_show', {'id': quest.id}) }}">show</a>
+                    <a href="{{ path('app_application_quests_edit', {'id': quest.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="13">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_application_quests_new') }}">Create new</a>
+{% endblock %}
