@@ -3,7 +3,7 @@
 namespace App\Controller\Application;
 
 use App\Entity\Application\Quests;
-use App\Form\Application\QuestsType;
+use App\Form\Application\Quests4Type;
 use App\Repository\Application\QuestsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,7 +26,7 @@ final class QuestsController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $quest = new Quests();
-        $form = $this->createForm(QuestsType::class, $quest);
+        $form = $this->createForm(Quests4Type::class, $quest);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -53,7 +53,7 @@ final class QuestsController extends AbstractController
     #[Route('/{id}/edit', name: 'app_application_quests_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Quests $quest, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(QuestsType::class, $quest);
+        $form = $this->createForm(Quests4Type::class, $quest);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
