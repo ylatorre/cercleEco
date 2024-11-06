@@ -8,5 +8,8 @@
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+
+//js
+// import './js/scroll.js';
 import '@fortawesome/fontawesome-free/js/all.js';
-import './js/scroll.js';
+
