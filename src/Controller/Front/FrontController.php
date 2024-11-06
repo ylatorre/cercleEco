@@ -48,6 +48,27 @@ class FrontController extends AbstractController
             'quest' => $quest,
         ]);
     }
+
+    #[Route('/quetes/{id}/repondre', name: 'app_quetes_repondre', methods: ['POST'])]
+    public function repondre(int $id, Request $request, QuestsRepository $questsRepository, EtatRepository $etatRepository): Response
+    {
+        $quest = $questsRepository->find($id);
+        if (!$quest) {
+            throw $this->createNotFoundException('Quête non trouvée.');
+        }
+
+        $reponse = $request->request->get('reponse');
+        $etat = new Etat();
+        $etat->setTitre($quest->getNom());
+        $etat->setCode($quest->getToken());
+        $etat->setFinish($reponse === $quest->getReponseCorrecte()); // Marque la quête comme terminée si la réponse est correcte
+
+        $etatRepository->save($etat, true);
+
+        return $this->redirectToRoute('app_quetes_show', ['id' => $id]);
+    }
+
+
     #[Route('/actualités', name: 'app_actualites')]
     public function actualites(): Response
     {
