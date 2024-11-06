@@ -2,6 +2,8 @@
 
 namespace App\Controller\Front;
 
+use App\Entity\Application\Quests;
+use App\Repository\Application\QuestsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -25,13 +27,26 @@ class FrontController extends AbstractController
     }
 
     #[Route('/quetes', name: 'app_quetes')]
-    public function quetes(): Response
+    public function quetes(QuestsRepository $questsRepository): Response
     {
-        return $this->render('Front/quetes.html.twig', [
+        $quests = $questsRepository->findBy([], ['ordre' => 'ASC']); // Tri par 'ordre'
 
+        return $this->render('Front/quetes.html.twig', [
+            'quests' => $quests,
         ]);
     }
 
+    #[Route('/quetes/{id}', name: 'app_quetes_show')]
+    public function QuetesShow(int $id, QuestsRepository $questsRepository): Response
+    {
+        $quest = $questsRepository->find($id);
+        if (!$quest) {
+            throw $this->createNotFoundException('La quête demandée n\'existe pas.');
+        }
+        return $this->render('Front/quetes_show.html.twig', [
+            'quest' => $quest,
+        ]);
+    }
     #[Route('/actualités', name: 'app_actualites')]
     public function actualites(): Response
     {

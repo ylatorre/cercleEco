@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block body %}
+
+    <h1>Quête</h1>
+
+    <div class="quest-item">
+        <h2>{{ quest.nom }}</h2>
+        <p>{{ quest.description }}</p>
+        <p>Niveau : {{ quest.level }}</p>
+        <p>XP Gagnée : {{ quest.xpGive }}</p>
+
+    </div>
+
+{% endblock %}
+
+
