@@ -2,6 +2,7 @@
 
 namespace App\Controller\Front;
 
+use App\Repository\Application\DonsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -17,10 +18,12 @@ class FrontController extends AbstractController
     }
 
     #[Route('/front/dons', name: 'app_dons')]
-    public function dons(): Response
+    public function dons(DonsRepository $donsRepository): Response
     {
-        return $this->render('Front/dons.html.twig', [
+        $dons = $donsRepository->findAll();
 
+        return $this->render('Front/dons.html.twig', [
+            'dons' => $dons
         ]);
     }
 
