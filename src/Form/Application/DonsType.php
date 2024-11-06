@@ -29,6 +29,7 @@ class DonsType extends AbstractType
             ])
             ->add('image', FileType::class, [
                 'label' => 'Image',
+                'data_class' => null,
             ])
             ->add('user', EntityType::class, [
                 'class' => User::class,

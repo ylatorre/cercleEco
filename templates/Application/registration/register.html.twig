@@ -39,60 +39,61 @@
         <h1 class="text-2xl font-medium text-center mb-2">Bienvenue</h1>
         <h2 class="text-xl text-[#3B4419] text-center mb-8">Créer votre compte</h2>
 
-        {{ form_errors(registrationForm) }}
-
-        {{ form_start(registrationForm, {
-            'attr': {
-                'class': 'space-y-4'
-            }
-        }) }}
-
-            {# Nom #}
-            {{ form_widget(registrationForm.nom, {
+            {{ form_start(registrationForm, {
                 'attr': {
-                    'class': 'w-full bg-transparent border border-gray-300 rounded-lg h-12 px-4 focus:outline-none focus:ring-2 focus:ring-[#3B4419]',
-                    'placeholder': 'Nom'
-                }
-            }) }}
-            {{ form_errors(registrationForm.nom) }}
+                    'class': 'space-y-4'
+                }}) }}
 
-            {# Prénom #}
-            {{ form_widget(registrationForm.prenom, {
-                'attr': {
-                    'class': 'w-full bg-transparent border border-gray-300 rounded-lg h-12 px-4 focus:outline-none focus:ring-2 focus:ring-[#3B4419]',
-                    'placeholder': 'Prénom'
-                }
-            }) }}
-            {{ form_errors(registrationForm.prenom) }}
+                {# Nom #}
+                {{ form_widget(registrationForm.nom, {
+                    'attr': {
+                        'class': 'w-full bg-transparent border border-gray-300 rounded-lg h-12 px-4 focus:outline-none focus:ring-2 focus:ring-[#3B4419]',
+                        'placeholder': 'Nom'
+                    }
+                }) }}
+                {{ form_errors(registrationForm.nom) }}
 
-            {# Email #}
-            {{ form_widget(registrationForm.email, {
-                'attr': {
-                    'class': 'w-full bg-transparent border border-gray-300 rounded-lg h-12 px-4 focus:outline-none focus:ring-2 focus:ring-[#3B4419]',
-                    'placeholder': 'Adresse mail'
-                }
-            }) }}
-            {{ form_errors(registrationForm.email) }}
+                {# Prénom #}
+                {{ form_widget(registrationForm.prenom, {
+                    'attr': {
+                        'class': 'w-full bg-transparent border border-gray-300 rounded-lg h-12 px-4 focus:outline-none focus:ring-2 focus:ring-[#3B4419]',
+                        'placeholder': 'Prénom'
+                    }
+                }) }}
+                {{ form_errors(registrationForm.prenom) }}
 
-            {# Password #}
-            {{ form_widget(registrationForm.plainPassword, {
-                'attr': {
-                    'class': 'w-full bg-transparent border border-gray-300 rounded-lg h-12 px-4 focus:outline-none focus:ring-2 focus:ring-[#3B4419]',
-                    'placeholder': 'Mot de passe'
-                }
-            }) }}
-            {{ form_errors(registrationForm.plainPassword) }}
+                {# Email #}
+                {{ form_widget(registrationForm.email, {
+                    'attr': {
+                        'class': 'w-full bg-transparent border border-gray-300 rounded-lg h-12 px-4 focus:outline-none focus:ring-2 focus:ring-[#3B4419]',
+                        'placeholder': 'Adresse mail'
+                    }
+                }) }}
+                {{ form_errors(registrationForm.email) }}
 
-            {# Terms checkbox - hidden but maintained for functionality #}
-            <div class="hidden">
-                {{ form_widget(registrationForm.agreeTerms) }}
-                {{ form_errors(registrationForm.agreeTerms) }}
-            </div>
+                {# Password #}
+                {{ form_widget(registrationForm.plainPassword, {
+                    'attr': {
+                        'class': 'w-full bg-transparent border border-gray-300 rounded-lg h-12 px-4 focus:outline-none focus:ring-2 focus:ring-[#3B4419]',
+                        'placeholder': 'Mot de passe'
+                    }
+                }) }}
+                {{ form_errors(registrationForm.plainPassword) }}
 
-            <button type="submit" class="w-full bg-[#3B4419] hover:bg-[#2A3112] text-white h-12 rounded-lg font-medium transition-colors duration-200">
-                S'inscrire
-            </button>
-        {{ form_end(registrationForm) }}
+                {# Terms checkbox - hidden but maintained for functionality #}
+                <div class="flex items-center space-x-2">
+                    {{ form_widget(registrationForm.agreeTerms) }}
+                    <label for="{{ registrationForm.agreeTerms.vars.id }}" class="text-sm text-gray-600">
+                        En cochant cette case, vous acceptez les termes d'utilisation de l'application
+                    </label>
+                    {{ form_errors(registrationForm.agreeTerms) }}
+                </div>
+
+                <button type="submit" class="w-full bg-[#3B4419] hover:bg-[#2A3112] text-white h-12 rounded-lg font-medium transition-colors duration-200">
+                    S'inscrire
+                </button>
+            {{ form_end(registrationForm) }}
+        </form>
 
         {# Login Link #}
         <div class="mt-6 text-sm text-center">
