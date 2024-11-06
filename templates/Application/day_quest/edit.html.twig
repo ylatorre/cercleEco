@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit DayQuest{% endblock %}
+
+{% block body %}
+    <h1>Edit DayQuest</h1>
+
+    {{ include('application/day_quest/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_application_day_quest_index') }}">back to list</a>
+
+    {{ include('application/day_quest/_delete_form.html.twig') }}
+{% endblock %}
