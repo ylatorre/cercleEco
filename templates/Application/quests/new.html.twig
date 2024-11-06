@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Quests{% endblock %}
+
+{% block body %}
+    <h1>Create new Quests</h1>
+
+    {{ include('application/quests/_form.html.twig') }}
+
+    <a href="{{ path('app_application_quests_index') }}">back to list</a>
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Quests{% endblock %}
+
+{% block body %}
+    <h1>Quests</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ quest.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ quest.nom }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ quest.description }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ quest.CreatedAt ? quest.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Level</th>
+                <td>{{ quest.level }}</td>
+            </tr>
+            <tr>
+                <th>Contenu</th>
+                <td>{{ quest.contenu }}</td>
+            </tr>
+            <tr>
+                <th>Question</th>
+                <td>{{ quest.question }}</td>
+            </tr>
+            <tr>
+                <th>ReponseA</th>
+                <td>{{ quest.reponseA }}</td>
+            </tr>
+            <tr>
+                <th>ReponseB</th>
+                <td>{{ quest.reponseB }}</td>
+            </tr>
+            <tr>
+                <th>ReponseC</th>
+                <td>{{ quest.reponseC }}</td>
+            </tr>
+            <tr>
+                <th>ReponseD</th>
+                <td>{{ quest.reponseD }}</td>
+            </tr>
+            <tr>
+                <th>ReponseCorrecte</th>
+                <td>{{ quest.reponseCorrecte }}</td>
+            </tr>
+            <tr>
+                <th>Ordre</th>
+                <td>{{ quest.ordre }}</td>
+            </tr>
+            <tr>
+                <th>Xp_give</th>
+                <td>{{ quest.xpGive }}</td>
+            </tr>
+            <tr>
+                <th>Token</th>
+                <td>{{ quest.token }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_application_quests_index') }}">back to list</a>
+
+    <a href="{{ path('app_application_quests_edit', {'id': quest.id}) }}">edit</a>
+
+    {{ include('application/quests/_delete_form.html.twig') }}
+{% endblock %}
