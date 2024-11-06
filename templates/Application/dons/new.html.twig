@@ -7,11 +7,11 @@
     <div class="bg-white shadow-md rounded-lg p-8 max-w-4xl w-full">
         <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">Create new Dons</h1>
 
-        {{ include('application/dons/_form.html.twig') }}
-
-        <div class="mt-4">
-            <a href="{{ path('app_application_dons_index') }}" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">Back to list</a>
+        <div class="mt-4 mb-4">
+            <a href="{{ path('app_application_dons_index') }}" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">Retour</a>
         </div>
+
+        {{ include('application/dons/_form.html.twig') }}
     </div>
 </div>
 {% endblock %}

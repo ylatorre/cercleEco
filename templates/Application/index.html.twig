@@ -9,11 +9,11 @@
         <p class="text-gray-600 mb-6">Utilisez les options ci-dessous pour gérer votre application.</p>
         
         <div class="grid grid-cols-1 gap-4">
-            <a href="{{path('app_application_user_index')}}" class="block bg-blue-500 text-white text-center py-2 rounded-lg hover:bg-blue-600 transition duration-300">Gérer les utilisateurs</a>
-            <a href="{{path('app_application_dons_index')}}" class="block bg-green-500 text-white text-center py-2 rounded-lg hover:bg-green-600 transition duration-300">Gérer les dons</a>
-            <a href="#" class="block bg-yellow-500 text-white text-center py-2 rounded-lg hover:bg-yellow-600 transition duration-300">Gérer les quêtes</a>
-            <a href="#" class="block bg-yellow-500 text-white text-center py-2 rounded-lg hover:bg-yellow-600 transition duration-300">Gérer les quêtes journalières</a>
-            <a href="#" class="block bg-red-500 text-white text-center py-2 rounded-lg hover:bg-red-600 transition duration-300">Se déconnecter</a>
+            <a href="{{ path('app_application_user_index') }}" class="block bg-blue-500 text-white text-center py-2 rounded-lg hover:bg-blue-600 transition duration-300">Gérer les utilisateurs</a>
+            <a href="{{ path('app_application_dons_index') }}" class="block bg-green-500 text-white text-center py-2 rounded-lg hover:bg-green-600 transition duration-300">Gérer les dons</a>
+            <a href="{{ path('app_application_quests_index') }}" class="block bg-yellow-500 text-white text-center py-2 rounded-lg hover:bg-yellow-600 transition duration-300">Gérer les quêtes</a>
+            <a href="{{ path('app_application_day_quest_index') }}" class="block bg-blue-500 text-white text-center py-2 rounded-lg hover:bg-indigo-600 transition duration-300">Gérer les quêtes journalières</a>
+            <a href="{{ path('app_logout') }}" class="block bg-red-500 text-white text-center py-2 rounded-lg hover:bg-red-600 transition duration-300">Se déconnecter</a>
         </div>
     </div>
 </div>

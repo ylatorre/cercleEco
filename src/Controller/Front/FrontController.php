@@ -23,4 +23,36 @@ class FrontController extends AbstractController
 
         ]);
     }
+
+    #[Route('/quetes', name: 'app_quetes')]
+    public function quetes(): Response
+    {
+        return $this->render('Front/quetes.html.twig', [
+
+        ]);
+    }
+
+    #[Route('/actualités', name: 'app_actualites')]
+    public function actualites(): Response
+    {
+        return $this->render('Front/actualites.html.twig', [
+
+        ]);
+    }
+
+    #[Route('/quetes-journalières', name: 'app_day_quests')]
+    public function day_quests(): Response
+    {
+        return $this->render('Front/day_quest.html.twig', [
+
+        ]);
+    }
+
+    #[Route('/chatAi', name: 'app_chatAi')]
+    public function chatAi(): Response
+    {
+        return $this->render('Front/chatAi.html.twig', [
+
+        ]);
+    }
 }
