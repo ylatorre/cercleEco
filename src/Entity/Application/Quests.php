@@ -46,6 +46,21 @@ class Quests
     #[ORM\Column(length: 255)]
     private ?string $reponseCorrecte = null;
 
+    #[ORM\Column]
+    private ?int $ordre = null;
+
+    #[ORM\Column]
+    private ?float $xp_give = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $token = null;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+        $this->token = bin2hex(random_bytes(50));
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -179,6 +194,42 @@ class Quests
     public function setReponseCorrecte(string $reponseCorrecte): static
     {
         $this->reponseCorrecte = $reponseCorrecte;
+
+        return $this;
+    }
+
+    public function getOrdre(): ?int
+    {
+        return $this->ordre;
+    }
+
+    public function setOrdre(int $ordre): static
+    {
+        $this->ordre = $ordre;
+
+        return $this;
+    }
+
+    public function getXpGive(): ?int
+    {
+        return $this->xp_give;
+    }
+
+    public function setXpGive(int $xp_give): static
+    {
+        $this->xp_give = $xp_give;
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(string $token): static
+    {
+        $this->token = $token;
 
         return $this;
     }
