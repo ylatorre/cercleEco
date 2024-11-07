@@ -4,9 +4,14 @@ namespace App\Command;
 
 use App\Service\DayQuestService;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'app:change-daily-quest',
+    description: 'Change the daily quest.',
+)]
 class ChangeDailyQuestCommand extends Command
 {
     private DayQuestService $dayQuestService;
@@ -16,8 +21,6 @@ class ChangeDailyQuestCommand extends Command
         parent::__construct();
         $this->dayQuestService = $dayQuestService;
     }
-
-    protected static $defaultName = 'app:change-daily-quests';
 
     protected function configure()
     {
