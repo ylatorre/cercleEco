@@ -10,6 +10,7 @@ use App\Repository\Application\etatRepository;
 use App\Repository\Application\QuestsRepository;
 use App\Repository\Application\DayQuestRepository;
 use App\Entity\Application\DayQuest;
+use App\Service\LevelCalculatorService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
@@ -28,11 +29,12 @@ use App\Entity\Application\DayQuestUser;
 class FrontController extends AbstractController
 {
     private $chatGPTService;
-    private EntityManagerInterface $entityManager;
+    private $levelCalculator;
 
-    public function __construct(Security $security, ChatGPTService $chatGPTService, EntityManagerInterface $entityManager)
+    public function __construct(private Security $security,ChatGPTService $chatGPTService, LevelCalculatorService $levelCalculator, EntityManagerInterface $entityManager)
     {
         $this->chatGPTService = $chatGPTService;
+        $this->levelCalculator = $levelCalculator;
         $this->entityManager = $entityManager;
     }
 
@@ -330,5 +332,40 @@ class FrontController extends AbstractController
         $entityManager->flush();
 
         return $this->redirectToRoute('app_quetes');
+    }
+
+//    #[Route('/levelUser', name: 'app_application_user_show_level', methods: ['GET'])]
+//    public function getLevel(): Response
+//    {
+//        $user = $this->getUser();
+//        $niveau = $this->levelCalculator->calculerNiveau($user->getXpTotal());
+//
+//        return $this->render('Components/xpcalcul.html.twig', [
+//            'niveau' => $niveau,
+//        ]);
+//    }
+    #[Route('/levelUser', name: 'app_application_user_show_level', methods: ['GET'])]
+    public function getLevel(): Response
+    {
+        $user = $this->getUser();
+        $niveau = $this->levelCalculator->calculerNiveau($user->getXpTotal());
+        $xpTotal = $user->getXpTotal();
+        $xpSeuil = $this->levelCalculator->getXpSeuil($niveau); // méthode pour obtenir l'XP nécessaire pour atteindre le niveau suivant
+
+        return $this->json([
+            'niveau' => $niveau,
+            'xpTotal' => $xpTotal,
+            'xpSeuil' => $xpSeuil,
+        ]);
+    }
+    #[Route('/leaderboard', name: 'app_application_user_leaderboard', methods: ['GET'])]
+    public function leaderboard(UserRepository $userRepository): Response
+    {
+        // Récupérer les 50 meilleurs utilisateurs triés par XP
+        $topUsers = $userRepository->findTopUsersByXp(50);
+
+        return $this->render('Front/leaderboard.html.twig', [
+            'topUsers' => $topUsers,
+        ]);
     }
 }

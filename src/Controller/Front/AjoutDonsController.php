@@ -13,10 +13,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[Route('/front')]
 final class AjoutDonsController extends AbstractController
 {
-
-    #[Route('/new', name: 'app_application_dons_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_front_dons_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $don = new Dons();
@@ -46,16 +46,16 @@ final class AjoutDonsController extends AbstractController
             $entityManager->persist($don);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_application_dons_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_dons', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('Application/dons/new.html.twig', [
+        return $this->render('Front/donsCrud/new.html.twig', [
             'don' => $don,
             'form' => $form->createView(),
         ]);
     }
 
-    #[Route('/{token}/edit', name: 'app_application_dons_edit', methods: ['GET', 'POST'])]
+    #[Route('/{token}/edit', name: 'app_front_dons_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, EntityManagerInterface $entityManager): Response
     {
         $don = $entityManager->getRepository(Dons::class)->findOneBy(['token' => $request->get('token')]);
@@ -83,23 +83,24 @@ final class AjoutDonsController extends AbstractController
 
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_application_dons_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_dons', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('Application/dons/edit.html.twig', [
+        return $this->render('Front/donsCrud/edit.html.twig', [
             'don' => $don,
             'form' => $form->createView(),
         ]);
     }
 
-    #[Route('/{token}', name: 'app_application_dons_delete', methods: ['POST'])]
-    public function delete(Request $request, Dons $don, EntityManagerInterface $entityManager): Response
+    #[Route('/{token}', name: 'app_front_dons_delete', methods: ['POST'])]
+    public function delete(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $don = $entityManager->getRepository(Dons::class)->findOneBy(['token' => $request->get('token')]);
         if ($this->isCsrfTokenValid('delete'.$don->getToken(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($don);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_application_dons_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_dons', [], Response::HTTP_SEE_OTHER);
     }
 }

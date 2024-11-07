@@ -30,6 +30,7 @@ final class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user->setXpTotal(300);
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -41,6 +42,9 @@ final class UserController extends AbstractController
             'form' => $form,
         ]);
     }
+
+
+
 
     #[Route('/{id}', name: 'app_application_user_show', methods: ['GET'])]
     public function show(User $user): Response
@@ -78,4 +82,6 @@ final class UserController extends AbstractController
 
         return $this->redirectToRoute('app_application_user_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
 }
