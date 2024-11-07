@@ -17,7 +17,7 @@ final class UserController extends AbstractController
     #[Route(name: 'app_application_user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {
-        return $this->render('application/user/index.html.twig', [
+        return $this->render('Application/user/index.html.twig', [
             'users' => $userRepository->findAll(),
         ]);
     }
@@ -36,7 +36,7 @@ final class UserController extends AbstractController
             return $this->redirectToRoute('app_application_user_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('application/user/new.html.twig', [
+        return $this->render('Application/user/new.html.twig', [
             'user' => $user,
             'form' => $form,
         ]);
@@ -45,7 +45,7 @@ final class UserController extends AbstractController
     #[Route('/{id}', name: 'app_application_user_show', methods: ['GET'])]
     public function show(User $user): Response
     {
-        return $this->render('application/user/show.html.twig', [
+        return $this->render('Application/user/show.html.twig', [
             'user' => $user,
         ]);
     }
@@ -62,7 +62,7 @@ final class UserController extends AbstractController
             return $this->redirectToRoute('app_application_user_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('application/user/edit.html.twig', [
+        return $this->render('Application/user/edit.html.twig', [
             'user' => $user,
             'form' => $form,
         ]);
