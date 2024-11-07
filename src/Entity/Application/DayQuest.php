@@ -26,6 +26,9 @@ class DayQuest
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date_de_creation = null;
 
+    #[ORM\ManyToOne(inversedBy: 'dayQuests')]
+    private ?User $user = null;
+
     public function __construct()
     {
         $this->date_de_creation = new \DateTimeImmutable();
@@ -80,6 +83,18 @@ class DayQuest
     public function setDateDeCreation(\DateTimeInterface $date_de_creation): static
     {
         $this->date_de_creation = $date_de_creation;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

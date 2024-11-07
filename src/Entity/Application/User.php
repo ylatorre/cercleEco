@@ -50,10 +50,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Dons::class, mappedBy: 'user')]
     private Collection $dons;
 
+    /**
+     * @var Collection<int, DayQuest>
+     */
+    #[ORM\OneToMany(targetEntity: DayQuest::class, mappedBy: 'user')]
+    private Collection $dayQuests;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->dons = new ArrayCollection();
+        $this->dayQuests = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -191,6 +198,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($don->getUser() === $this) {
                 $don->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DayQuest>
+     */
+    public function getDayQuests(): Collection
+    {
+        return $this->dayQuests;
+    }
+
+    public function addDayQuest(DayQuest $dayQuest): static
+    {
+        if (!$this->dayQuests->contains($dayQuest)) {
+            $this->dayQuests->add($dayQuest);
+            $dayQuest->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDayQuest(DayQuest $dayQuest): static
+    {
+        if ($this->dayQuests->removeElement($dayQuest)) {
+            // set the owning side to null (unless already changed)
+            if ($dayQuest->getUser() === $this) {
+                $dayQuest->setUser(null);
             }
         }
 
