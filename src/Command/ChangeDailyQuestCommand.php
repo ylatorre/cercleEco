@@ -29,8 +29,10 @@ class ChangeDailyQuestCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        // Mettre à jour les quêtes journalières dans la base de données et le cache
+        $this->dayQuestService->setDailyQuestsInCacheAndDatabase();
+
         // Mettre à jour les quêtes dans le cache pour 24 heures
-        $this->dayQuestService->setDailyQuestsInCache();
 
         $output->writeln('Les quêtes journalières ont été mises à jour.');
 
