@@ -19,7 +19,7 @@ final class QuestsController extends AbstractController
     public function index(QuestsRepository $questsRepository): Response
     {
         $quests = $questsRepository->findBy([], ['ordre' => 'ASC']);
-        return $this->render('application/quests/index.html.twig', [
+        return $this->render('Application/quests/index.html.twig', [
             'quests' => $quests,
         ]);
     }
@@ -38,7 +38,7 @@ final class QuestsController extends AbstractController
             return $this->redirectToRoute('app_application_quests_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('application/quests/new.html.twig', [
+        return $this->render('Application/quests/new.html.twig', [
             'quest' => $quest,
             'form' => $form,
         ]);
@@ -47,7 +47,7 @@ final class QuestsController extends AbstractController
     #[Route('/{id}', name: 'app_application_quests_show', methods: ['GET'])]
     public function show(Quests $quest): Response
     {
-        return $this->render('application/quests/show.html.twig', [
+        return $this->render('Application/quests/show.html.twig', [
             'quest' => $quest,
         ]);
     }
@@ -64,7 +64,7 @@ final class QuestsController extends AbstractController
             return $this->redirectToRoute('app_application_quests_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('application/quests/edit.html.twig', [
+        return $this->render('Application/quests/edit.html.twig', [
             'quest' => $quest,
             'form' => $form,
         ]);
