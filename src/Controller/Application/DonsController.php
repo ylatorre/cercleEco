@@ -110,8 +110,9 @@ final class DonsController extends AbstractController
     }
 
     #[Route('/{token}', name: 'app_application_dons_delete', methods: ['POST'])]
-    public function delete(Request $request, Dons $don, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $don = $entityManager->getRepository(Dons::class)->findOneBy(['token' => $request->get('token')]);
         if ($this->isCsrfTokenValid('delete'.$don->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($don);
             $entityManager->flush();
