@@ -7,7 +7,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ChangeDailyQuestsCommand extends Command
+class ChangeDailyQuestCommand extends Command
 {
     private DayQuestService $dayQuestService;
 
