@@ -1,0 +1,23 @@
+{# templates/Application/user/leaderboard.html.twig #}
+
+<h1>Classement des 50 Meilleurs Utilisateurs</h1>
+<table class="table-auto w-full">
+    <thead>
+    <tr>
+        <th class="px-4 py-2">Position</th>
+        <th class="px-4 py-2">Nom d'utilisateur</th>
+        <th class="px-4 py-2">XP Total</th>
+        <th class="px-4 py-2">Niveau</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for user in topUsers %}
+    <tr>
+        <td class="border px-4 py-2">{{ loop.index }}</td>
+        <td class="border px-4 py-2">{{ user.nom }}</td>
+        <td class="border px-4 py-2">{{ user.xpTotal }}</td>
+{#        <td class="border px-4 py-2">{{ user.level }}</td> #}{# Niveau calculé #}
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>

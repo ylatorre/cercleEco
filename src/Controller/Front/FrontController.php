@@ -253,5 +253,14 @@ class FrontController extends AbstractController
             'xpSeuil' => $xpSeuil,
         ]);
     }
+    #[Route('/leaderboard', name: 'app_application_user_leaderboard', methods: ['GET'])]
+    public function leaderboard(UserRepository $userRepository): Response
+    {
+        // Récupérer les 50 meilleurs utilisateurs triés par XP
+        $topUsers = $userRepository->findTopUsersByXp(50);
 
+        return $this->render('Front/leaderboard.html.twig', [
+            'topUsers' => $topUsers,
+        ]);
+    }
 }
