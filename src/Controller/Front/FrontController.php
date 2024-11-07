@@ -45,11 +45,8 @@ class FrontController extends AbstractController
     public function dons(DonsRepository $donsRepository): Response
     {
         $dons = $donsRepository->findAll();
-        $user = $this->getUser();
-
         return $this->render('Front/dons.html.twig', [
             'dons' => $dons,
-            'user' => $user
         ]);
     }
 
@@ -60,7 +57,7 @@ class FrontController extends AbstractController
         $user = $userRepository->findOneBy(['token' => $token]);
         $dons = $donsRepository->findByuser($user);
 
-        return $this->render('Front/dons.html.twig', [
+        return $this->render('Front/donsPerso.html.twig', [
             'dons' => $dons
         ]);
     }
