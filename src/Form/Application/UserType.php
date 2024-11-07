@@ -26,7 +26,6 @@ class UserType extends AbstractType
                 'required' => true,
             ])
             ->add('email')
-            ->add('password')
         ;
     }
 
