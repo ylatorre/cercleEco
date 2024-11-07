@@ -63,25 +63,27 @@ final class DonsController extends AbstractController
         ]);
     }
 
-    #[Route('/{token}', name: 'app_application_dons_show', methods: ['GET'])]
-    public function show(Dons $don): Response
+    #[Route('/{token}/show', name: 'app_application_dons_show', methods: ['GET'])]
+    public function show(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $don = $entityManager->getRepository(Dons::class)->findOneByToken($request->get('token'));
         return $this->render('Application/dons/show.html.twig', [
             'don' => $don,
         ]);
     }
 
     #[Route('/{token}/edit', name: 'app_application_dons_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Dons $don, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(DonsType::class, $don);
+        $donForm = $entityManager->getRepository(Dons::class)->findOneByToken($request->get('token'));
+        $form = $this->createForm(DonsType::class, $donForm);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $imageFile = $form->get('image')->getData();
 
             if ($imageFile) {
-                $newFilename = $don->getToken().'.'.$imageFile->guessExtension();
+                $newFilename = $donForm->getToken().'.'.$imageFile->guessExtension();
                 $path = $this->getParameter('kernel.project_dir').'/public/image/dons';
 
                 try {
@@ -93,7 +95,7 @@ final class DonsController extends AbstractController
                     // handle exception if something happens during file upload
                 }
 
-                $don->setImage($newFilename);
+                $donForm->setImage($newFilename);
             }
 
             $entityManager->flush();
@@ -102,7 +104,8 @@ final class DonsController extends AbstractController
         }
 
         return $this->render('Application/dons/edit.html.twig', [
-            'don' => $don,
+            'don' => $donForm,
+            'form' => $form,
         ]);
     }
 
