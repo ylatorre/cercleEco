@@ -54,21 +54,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $token = null;
 
-    /**
-     * @var Collection<int, DayQuest>
-     */
-    #[ORM\OneToMany(targetEntity: DayQuest::class, mappedBy: 'user')]
-    private Collection $dayQuests;
-
     #[ORM\Column(nullable: true)]
     private ?int $xpTotal = null;
+
+    /**
+     * @var Collection<int, DayQuestUser>
+     */
+    #[ORM\OneToMany(targetEntity: DayQuestUser::class, mappedBy: 'user')]
+    private Collection $dayQuestUsers;
 
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->dons = new ArrayCollection();
         $this->token = bin2hex(random_bytes(50));
-        $this->dayQuests = new ArrayCollection();
+        $this->dayQuestUsers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -224,36 +224,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, DayQuest>
-     */
-    public function getDayQuests(): Collection
-    {
-        return $this->dayQuests;
-    }
-
-    public function addDayQuest(DayQuest $dayQuest): static
-    {
-        if (!$this->dayQuests->contains($dayQuest)) {
-            $this->dayQuests->add($dayQuest);
-            $dayQuest->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeDayQuest(DayQuest $dayQuest): static
-    {
-        if ($this->dayQuests->removeElement($dayQuest)) {
-            // set the owning side to null (unless already changed)
-            if ($dayQuest->getUser() === $this) {
-                $dayQuest->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getXpTotal(): ?int
     {
         return $this->xpTotal;
@@ -262,6 +232,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setXpTotal(?int $xpTotal): static
     {
         $this->xpTotal = $xpTotal;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DayQuestUser>
+     */
+    public function getDayQuestUsers(): Collection
+    {
+        return $this->dayQuestUsers;
+    }
+
+    public function addDayQuestUser(DayQuestUser $dayQuestUser): static
+    {
+        if (!$this->dayQuestUsers->contains($dayQuestUser)) {
+            $this->dayQuestUsers->add($dayQuestUser);
+            $dayQuestUser->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDayQuestUser(DayQuestUser $dayQuestUser): static
+    {
+        if ($this->dayQuestUsers->removeElement($dayQuestUser)) {
+            // set the owning side to null (unless already changed)
+            if ($dayQuestUser->getUser() === $this) {
+                $dayQuestUser->setUser(null);
+            }
+        }
 
         return $this;
     }

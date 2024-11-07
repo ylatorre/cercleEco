@@ -3,6 +3,8 @@
 namespace App\Entity\Application;
 
 use App\Repository\Application\DayQuestRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -26,12 +28,16 @@ class DayQuest
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date_de_creation = null;
 
-    #[ORM\ManyToOne(inversedBy: 'dayQuests')]
-    private ?User $user = null;
+    /**
+     * @var Collection<int, DayQuestUser>
+     */
+    #[ORM\OneToMany(targetEntity: DayQuestUser::class, mappedBy: 'dayQuest')]
+    private Collection $dayQuestUsers;
 
     public function __construct()
     {
         $this->date_de_creation = new \DateTimeImmutable();
+        $this->dayQuestUsers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -87,14 +93,32 @@ class DayQuest
         return $this;
     }
 
-    public function getUser(): ?User
+    /**
+     * @return Collection<int, DayQuestUser>
+     */
+    public function getDayQuestUsers(): Collection
     {
-        return $this->user;
+        return $this->dayQuestUsers;
     }
 
-    public function setUser(?User $user): static
+    public function addDayQuestUser(DayQuestUser $dayQuestUser): static
     {
-        $this->user = $user;
+        if (!$this->dayQuestUsers->contains($dayQuestUser)) {
+            $this->dayQuestUsers->add($dayQuestUser);
+            $dayQuestUser->setDayQuest($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDayQuestUser(DayQuestUser $dayQuestUser): static
+    {
+        if ($this->dayQuestUsers->removeElement($dayQuestUser)) {
+            // set the owning side to null (unless already changed)
+            if ($dayQuestUser->getDayQuest() === $this) {
+                $dayQuestUser->setDayQuest(null);
+            }
+        }
 
         return $this;
     }
