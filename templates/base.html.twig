@@ -44,6 +44,27 @@
             <div class="text-center leading-tight">
                 <span class="block font-semibold">{{app.user.nom}}</span>
                 <span class="block text-sm">{{app.user.prenom}}</span>
+{#                niveau user#}
+                {% set xp = app.user.xpTotal %}
+                {% set level = 1 %}
+                {% set xpThreshold = 100 %}
+
+                {% for i in 1..100 %}
+                    {% if xp >= xpThreshold %}
+                        {% set level = i %}
+                        {% set xpThreshold = 100 * (1.1 ** level) %}
+                    {% else %}
+                        {% break %}
+                    {% endif %}
+                {% endfor %}
+
+                <span class="block text-sm">Niveau : {{ level }}</span>
+
+
+
+
+
+                <span class="block text-sm">Niveau : {{app.user.xpTotal}}</span>
             </div>
         </a>
     {% else %}
