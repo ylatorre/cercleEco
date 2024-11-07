@@ -103,7 +103,6 @@ final class DonsController extends AbstractController
 
         return $this->render('Application/dons/edit.html.twig', [
             'don' => $don,
-            'form' => $form->createView(),
         ]);
     }
 
