@@ -16,15 +16,21 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\Application\Etat; 
+use App\Service\ChatGPTService;
+use App\Form\ChatGPTType;
+
 
 use App\Service\DayQuestService;
 
 
-#[Route('/front')]
 class FrontController extends AbstractController
 {
-    public function __construct(private Security $security)
+    private $chatGPTService;
+
+    public function __construct(private Security $security,ChatGPTService $chatGPTService)
     {
+        $this->chatGPTService = $chatGPTService;
+
     }
 
     #[Route('/', name: 'app_front')]
@@ -45,7 +51,18 @@ class FrontController extends AbstractController
         ]);
     }
 
-    #[Route('/quetes', name: 'app_quetes')]
+    #[Route('/front/donsdetail/{token}', name: 'app_don_detail')]
+    public function donsDetail(Request $request, DonsRepository $donsRepository): Response
+    {
+        $token = $request->get('token');
+        $don = $donsRepository->findOneBy(['token' => $token]);
+
+        return $this->render('Front/donsDetail.html.twig', [
+            'don' => $don
+        ]);
+    }
+
+    #[Route('/front/quetes', name: 'app_quetes')]
     public function quetes(QuestsRepository $questsRepository): Response
     {
         $quests = $questsRepository->findBy([], ['ordre' => 'ASC']); // Tri par 'ordre'
@@ -145,9 +162,23 @@ class FrontController extends AbstractController
 
 
     #[Route('/chatAi', name: 'app_chatAi')]
-    public function chatAi(): Response
+    public function chatAi(Request $request): Response
     {
+        $form = $this->createForm(ChatGPTType::class);
+        $form->handleRequest($request);               
+        $responseText = '';          
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Récupère les données du formulaire sous forme de tableau.
+            $data = $form->getData();
+            // Récupère la valeur du champ 'userInput', soit la question de l'utilisateur.
+            $userInput = $data['userInput'];
+            // Appelle le service ChatGPTService pour générer une réponse à partir de l'entrée utilisateur.
+            // La réponse générée est stockée dans la variable $responseText.
+            $responseText = $this->chatGPTService->generateResponse($userInput);
+        }                 
         return $this->render('Front/chatAi.html.twig', [
+            'form' => $form->createView(),
+            'responseText' => $responseText,
 
         ]);
     }
