@@ -244,10 +244,13 @@ class FrontController extends AbstractController
     {
         $user = $this->getUser();
         $niveau = $this->levelCalculator->calculerNiveau($user->getXpTotal());
+        $xpTotal = $user->getXpTotal();
+        $xpSeuil = $this->levelCalculator->getXpSeuil($niveau); // méthode pour obtenir l'XP nécessaire pour atteindre le niveau suivant
 
-        // Retourne les données sous forme de JSON, incluant le niveau
         return $this->json([
-            'niveau' => $niveau
+            'niveau' => $niveau,
+            'xpTotal' => $xpTotal,
+            'xpSeuil' => $xpSeuil,
         ]);
     }
 
