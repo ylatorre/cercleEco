@@ -41,6 +41,15 @@ class FrontController extends AbstractController
         ]);
     }
 
+    #[Route('/profil', name: 'app_profil')]
+    public function profil(): Response
+    {
+        $user = $this->getUser();
+        return $this->render('Front/profil.html.twig', [
+            'user' => $user,
+        ]);
+    }
+
     #[Route('/front/dons', name: 'app_dons')]
     public function dons(DonsRepository $donsRepository): Response
     {
