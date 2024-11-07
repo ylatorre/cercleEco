@@ -63,7 +63,7 @@ final class DonsController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_application_dons_show', methods: ['GET'])]
+    #[Route('/{token}', name: 'app_application_dons_show', methods: ['GET'])]
     public function show(Dons $don): Response
     {
         return $this->render('Application/dons/show.html.twig', [
@@ -71,7 +71,7 @@ final class DonsController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_application_dons_edit', methods: ['GET', 'POST'])]
+    #[Route('/{token}/edit', name: 'app_application_dons_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Dons $don, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(DonsType::class, $don);
@@ -103,11 +103,10 @@ final class DonsController extends AbstractController
 
         return $this->render('Application/dons/edit.html.twig', [
             'don' => $don,
-            'form' => $form->createView(),
         ]);
     }
 
-    #[Route('/{id}', name: 'app_application_dons_delete', methods: ['POST'])]
+    #[Route('/{token}', name: 'app_application_dons_delete', methods: ['POST'])]
     public function delete(Request $request, Dons $don, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$don->getId(), $request->getPayload()->getString('_token'))) {

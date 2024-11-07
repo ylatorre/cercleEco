@@ -3,12 +3,14 @@
 namespace App\Controller\Front;
 
 
+use App\Entity\Application\User;
 use App\Repository\Application\DonsRepository;
 use App\Entity\Application\Quests;
 use App\Repository\Application\etatRepository;
 use App\Repository\Application\QuestsRepository;
 use App\Repository\Application\DayQuestRepository;
 use App\Entity\Application\DayQuest;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -231,5 +233,28 @@ class FrontController extends AbstractController
             'responseText' => $responseText,
 
         ]);
+    }
+
+
+//Gestion xp
+
+    #[Route('/quete/ajouter-xp/{amount}', name: 'ajouter_xp')]
+
+    public function ajouterXP(int $amount, Security $security, EntityManagerInterface $entityManager): Response
+    {
+        // Récupère l'utilisateur connecté
+        $user = $security->getUser();
+        if (!$user) {
+            throw $this->createNotFoundException('Utilisateur non trouvé');
+        }
+
+        // Ajoute l'XP au total actuel de l'utilisateur
+        $user->setXpTotal( $user->getXpTotal() + $amount);
+
+        // Sauvegarde la mise à jour dans la base de données
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_quetes');
     }
 }

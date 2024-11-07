@@ -56,8 +56,9 @@ final class AjoutDonsController extends AbstractController
     }
 
     #[Route('/{token}/edit', name: 'app_application_dons_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Dons $don, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $don = $entityManager->getRepository(Dons::class)->findOneBy(['token' => $request->get('token')]);
         $form = $this->createForm(DonsType::class, $don);
         $form->handleRequest($request);
 
