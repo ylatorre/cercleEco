@@ -3,44 +3,53 @@
 {% block title %}Dons{% endblock %}
 
 {% block body %}
-    <h1>Dons</h1>
+<div class="min-h-screen bg-gray-100 flex flex-col justify-center items-center">
+    <div class="bg-white shadow-md rounded-lg p-8 max-w-4xl w-full">
+        <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">Dons</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ don.id }}</td>
-            </tr>
-            <tr>
-                <th>Titre</th>
-                <td>{{ don.titre }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ don.description }}</td>
-            </tr>
-            <tr>
-                <th>Image</th>
-                <td>{{ don.image }}</td>
-            </tr>
-            <tr>
-                <th>Localisation</th>
-                <td>{{ don.localisation }}</td>
-            </tr>
-            <tr>
-                <th>Categorie</th>
-                <td>{{ don.categorie }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ don.createdAt ? don.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+        <table class="table-auto w-full mb-6">
+            <tbody>
+                <tr class="border-b">
+                    <th class="px-4 py-2 text-left text-gray-600">Id</th>
+                    <td class="px-4 py-2">{{ don.id }}</td>
+                </tr>
+                <tr class="border-b">
+                    <th class="px-4 py-2 text-left text-gray-600">Titre</th>
+                    <td class="px-4 py-2">{{ don.titre }}</td>
+                </tr>
+                <tr class="border-b">
+                    <th class="px-4 py-2 text-left text-gray-600">Description</th>
+                    <td class="px-4 py-2">{{ don.description }}</td>
+                </tr>
+                <tr class="border-b">
+                    <th class="px-4 py-2 text-left text-gray-600">Image</th>
+                    <td class="px-4 py-2">
+                        {% if don.image %}
+                            <img src="{{ asset('images/dons/' ~ don.image) }}" alt="{{ don.titre }}" class="w-32 h-32 object-cover rounded-lg">
+                        {% else %}
+                            <span class="text-gray-500">No image</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr class="border-b">
+                    <th class="px-4 py-2 text-left text-gray-600">Localisation</th>
+                    <td class="px-4 py-2">{{ don.localisation }}</td>
+                </tr>
+                <tr class="border-b">
+                    <th class="px-4 py-2 text-left text-gray-600">CreatedAt</th>
+                    <td class="px-4 py-2">{{ don.createdAt ? don.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+            </tbody>
+        </table>
 
-    <a href="{{ path('app_application_dons_index') }}">back to list</a>
+        <div class="flex justify-between">
+            <a href="{{ path('app_application_dons_index') }}" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">Back to list</a>
+            <a href="{{ path('app_application_dons_edit', {'token': don.token}) }}" class="bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-700">Edit</a>
+        </div>
 
-    <a href="{{ path('app_application_dons_edit', {'id': don.id}) }}">edit</a>
-
-    {{ include('Application/dons/_delete_form.html.twig') }}
+        <div class="mt-4">
+            {{ include('Application/dons/_delete_form.html.twig') }}
+        </div>
+    </div>
+</div>
 {% endblock %}
