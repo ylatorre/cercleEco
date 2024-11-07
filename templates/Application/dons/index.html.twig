@@ -15,7 +15,6 @@
                 <tr>
                     <th class="py-2 px-4 bg-gray-200 text-gray-600 font-bold uppercase text-sm text-left">Titre</th>
                     <th class="py-2 px-4 bg-gray-200 text-gray-600 font-bold uppercase text-sm text-left">Localisation</th>
-                    <th class="py-2 px-4 bg-gray-200 text-gray-600 font-bold uppercase text-sm text-left">Categorie</th>
                     <th class="py-2 px-4 bg-gray-200 text-gray-600 font-bold uppercase text-sm text-left">CreatedAt</th>
                     <th class="py-2 px-4 bg-gray-200 text-gray-600 font-bold uppercase text-sm text-left">Actions</th>
                 </tr>
@@ -25,11 +24,10 @@
                 <tr class="border-b">
                     <td class="py-2 px-4">{{ don.titre }}</td>
                     <td class="py-2 px-4">{{ don.localisation }}</td>
-                    <td class="py-2 px-4">{{ don.categorie }}</td>
                     <td class="py-2 px-4">{{ don.createdAt ? don.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                     <td class="py-2 px-4">
-                        <a href="{{ path('app_application_dons_show', {'id': don.id}) }}" class="text-blue-500 hover:underline"><i class="fas fa-eye"></i></a>
-                        <a href="{{ path('app_application_dons_edit', {'id': don.id}) }}" class="text-blue-500 hover:underline ml-2"><i class="fas fa-edit"></i></a>
+                        <a href="{{ path('app_application_dons_show', {'token': don.token}) }}" class="text-blue-500 hover:underline"><i class="fas fa-eye"></i></a>
+                        <a href="{{ path('app_application_dons_edit', {'token': don.token}) }}" class="text-blue-500 hover:underline ml-2"><i class="fas fa-edit"></i></a>
                     </td>
                 </tr>
             {% else %}

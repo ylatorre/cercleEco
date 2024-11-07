@@ -24,9 +24,6 @@ class DonsType extends AbstractType
                 'label' => 'Description',
             ])
             ->add('localisation')
-            ->add('categorie', TextAreaType::class, [
-                'label' => 'Catégorie',
-            ])
             ->add('image', FileType::class, [
                 'label' => 'Image',
                 'data_class' => null,

@@ -53,11 +53,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $token = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $xpTotal = null;
+
+    /**
+     * @var Collection<int, DayQuestUser>
+     */
+    #[ORM\OneToMany(targetEntity: DayQuestUser::class, mappedBy: 'user')]
+    private Collection $dayQuestUsers;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->dons = new ArrayCollection();
         $this->token = bin2hex(random_bytes(50));
+        $this->dayQuestUsers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -209,6 +219,48 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setToken(string $token): static
     {
         $this->token = $token;
+
+        return $this;
+    }
+
+    public function getXpTotal(): ?int
+    {
+        return $this->xpTotal;
+    }
+
+    public function setXpTotal(?int $xpTotal): static
+    {
+        $this->xpTotal = $xpTotal;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DayQuestUser>
+     */
+    public function getDayQuestUsers(): Collection
+    {
+        return $this->dayQuestUsers;
+    }
+
+    public function addDayQuestUser(DayQuestUser $dayQuestUser): static
+    {
+        if (!$this->dayQuestUsers->contains($dayQuestUser)) {
+            $this->dayQuestUsers->add($dayQuestUser);
+            $dayQuestUser->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDayQuestUser(DayQuestUser $dayQuestUser): static
+    {
+        if ($this->dayQuestUsers->removeElement($dayQuestUser)) {
+            // set the owning side to null (unless already changed)
+            if ($dayQuestUser->getUser() === $this) {
+                $dayQuestUser->setUser(null);
+            }
+        }
 
         return $this;
     }
