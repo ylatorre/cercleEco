@@ -2,7 +2,6 @@
 
 namespace App\Entity\Application;
 
-use App\Entity\Test;
 use App\Repository\Application\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
