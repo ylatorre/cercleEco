@@ -147,47 +147,6 @@ class FrontController extends AbstractController
         ]);
     }
     
-    /*
-    #[Route('/quetes-journalières', name: 'app_day_quests')]
-    public function dayQuests(DayQuestRepository $dayQuestRepository): Response
-    {
-        // Appeler la méthode qui génère les quêtes journalières
-        $day_quests = $this->generateDailyQuests($dayQuestRepository);
-
-        // Rendre la vue avec les quêtes générées
-        return $this->render('Front/day_quest.html.twig', [
-            'day_quests' => $day_quests,
-        ]);
-    }
-
-    public function generateDailyQuests(DayQuestRepository $dayQuestRepository): array
-    {
-        // Récupérer toutes les quêtes puis en sélectionner 2 ou 3 aléatoirement
-        $allQuests = $dayQuestRepository->findAll();
-        $randomKeys = array_rand($allQuests, rand(3, 3));  // Sélectionner 2 ou 3 quêtes au hasard
-
-        if (!is_array($randomKeys)) {
-            $randomKeys = [$randomKeys];  // Si un seul élément est retourné, le convertir en tableau
-        }
-
-        return array_map(fn($key) => $allQuests[$key], $randomKeys);
-    }
-    */
-
-    /*
-    #[Route('/quetes-journalières', name: 'app_day_quests')]
-    public function dayQuests(DayQuestService $dayQuestService): Response
-    {
-        // Récupérer les quêtes journalières depuis le cache
-        $day_quests = $dayQuestService->getDailyQuests();
-
-        // Rendre la vue avec les quêtes générées
-        return $this->render('Front/day_quest.html.twig', [
-            'day_quests' => $day_quests,
-        ]);
-    }
-    */
-
     #[Route('/quetes-journalières', name: 'app_day_quests')]
     public function dayQuests(DayQuestService $dayQuestService, DayQuestUserRepository $dayQuestUserRepository): Response
     {
@@ -275,10 +234,6 @@ class FrontController extends AbstractController
 
         // Marquer la quête comme terminée (status = 1)
         $dayQuestUser->setEtat(1);
-
-        //$xpDayQuest = $request->request->get('xpAmount', 0);
-
-        //ajouterXP(xpDayQuest);
 
         $this->ajouterXP($quest->getXp(), $security, $entityManager);
 
