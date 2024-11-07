@@ -50,10 +50,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Dons::class, mappedBy: 'user')]
     private Collection $dons;
 
+    #[ORM\Column(length: 255)]
+    private ?string $token = null;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->dons = new ArrayCollection();
+        $this->token = bin2hex(random_bytes(50));
     }
 
     public function getId(): ?int
@@ -193,6 +197,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $don->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(string $token): static
+    {
+        $this->token = $token;
 
         return $this;
     }

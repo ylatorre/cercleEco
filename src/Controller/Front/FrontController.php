@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\Application\Etat; 
 use App\Service\ChatGPTService;
 use App\Form\ChatGPTType;
-
+use App\Repository\Application\UserRepository;
 use App\Service\DayQuestService;
 
 
@@ -45,6 +45,20 @@ class FrontController extends AbstractController
     public function dons(DonsRepository $donsRepository): Response
     {
         $dons = $donsRepository->findAll();
+        $user = $this->getUser();
+
+        return $this->render('Front/dons.html.twig', [
+            'dons' => $dons,
+            'user' => $user
+        ]);
+    }
+
+    #[Route('/front/dons/{tokenUser}', name: 'app_dons_Perso')]
+    public function donsPerso(Request $request, DonsRepository $donsRepository, UserRepository $userRepository): Response
+    {
+        $token = $request->get('tokenUser');
+        $user = $userRepository->findOneBy(['token' => $token]);
+        $dons = $donsRepository->findByuser($user);
 
         return $this->render('Front/dons.html.twig', [
             'dons' => $dons
