@@ -3,14 +3,14 @@
 {% block title %}Chat avec l'IA{% endblock %}
 
 {% block body %}
-<div class="min-h-screen bg-[#3B4419] text-[#2E3105] flex flex-col items-center">
+<div class="min-h-screen bg-[#3B4419] text-black flex flex-col items-center">
     <header class="bg-[#3B4419] w-full py-4 text-center text-3xl font-bold">
         <h1>Chat avec l'IA</h1>
     </header>
 
     <div class="max-w-4xl w-full bg-[#B8BC86] rounded-lg shadow-lg mt-10 p-6">
         {# Affichage des messages du chat #}
-        <div id="chatContent" class="h-80 overflow-y-auto p-4 bg-black text-[#2E3105] rounded-lg mb-4">
+        <div id="chatContent" class="h-80 overflow-y-auto p-4 bg-white text-black rounded-lg mb-4">
             {% if responseText %}
                 <div class="text-left mb-2">
                     <p class="text-blue-600 font-semibold">IA :</p>
@@ -20,14 +20,21 @@
         </div>
 
         {# Formulaire pour envoyer un message #}
-        {{ form_start(form) }}
-            <div class="flex space-x-4">
-                {{ form_row(form.userInput, {'attr': {'class': 'w-full p-2 border rounded-lg text-black'}}) }}
-                <button type="submit" class="bg-[#3B4419] text-white px-4 py-2 rounded-lg hover:bg-[#2E3105]">
-                    Envoyer
-                </button>
-            </div>
-        {{ form_end(form) }}
+   {{ form_start(form, { 'attr': { 'onsubmit': 'clearInput()' } }) }}
+    <div class="flex space-x-4">
+        {{ form_row(form.userInput, {'attr': {'class': 'w-full p-2 border rounded-lg text-black', 'id': 'userInput'}}) }}
+        <button type="submit" class="bg-[#3B4419] text-white px-4 py-2 rounded-lg hover:bg-[#2E3105]">
+            Envoyer
+        </button>
+    </div>
+{{ form_end(form) }}
+
+<script>
+    function clearInput() {
+        document.getElementById('userInput').value = '';
+    }
+</script>
+
     </div>
 </div>
 {% endblock %}
