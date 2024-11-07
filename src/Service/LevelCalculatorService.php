@@ -7,6 +7,6 @@ class LevelCalculatorService
     public function calculerNiveau(int $xp): int
     {
 // Formule exponentielle simplifiée pour le calcul du niveau
-        return floor(log($xp / 300) / log(1.1)) + 1;
+        return floor(log($xp / 300) / log(1.3)) + 1;
     }
 }
