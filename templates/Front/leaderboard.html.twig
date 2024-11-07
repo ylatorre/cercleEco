@@ -14,7 +14,7 @@
     {% for user in topUsers %}
     <tr>
         <td class="border px-4 py-2">{{ loop.index }}</td>
-        <td class="border px-4 py-2">{{ user.nom }}</td>
+        <td class="border px-4 py-2">{{ user.nom }}  {{ user.prenom }}</td>
         <td class="border px-4 py-2">{{ user.xpTotal }}</td>
 {#        <td class="border px-4 py-2">{{ user.level }}</td> #}{# Niveau calculé #}
     </tr>
