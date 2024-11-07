@@ -6,6 +6,13 @@
 {# <<<<<<< Updated upstream #}
 <div class="min-h-screen bg-[#3B4419]">
     <div class="max-w-7xl mx-auto px-6 py-10">
+        <div class="flex justify-end">
+            <a href="#" class="flex items-center bg-[#DFE777] text-[#3B4419] p-2 rounded-full hover:bg-[#B8BC86] transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+            </a>
+        </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div class="bg-[#DFE777] p-6 rounded-lg flex flex-col items-center text-center text-[#3B4419]">
                 {% if don.image %}
@@ -29,7 +36,7 @@
         {# </div> #}
 
         <!-- Product Details Section - Placed on the Left -->
-        <div class="w-full md:w-1/2 bg-[#DFE777] p-10 rounded-lg text-[#3B4419]">
+        <div class="w-full bg-[#DFE777] p-10 rounded-lg text-[#3B4419]">
             <h1 class="text-4xl font-serif mb-6">{{ don.titre }}</h1>
             <p class="text-lg mb-8">{{ don.description }}</p>
 
