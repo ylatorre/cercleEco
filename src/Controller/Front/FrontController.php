@@ -7,7 +7,10 @@ use App\Repository\Application\DonsRepository;
 use App\Entity\Application\Quests;
 use App\Repository\Application\etatRepository;
 use App\Repository\Application\QuestsRepository;
+use App\Repository\Application\DayQuestRepository;
+use App\Entity\Application\DayQuest;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,6 +18,8 @@ use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\Application\Etat; 
 use App\Service\ChatGPTService;
 use App\Form\ChatGPTType;
+
+use App\Service\DayQuestService;
 
 
 class FrontController extends AbstractController
@@ -28,10 +33,11 @@ class FrontController extends AbstractController
     }
 
     #[Route('/', name: 'app_front')]
-    public function index(): Response
+    public function index(QuestsRepository $questsRepository): Response
     {
+        $quests = $questsRepository->findAll();
         return $this->render('Front/index.html.twig', [
-
+            'quests' => $quests,
         ]);
     }
 
@@ -114,14 +120,46 @@ class FrontController extends AbstractController
 
         ]);
     }
-
+    
+    /*
     #[Route('/quetes-journalières', name: 'app_day_quests')]
-    public function day_quests(): Response
+    public function dayQuests(DayQuestRepository $dayQuestRepository): Response
     {
-        return $this->render('Front/day_quest.html.twig', [
+        // Appeler la méthode qui génère les quêtes journalières
+        $day_quests = $this->generateDailyQuests($dayQuestRepository);
 
+        // Rendre la vue avec les quêtes générées
+        return $this->render('Front/day_quest.html.twig', [
+            'day_quests' => $day_quests,
         ]);
     }
+
+    public function generateDailyQuests(DayQuestRepository $dayQuestRepository): array
+    {
+        // Récupérer toutes les quêtes puis en sélectionner 2 ou 3 aléatoirement
+        $allQuests = $dayQuestRepository->findAll();
+        $randomKeys = array_rand($allQuests, rand(3, 3));  // Sélectionner 2 ou 3 quêtes au hasard
+
+        if (!is_array($randomKeys)) {
+            $randomKeys = [$randomKeys];  // Si un seul élément est retourné, le convertir en tableau
+        }
+
+        return array_map(fn($key) => $allQuests[$key], $randomKeys);
+    }
+    */
+
+    #[Route('/quetes-journalières', name: 'app_day_quests')]
+    public function dayQuests(DayQuestService $dayQuestService): Response
+    {
+        // Récupérer les quêtes journalières depuis le cache
+        $day_quests = $dayQuestService->getDailyQuests();
+
+        // Rendre la vue avec les quêtes générées
+        return $this->render('Front/day_quest.html.twig', [
+            'day_quests' => $day_quests,
+        ]);
+    }
+
 
     #[Route('/chatAi', name: 'app_chatAi')]
     public function chatAi(Request $request): Response
@@ -130,12 +168,8 @@ class FrontController extends AbstractController
         $form->handleRequest($request);               
         $responseText = '';          
         if ($form->isSubmitted() && $form->isValid()) {
-            // Récupère les données du formulaire sous forme de tableau.
             $data = $form->getData();
-            // Récupère la valeur du champ 'userInput', soit la question de l'utilisateur.
             $userInput = $data['userInput'];
-            // Appelle le service ChatGPTService pour générer une réponse à partir de l'entrée utilisateur.
-            // La réponse générée est stockée dans la variable $responseText.
             $responseText = $this->chatGPTService->generateResponse($userInput);
         }                 
         return $this->render('Front/chatAi.html.twig', [

@@ -17,7 +17,7 @@ final class DayQuestController extends AbstractController
     #[Route(name: 'app_application_day_quest_index', methods: ['GET'])]
     public function index(DayQuestRepository $dayQuestRepository): Response
     {
-        return $this->render('application/day_quest/index.html.twig', [
+        return $this->render('Application/day_quest/index.html.twig', [
             'day_quests' => $dayQuestRepository->findAll(),
         ]);
     }
@@ -36,7 +36,7 @@ final class DayQuestController extends AbstractController
             return $this->redirectToRoute('app_application_day_quest_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('application/day_quest/new.html.twig', [
+        return $this->render('Application/day_quest/new.html.twig', [
             'day_quest' => $dayQuest,
             'form' => $form,
         ]);
@@ -45,7 +45,7 @@ final class DayQuestController extends AbstractController
     #[Route('/{id}', name: 'app_application_day_quest_show', methods: ['GET'])]
     public function show(DayQuest $dayQuest): Response
     {
-        return $this->render('application/day_quest/show.html.twig', [
+        return $this->render('Application/day_quest/show.html.twig', [
             'day_quest' => $dayQuest,
         ]);
     }
@@ -62,7 +62,7 @@ final class DayQuestController extends AbstractController
             return $this->redirectToRoute('app_application_day_quest_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('application/day_quest/edit.html.twig', [
+        return $this->render('Application/day_quest/edit.html.twig', [
             'day_quest' => $dayQuest,
             'form' => $form,
         ]);

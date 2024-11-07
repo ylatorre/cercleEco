@@ -28,7 +28,7 @@ class DayQuest
 
     public function __construct()
     {
-        $this->createdAt = new \DateTimeImmutable();
+        $this->date_de_creation = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
