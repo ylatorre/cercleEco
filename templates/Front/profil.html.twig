@@ -1,11 +1,58 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Greenify - Profil{% endblock %}
+{% block title %}Profil de l'Utilisateur{% endblock %}
 
 {% block body %}
+<main class="max-w-4xl mx-auto px-6 py-10">
+    
+    <!-- Profile Header with Image and Details -->
+    <div class="flex items-center space-x-8 mb-10 p-8 bg-gradient-to-r from-[#3B4419] to-[#6B8F23] text-white rounded-lg shadow-xl">
+        
+        <!-- Profile Image Placeholder -->
+        <div class="h-28 w-28 rounded-full bg-gray-200 flex items-center justify-center text-[#3B4419] text-4xl font-bold shadow-md">
+            {{ app.user.nom }}{{ app.user.prenom}}
+        </div>
 
+        <!-- Profile Details -->
+        <div>
+            <h1 class="text-4xl font-semibold">{{ app.user.nom }} {{ app.user.prenom }}</h1>
+            <p class="text-lg font-light">{{ app.user.email }}</p>
+            <p class="text-sm text-gray-300 mt-2">Membre depuis le {{ app.user.createdAt }}</p>
+        </div>
+    </div>
 
-{% endblock %}
-{% block javascripts %}
+    <!-- Profile Actions with Gradient Buttons -->
+    <div class="flex justify-end space-x-4 mb-8">
+        <a href="{{ path('app_application_user_edit', {'id': app.user.id}) }}" 
+           class="px-5 py-3 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white rounded-full hover:from-yellow-500 hover:to-yellow-600 transition duration-200 shadow-md">
+            Modifier Profil
+        </a>
+        <form method="post" action="{{ path('app_application_user_delete', {'id': app.user.id}) }}" 
+              onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce profil ?');" class="inline">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ app.user.id) }}" />
+            <button type="submit" class="px-5 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-full hover:from-red-600 hover:to-red-700 transition duration-200 shadow-md">
+                Supprimer Profil
+            </button>
+        </form>
+    </div>
 
+    <!-- Additional Information Section with Stylish Layout -->
+    <div class="bg-white shadow-lg rounded-lg p-8">
+        <h2 class="text-3xl font-semibold text-[#3B4419] mb-6 border-b-2 border-[#3B4419] pb-2">Informations Personnelles</h2>
+        <ul class="space-y-4 text-gray-800">
+            <li class="flex justify-between items-center border-b pb-4">
+                <span class="font-medium">Adresse :</span>
+                <span>{{ app.user.adresse }}</span>
+            </li>
+            <li class="flex justify-between items-center border-b pb-4">
+                <span class="font-medium">Téléphone :</span>
+                <span>{{ app.user.telephone }}</span>
+            </li>
+            {# <li class="flex justify-between items-center"> #}
+                {# <span class="font-medium">Date de Naissance :</span> #}
+                {# <span>{{ app.user.dateNaissance }}</span> #}
+            </li>
+        </ul>
+    </div>
+</main>
 {% endblock %}
