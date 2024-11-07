@@ -6,14 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="477e4efb-cf15-41ff-bafa-b53b2c44fad9" name="Changes" comment="QuestController.php">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Application/QuestsController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Application/Quests.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Application/Quests.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/Application/quests/_delete_form.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/Application/quests/_form.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/Application/quests/edit.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/Application/quests/index.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/Application/quests/new.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/Application/quests/show.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Front/FrontController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Front/FrontController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Application/etat.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Application/etat.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,6 +62,16 @@
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/ylatorre/cercleEco.git&quot;,
     &quot;accountId&quot;: &quot;f76a737c-212f-4733-9ab0-080ed9447504&quot;
+  },
+  &quot;recentNewPullRequestHead&quot;: {
+    &quot;server&quot;: {
+      &quot;useHttp&quot;: false,
+      &quot;host&quot;: &quot;github.com&quot;,
+      &quot;port&quot;: null,
+      &quot;suffix&quot;: null
+    },
+    &quot;owner&quot;: &quot;ylatorre&quot;,
+    &quot;repository&quot;: &quot;cercleEco&quot;
   }
 }</component>
   <component name="PackageJsonUpdateNotifier">

@@ -14,7 +14,6 @@
 			<table class="min-w-full bg-white">
 				<thead>
 					<tr>
-						<th class="py-2 px-4 bg-gray-200 text-gray-600 font-bold uppercase text-sm text-left">Id</th>
 						<th class="py-2 px-4 bg-gray-200 text-gray-600 font-bold uppercase text-sm text-left">Titre</th>
 						<th class="py-2 px-4 bg-gray-200 text-gray-600 font-bold uppercase text-sm text-left">Description</th>
 						<th class="py-2 px-4 bg-gray-200 text-gray-600 font-bold uppercase text-sm text-left">Xp</th>
@@ -25,11 +24,10 @@
 				<tbody>
 					{% for d in day_quests %}
 						<tr class="border-b">
-							<td class="py-2 px-4">{{ d.id }}</td>
 							<td class="py-2 px-4">{{ d.titre }}</td>
 							<td class="py-2 px-4">{{ d.description }}</td>
 							<td class="py-2 px-4">{{ d.xp }}</td>
-							<td class="py-2 px-4">{{ d.dateDeCreation ? d.dateDeCreation|date('Y-m-d H:i:s') : '' }}</td>
+							<td class="py-2 px-4">{{ d.dateDeCreation ? d.dateDeCreation|date('Y-m-d') : '' }}</td>
 							<td class="py-2 px-4">
 								<a href="{{ path('app_application_day_quest_show', {'id': d.id}) }}" class="text-blue-500 hover:underline">
 									<i class="fas fa-eye"></i>

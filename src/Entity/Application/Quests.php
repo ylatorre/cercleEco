@@ -210,12 +210,12 @@ class Quests
         return $this;
     }
 
-    public function getXpGive(): ?int
+    public function getXpGive(): ?float
     {
         return $this->xp_give;
     }
 
-    public function setXpGive(int $xp_give): static
+    public function setXpGive(float $xp_give): static
     {
         $this->xp_give = $xp_give;
 
