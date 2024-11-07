@@ -19,7 +19,6 @@ use App\Entity\Application\Etat;
 use App\Service\ChatGPTService;
 use App\Form\ChatGPTType;
 
-
 use App\Service\DayQuestService;
 
 
