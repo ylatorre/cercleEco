@@ -16,6 +16,20 @@ class DayQuestUserRepository extends ServiceEntityRepository
         parent::__construct($registry, DayQuestUser::class);
     }
 
+    public function isQuestCompletedByUser($userId, $questId): bool
+    {
+        $result = $this->createQueryBuilder('dqu')
+            ->where('dqu.user = :userId')
+            ->andWhere('dqu.dayQuest = :questId')
+            ->setParameter('userId', $userId)
+            ->setParameter('questId', $questId)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        // Retourner true si la quête est marquée comme terminée, sinon false
+        return $result !== null && $result->getEtat() === 1;
+    }
+
     //    /**
     //     * @return DayQuestUser[] Returns an array of DayQuestUser objects
     //     */

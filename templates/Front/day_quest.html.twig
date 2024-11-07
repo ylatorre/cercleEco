@@ -10,14 +10,18 @@
 			<div class="day-quest-item">
 				<h2>{{ d.titre }}</h2>
 				<p>{{ d.description }}</p>
-				<p>XP Gagnée :
+				<p>XP Gagnée:
 					{{ d.xp }}</p>
-				<a href="{{ path('app_quetes_show', {'id': d.id}) }}" class="btn btn-primary">Voir Détails</a>
-				<a href="{{ path('ajouter_xp', { 'amount': d.xp }) }}" class="btn btn-primary">Ajouter 50 XP</a>
 
+				{% if not d.isCompleted %}
+					<form action="{{ path('app_day_quest_complete', {'questId': d.id}) }}" method="POST">
+						<input type="hidden" name="xpAmount" value="{{ d.xp }}">
+						<button type="submit" class="btn btn-primary">Finir la quête</button>
+					</form>
+				{% else %}
+					<p>Cette quête est déjà terminée.</p>
+				{% endif %}
 			</div>
-		{% else %}
-			<p>Aucune quête disponible pour le moment.</p>
 		{% endfor %}
 	</div>
 {% endblock %}

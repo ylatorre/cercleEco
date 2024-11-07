@@ -23,16 +23,17 @@ use App\Form\ChatGPTType;
 use App\Repository\Application\UserRepository;
 use App\Service\DayQuestService;
 use App\Repository\Application\DayQuestUserRepository;
-
+use App\Entity\Application\DayQuestUser;
 
 class FrontController extends AbstractController
 {
     private $chatGPTService;
+    private EntityManagerInterface $entityManager;
 
-    public function __construct(private Security $security,ChatGPTService $chatGPTService)
+    public function __construct(Security $security, ChatGPTService $chatGPTService, EntityManagerInterface $entityManager)
     {
         $this->chatGPTService = $chatGPTService;
-
+        $this->entityManager = $entityManager;
     }
 
     #[Route('/', name: 'app_front')]
@@ -171,6 +172,7 @@ class FrontController extends AbstractController
     }
     */
 
+    /*
     #[Route('/quetes-journalières', name: 'app_day_quests')]
     public function dayQuests(DayQuestService $dayQuestService): Response
     {
@@ -182,10 +184,35 @@ class FrontController extends AbstractController
             'day_quests' => $day_quests,
         ]);
     }
+    */
 
-    /**
-     * @Route("/day-quest/{id}/complete", name="app_complete_quest", methods={"POST"})
-     */
+    #[Route('/quetes-journalières', name: 'app_day_quests')]
+    public function dayQuests(DayQuestService $dayQuestService, DayQuestUserRepository $dayQuestUserRepository): Response
+    {
+        // Récupérer les quêtes journalières depuis le cache
+        $day_quests = $dayQuestService->getDailyQuests();
+
+        // Récupérer l'utilisateur actuel
+        $user = $this->getUser();
+
+        // Vérifier si chaque quête est complétée par l'utilisateur
+        foreach ($day_quests as $quest) {
+            $dayQuestUser = $dayQuestUserRepository->findOneBy([
+                'user' => $user,
+                'dayQuest' => $quest,
+            ]);
+
+            // Ajouter un champ 'isCompleted' à chaque quête pour vérifier son statut
+            $quest->isCompleted = $dayQuestUser ? $dayQuestUser->getEtat() === 1 : false;
+        }
+
+        // Rendre la vue avec les quêtes générées
+        return $this->render('Front/day_quest.html.twig', [
+            'day_quests' => $day_quests,
+        ]);
+    }
+
+    #[Route('/day-quest/{id}/complete', name: 'app_complete_quest', methods: ['POST'])]
     public function completeQuest(
         int $id,
         DayQuestRepository $dayQuestRepository,
@@ -217,6 +244,54 @@ class FrontController extends AbstractController
         return $this->redirectToRoute('app_day_quests');
     }
 
+
+    #[Route('/marquer-quete/{questId}/terminee', name: 'app_day_quest_complete', methods: ['GET', 'POST'])]
+    public function dayQuestCompleted(
+        $questId,
+        DayQuestRepository $dayQuestRepository,
+        DayQuestUserRepository $dayQuestUserRepository,
+        Security $security,
+        EntityManagerInterface $entityManager,
+        Request $request
+    ): Response {
+        $user = $this->getUser();
+        $quest = $dayQuestRepository->find($questId);
+        
+        if (!$quest) {
+            throw $this->createNotFoundException('La quête n\'existe pas.');
+        }
+
+        // Vérifier si l'utilisateur a déjà effectué cette quête
+        $dayQuestUser = $dayQuestUserRepository->findOneBy([
+            'user' => $user,
+            'dayQuest' => $quest,
+        ]);
+
+        if (!$dayQuestUser) {
+            throw $this->createNotFoundException('Cette quête n\'a pas été assignée à cet utilisateur.');
+        }
+
+        // Marquer la quête comme terminée (status = 1)
+        $dayQuestUser->setEtat(1);
+
+        //$xpDayQuest = $request->request->get('xpAmount', 0);
+
+        //ajouterXP(xpDayQuest);
+
+        $this->ajouterXP($quest->getXp(), $security, $entityManager);
+
+
+        // Sauvegarder les modifications
+        $entityManager->persist($dayQuestUser);
+        $entityManager->flush();
+
+        // Message flash pour indiquer que la quête a été complétée
+        $this->addFlash('success', 'La quête a été complétée avec succès !');
+
+        // Rediriger vers la page des quêtes ou une autre page
+        return $this->redirectToRoute('app_day_quests'); // Ou toute autre page de votre choix
+    }
+
     #[Route('/chatAi', name: 'app_chatAi')]
     public function chatAi(Request $request): Response
     {
@@ -234,7 +309,6 @@ class FrontController extends AbstractController
 
         ]);
     }
-
 
 //Gestion xp
 
