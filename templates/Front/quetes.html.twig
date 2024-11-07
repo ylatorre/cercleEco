@@ -3,19 +3,43 @@
 {% block title %}Quêtes disponibles{% endblock %}
 
 {% block body %}
-<div class="min-h-screen bg-[#B8BC86]">
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch('/levelUser')
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data); // Vérifiez le retour dans la console
+                    // Mettre à jour les informations de niveau et d'XP
+                    document.getElementById("niveau").innerText = 'Niveau ' + data.niveau;
+                    document.getElementById("xpProgress").innerText = data.xpTotal + ' / ' + data.xpSeuil + ' XP';
+
+                    // Calculer le pourcentage de progression et ajuster la largeur de la barre
+                    const progressPercentage = (data.xpTotal / data.xpSeuil) * 100;
+                    document.getElementById("progressBar").style.width = progressPercentage + '%';
+                })
+                .catch(error => {
+                    console.error('Erreur lors de la récupération des données de niveau:', error);
+                });
+        });
+    </script>
+
+    <div class="min-h-screen bg-[#B8BC86]">
     {# {/* Main Content */} #}
     <main class="max-w-7xl mx-auto px-6 py-8">
         {# {/* Level Bar */} #}
         <div class="bg-[#3B4419] rounded-full p-4 mb-8 flex items-center justify-between">
-            <div class="text-white">Niveau 69</div>
+            <div class="text-white" id="niveau">Niveau</div>
             <div class="flex items-center space-x-4">
-                <div class="text-white">12345 / 17000 XP</div>
+                <div class="text-white" id="xpProgress">0 / 0 XP</div>
+                <div class="w-64 h-2 bg-gray-300 rounded-full overflow-hidden">
+                    <div id="progressBar" class="h-full bg-yellow-400 rounded-full" style="width: 0%;"></div>
+                </div>
                 <svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
                 </svg>
             </div>
         </div>
+
 
         <h1 class="text-4xl font-serif text-[#3B4419]  mb-8">Quêtes disponibles</h1>
 
