@@ -20,6 +20,7 @@ use App\Service\ChatGPTService;
 use App\Form\ChatGPTType;
 use App\Repository\Application\UserRepository;
 use App\Service\DayQuestService;
+use App\Repository\Application\DayQuestUserRepository;
 
 
 class FrontController extends AbstractController
@@ -180,6 +181,39 @@ class FrontController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/day-quest/{id}/complete", name="app_complete_quest", methods={"POST"})
+     */
+    public function completeQuest(
+        int $id,
+        DayQuestRepository $dayQuestRepository,
+        DayQuestUserRepository $dayQuestUserRepository,
+        EntityManagerInterface $entityManager
+    ): RedirectResponse {
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour terminer une quête.');
+        }
+
+        $dayQuest = $dayQuestRepository->find($id);
+        if (!$dayQuest) {
+            throw $this->createNotFoundException('Quête introuvable.');
+        }
+
+        $dayQuestUser = $dayQuestUserRepository->findOneBy(['user' => $user, 'dayQuest' => $dayQuest]);
+        if (!$dayQuestUser) {
+            $dayQuestUser = new DayQuestUser();
+            $dayQuestUser->setUser($user);
+            $dayQuestUser->setDayQuest($dayQuest);
+        }
+
+        $dayQuestUser->setEtat(1); // Marquer comme terminée
+        $entityManager->persist($dayQuestUser);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'La quête a été marquée comme terminée.');
+        return $this->redirectToRoute('app_day_quests');
+    }
 
     #[Route('/chatAi', name: 'app_chatAi')]
     public function chatAi(Request $request): Response

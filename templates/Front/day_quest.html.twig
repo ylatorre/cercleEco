@@ -13,6 +13,7 @@
 				<p>XP Gagnée :
 					{{ d.xp }}</p>
 				<a href="{{ path('app_quetes_show', {'id': d.id}) }}" class="btn btn-primary">Voir Détails</a>
+				<a href="{{ path('ajouter_xp', { 'amount': d.xp }) }}" class="btn btn-primary">Ajouter 50 XP</a>
 
 			</div>
 		{% else %}
@@ -20,5 +21,4 @@
 		{% endfor %}
 	</div>
 {% endblock %}
-
 {#    {% include 'Components/footer.html.twig' %}#}

@@ -9,33 +9,7 @@ use Symfony\Contracts\Cache\CacheInterface;
 
 use Psr\Cache\CacheItemPoolInterface;
 
-/*
-class DayQuestService
-{
-    private DayQuestRepository $dayQuestRepository;
 
-    public function __construct(DayQuestRepository $dayQuestRepository)
-    {
-        $this->dayQuestRepository = $dayQuestRepository;
-    }
-
-    public function generateDailyQuests(): array
-    {
-        // Récupérer toutes les quêtes puis en sélectionner 2 ou 3 aléatoirement
-        $allQuests = $this->dayQuestRepository->findAll();
-        $randomKeys = array_rand($allQuests, 3);
-
-        if (!is_array($randomKeys)) {
-            $randomKeys = [$randomKeys];
-        }
-
-        return array_map(fn($key) => $allQuests[$key], $randomKeys);
-    }
-}
-*/
-
-
-//Utilisable actuellement avec le changement en vidant le cache
 
 class DayQuestService
 {
