@@ -19,7 +19,7 @@ final class DonsController extends AbstractController
     #[Route(name: 'app_application_dons_index', methods: ['GET'])]
     public function index(DonsRepository $donsRepository): Response
     {
-        return $this->render('application/dons/index.html.twig', [
+        return $this->render('Application/dons/index.html.twig', [
             'dons' => $donsRepository->findAll(),
         ]);
     }
@@ -57,7 +57,7 @@ final class DonsController extends AbstractController
             return $this->redirectToRoute('app_application_dons_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('application/dons/new.html.twig', [
+        return $this->render('Application/dons/new.html.twig', [
             'don' => $don,
             'form' => $form->createView(),
         ]);
@@ -66,7 +66,7 @@ final class DonsController extends AbstractController
     #[Route('/{id}', name: 'app_application_dons_show', methods: ['GET'])]
     public function show(Dons $don): Response
     {
-        return $this->render('application/dons/show.html.twig', [
+        return $this->render('Application/dons/show.html.twig', [
             'don' => $don,
         ]);
     }
@@ -101,7 +101,7 @@ final class DonsController extends AbstractController
             return $this->redirectToRoute('app_application_dons_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('application/dons/edit.html.twig', [
+        return $this->render('Application/dons/edit.html.twig', [
             'don' => $don,
             'form' => $form->createView(),
         ]);
