@@ -45,21 +45,30 @@
                 <span class="block font-semibold">{{app.user.nom}}</span>
                 <span class="block text-sm">{{app.user.prenom}}</span>
 {#                niveau user#}
-                {% set xp = app.user.xpTotal %}
-                {% set level = 1 %}
-                {% set xpThreshold = 100 %}
 
-                {% for i in 1..100 %}
-                    {% if xp >= xpThreshold %}
-                        {% set level = i %}
-                        {% set xpThreshold = 100 * (1.1 ** level) %}
-                    {% else %}
-                        {% break %}
-                    {% endif %}
-                {% endfor %}
 
-                <span class="block text-sm">Niveau : {{ level }}</span>
+                <span class="block text-sm"></span>
+{#                include page xpcalcul.twig.php #}
 
+                <script>
+                    // Attendre que le DOM soit entièrement chargé
+                    document.addEventListener("DOMContentLoaded", function() {
+                        // Faire un appel GET à la route /levelUser
+                        fetch('/levelUser')
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log(data); // Vous pouvez vérifier ce que vous obtenez dans la console
+                                // Récupérer l'élément <p> et mettre à jour son contenu avec le niveau
+                                document.getElementById("niveauDisplay").innerText = 'Niveau : ' + data.niveau;
+                            })
+                            .catch(error => {
+                                console.error('Erreur lors de la récupération du niveau:', error);
+                            });
+                    });
+                </script>
+
+                <!-- Votre paragraphe où le niveau sera affiché -->
+                <p id="niveauDisplay">Chargement du niveau...</p>
 
 
 
@@ -92,7 +101,6 @@
     </body>
 
 
-{# templates/components/_footer.html.twig #}
 <footer class="bg-[#2E3105] text-white px-6 py-12">
     <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
         {# Logo Section #}

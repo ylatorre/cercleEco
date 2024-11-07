@@ -10,6 +10,7 @@ use App\Repository\Application\etatRepository;
 use App\Repository\Application\QuestsRepository;
 use App\Repository\Application\DayQuestRepository;
 use App\Entity\Application\DayQuest;
+use App\Service\LevelCalculatorService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
@@ -27,10 +28,14 @@ use App\Service\DayQuestService;
 class FrontController extends AbstractController
 {
     private $chatGPTService;
+    private $levelCalculator;
 
-    public function __construct(private Security $security,ChatGPTService $chatGPTService)
+    // Injection du service LevelCalculatorService
+    public function __construct(private Security $security,ChatGPTService $chatGPTService,LevelCalculatorService $levelCalculator)
     {
         $this->chatGPTService = $chatGPTService;
+
+        $this->levelCalculator = $levelCalculator;
 
     }
 
@@ -223,4 +228,27 @@ class FrontController extends AbstractController
 
         return $this->redirectToRoute('app_quetes');
     }
+
+//    #[Route('/levelUser', name: 'app_application_user_show_level', methods: ['GET'])]
+//    public function getLevel(): Response
+//    {
+//        $user = $this->getUser();
+//        $niveau = $this->levelCalculator->calculerNiveau($user->getXpTotal());
+//
+//        return $this->render('Components/xpcalcul.html.twig', [
+//            'niveau' => $niveau,
+//        ]);
+//    }
+    #[Route('/levelUser', name: 'app_application_user_show_level', methods: ['GET'])]
+    public function getLevel(): Response
+    {
+        $user = $this->getUser();
+        $niveau = $this->levelCalculator->calculerNiveau($user->getXpTotal());
+
+        // Retourne les données sous forme de JSON, incluant le niveau
+        return $this->json([
+            'niveau' => $niveau
+        ]);
+    }
+
 }
