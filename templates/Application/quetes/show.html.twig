@@ -13,9 +13,6 @@
             <a href="{{ path('app_application_quetes_index') }}" class="block py-2 px-4 rounded hover:bg-[#4B5429] transition-colors">
                 Gestion des Quêtes
             </a>
-            <a href="{{ path('app_application_day_quest_index') }}" class="block py-2 px-4 rounded hover:bg-[#4B5429] transition-colors">
-                Gestion des Quêtes journalières
-            </a>
             <a href="{{ path('app_application_dons_index') }}" class="block py-2 px-4 rounded hover:bg-[#4B5429] transition-colors">
                 Gestion des Dons
             </a>
@@ -60,9 +57,9 @@
                             <th class="px-4 py-2 text-left text-white">Xp</th>
                             <td class="px-4 py-2 text-white">{{ quete.xp }}</td>
                         </tr>
-                        {% for r in reponses %}
+                        {% for k,r in reponses %}
                             <tr class="border-b border-[#4B5429]">
-                                <th class="px-4 py-2 text-left text-white">Reponse1</th>
+                                <th class="px-4 py-2 text-left text-white">Reponse {{k +1}}</th>
                                 <td class="px-4 py-2 text-white">{{ r.titre }}</td>
                             </tr>
                             <tr class="border-b border-[#4B5429]">
