@@ -7,20 +7,36 @@
     {# Sidebar #}
     <aside class="w-64 bg-[#3B4419] text-white p-6">
         <div class="mb-12">
+        <h1 class="text-2xl font-serif mb-4">
             <img src="{{ asset('image/logo.png') }}" alt="Greenify Logo" class="inline-block" style="height: 8rem;">
+        </h1>
         </div>
+        <nav class="space-y-4">
+            <a href="{{ path('app_application_quetes_index') }}" class="block py-2 px-4 rounded hover:bg-[#4B5429] transition-colors">
+                Gestion des Quêtes
+            </a>
+            <a href="{{ path('app_application_day_quest_index') }}" class="block py-2 px-4 rounded hover:bg-[#4B5429] transition-colors">
+                Gestion des Quêtes journalières
+            </a>
+            <a href="{{ path('app_application_dons_index') }}" class="block py-2 px-4 rounded hover:bg-[#4B5429] transition-colors">
+                Gestion des Dons
+            </a>
+            <a href="{{ path('app_application_user_index') }}" class="block py-2 px-4 rounded bg-[#4B5429] transition-colors">
+                Gestion des Utilisateurs
+            </a>
+        </nav>
     </aside>
 
     {# Main Content #}
     <main class="flex-1 p-8">
-        <div class="flex justify-between items-center mb-8">
-            <h2 class="text-xl text-[#3B4419]">Bonjour {{ app.user.prenom }}</h2>
-        </div>
 
         <div class="mb-8">
             <h1 class="text-4xl font-serif text-[#3B4419] mb-8">User</h1>
 
             <div class="bg-[#3B4419] rounded-2xl overflow-hidden p-8">
+                <div class="flex justify-between mb-4">
+                    <a href="{{ path('app_application_user_index') }}" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">Retour</a> 
+                </div>
                 <table class="table-auto w-full mb-6">
                     <tbody>
                         <tr class="border-b border-[#4B5429]">
@@ -53,11 +69,6 @@
                         </tr>
                     </tbody>
                 </table>
-
-                <div class="flex justify-between">
-                    <a href="{{ path('app_application_user_index') }}" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">Back to list</a> 
-                    <a href="{{ path('app_application_user_edit', {'id': user.id}) }}" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">Edit</a>
-                </div>
 
                 <div class="mt-4">
                     {{ include('Application/user/_delete_form.html.twig') }}

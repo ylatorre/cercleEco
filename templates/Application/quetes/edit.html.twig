@@ -9,20 +9,33 @@
         <div class="mb-12">
             <img src="{{ asset('image/logo.png') }}" alt="Greenify Logo" class="inline-block" style="height: 8rem;">
         </div>
+        <nav class="space-y-4">
+            <a href="{{ path('app_application_quetes_index') }}" class="block py-2 px-4 rounded hover:bg-[#4B5429] transition-colors">
+                Gestion des Quêtes
+            </a>
+            <a href="{{ path('app_application_day_quest_index') }}" class="block py-2 px-4 rounded hover:bg-[#4B5429] transition-colors">
+                Gestion des Quêtes journalières
+            </a>
+            <a href="{{ path('app_application_dons_index') }}" class="block py-2 px-4 rounded hover:bg-[#4B5429] transition-colors">
+                Gestion des Dons
+            </a>
+            <a href="{{ path('app_application_user_index') }}" class="block py-2 px-4 rounded hover:bg-[#4B5429] transition-colors">
+                Gestion des Utilisateurs
+            </a>
+        </nav>
     </aside>
 
     {# Main Content #}
     <main class="flex-1 p-8">
-        <div class="flex justify-between items-center mb-8">
-            <h2 class="text-xl text-[#3B4419]">Bonjour {{ app.user.prenom }}</h2>
-        </div>
 
         <div class="mb-8">
-            <h1 class="text-4xl font-serif text-[#3B4419] mb-8">Modifier Quête</h1>
+            <h1 class="text-4xl font-serif text-[#3B4419] mb-8">Modifier votre quête</h1>
 
             <div class="bg-[#3B4419] rounded-2xl overflow-hidden p-8">
-                <div class="mt-4 mb-4">
-                    {{ include('application/quetes/_delete_form.html.twig') }}
+                <div class="flex justify-between mb-4">
+                    <div class="mt-4 mb-4">
+                        {{ include('application/quetes/_delete_form.html.twig') }}
+                    </div>
                 </div>
                 {{ form_start(form, {'attr': {'class': 'space-y-6'}}) }}
                     <div>
@@ -51,27 +64,26 @@
 
                     <div id="dynamic-fields" class="mt-4 space-y-4">
                         {% for k,reponse in reponses %}
+                            <input type="hidden" name="reponsesOld[{{ k }}][id]" value="{{ reponse.id }}">
                             <div>
                                 <label class="block text-sm font-medium text-white">Titre</label>
-                                <input type="text" name="reponses[{{ k }}][titre]" value="{{ reponse.titre }}" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                <input type="text" name="reponsesOld[{{ k }}][titre]" value="{{ reponse.titre }}" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-white">Is Good Reponse</label>
-                                <select name="reponses[{{ k }}][isGoodQuestion]" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                <select name="reponsesOld[{{ k }}][isGoodQuestion]" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                     <option value="yes" {% if reponse.isGoodQuestion %}selected{% endif %}>Yes</option>
                                     <option value="no" {% if not reponse.isGoodQuestion %}selected{% endif %}>No</option>
                                 </select>
                             </div>
                         {% endfor %}
                     </div><br>
-
                     <button type="button" id="add-field" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700">+</button><br>
-
                     <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">{{ button_label|default('Sauvegarder') }}</button>
                 {{ form_end(form) }}
 
                 <div class="mt-4">
-                    <a href="{{ path('app_application_quetes_index') }}" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">Back to list</a>
+                    <a href="{{ path('app_application_quetes_index') }}" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">Retour</a>
                 </div>
             </div>
         </div>
