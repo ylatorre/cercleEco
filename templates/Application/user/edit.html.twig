@@ -1,27 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User{% endblock %}
+{% block title %}Edit User{% endblock %}
 
 {% block body %}
 <div class="flex min-h-screen bg-[#B8BC86]">
     {# Sidebar #}
     <aside class="w-64 bg-[#3B4419] text-white p-6">
         <div class="mb-12">
-        <h1 class="text-2xl font-serif mb-4">
             <img src="{{ asset('image/logo.png') }}" alt="Greenify Logo" class="inline-block" style="height: 8rem;">
-        </h1>
         </div>
         <nav class="space-y-4">
             <a href="{{ path('app_application_quetes_index') }}" class="block py-2 px-4 rounded hover:bg-[#4B5429] transition-colors">
                 Gestion des Quêtes
             </a>
-            <a href="{{ path('app_application_day_quest_index') }}" class="block py-2 px-4 rounded hover:bg-[#4B5429] transition-colors">
-                Gestion des Quêtes journalières
-            </a>
             <a href="{{ path('app_application_dons_index') }}" class="block py-2 px-4 rounded hover:bg-[#4B5429] transition-colors">
                 Gestion des Dons
             </a>
-            <a href="{{ path('app_application_user_index') }}" class="block py-2 px-4 rounded bg-[#4B5429] transition-colors">
+            <a href="{{ path('app_application_user_index') }}" class="block py-2 px-4 rounded hover:bg-[#4B5429] transition-colors">
                 Gestion des Utilisateurs
             </a>
         </nav>
@@ -31,47 +26,44 @@
     <main class="flex-1 p-8">
 
         <div class="mb-8">
-            <h1 class="text-4xl font-serif text-[#3B4419] mb-8">User</h1>
+            <h1 class="text-4xl font-serif text-[#3B4419] mb-8">Modifier l'utilisateur</h1>
 
             <div class="bg-[#3B4419] rounded-2xl overflow-hidden p-8">
                 <div class="flex justify-between mb-4">
-                    <a href="{{ path('app_application_user_index') }}" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">Retour</a> 
+                    <div class="mt-4 mb-4">
+                        {{ include('application/user/_delete_form.html.twig') }}
+                    </div>
                 </div>
-                <table class="table-auto w-full mb-6">
-                    <tbody>
-                        <tr class="border-b border-[#4B5429]">
-                            <th class="px-4 py-2 text-left text-white">Id</th>
-                            <td class="px-4 py-2 text-white">{{ user.id }}</td>
-                        </tr>
-                        <tr class="border-b border-[#4B5429]">
-                            <th class="px-4 py-2 text-left text-white">Email</th>
-                            <td class="px-4 py-2 text-white">{{ user.email }}</td>
-                        </tr>
-                        <tr class="border-b border-[#4B5429]">
-                            <th class="px-4 py-2 text-left text-white">Roles</th>
-                            <td class="px-4 py-2 text-white">{{ user.roles ? user.roles|json_encode : '' }}</td>
-                        </tr>
-                        <tr class="border-b border-[#4B5429]">
-                            <th class="px-4 py-2 text-left text-white">Password</th>
-                            <td class="px-4 py-2 text-white">{{ user.password }}</td>
-                        </tr>
-                        <tr class="border-b border-[#4B5429]">
-                            <th class="px-4 py-2 text-left text-white">Nom</th>
-                            <td class="px-4 py-2 text-white">{{ user.nom }}</td>
-                        </tr>
-                        <tr class="border-b border-[#4B5429]">
-                            <th class="px-4 py-2 text-left text-white">Prenom</th>
-                            <td class="px-4 py-2 text-white">{{ user.prenom }}</td>
-                        </tr>
-                        <tr class="border-b border-[#4B5429]">
-                            <th class="px-4 py-2 text-left text-white">CreatedAt</th>
-                            <td class="px-4 py-2 text-white">{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                {{ form_start(form, {'attr': {'class': 'space-y-6'}}) }}
+                    <div>
+                        {{ form_label(form.nom, null, {'label_attr': {'class': 'block text-sm font-medium text-white'}}) }}
+                        {{ form_widget(form.nom, {'attr': {'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'}}) }}
+                        {{ form_errors(form.nom) }}
+                    </div>
+
+                    <div>
+                        {{ form_label(form.prenom, null, {'label_attr': {'class': 'block text-sm font-medium text-white'}}) }}
+                        {{ form_widget(form.prenom, {'attr': {'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'}}) }}
+                        {{ form_errors(form.prenom) }}
+                    </div>
+
+                    <div>
+                        {{ form_label(form.roles, null, {'label_attr': {'class': 'block text-sm font-medium text-white'}}) }}
+                        {{ form_widget(form.roles, {'attr': {'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'}}) }}
+                        {{ form_errors(form.roles) }}
+                    </div>
+
+                    <div>
+                        {{ form_label(form.email, null, {'label_attr': {'class': 'block text-sm font-medium text-white'}}) }}
+                        {{ form_widget(form.email, {'attr': {'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'}}) }}
+                        {{ form_errors(form.email) }}
+                    </div>
+
+                    <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">{{ button_label|default('Sauvegarder') }}</button>
+                {{ form_end(form) }}
 
                 <div class="mt-4">
-                    {{ include('Application/user/_delete_form.html.twig') }}
+                    <a href="{{ path('app_application_user_index') }}" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">Retour</a>
                 </div>
             </div>
         </div>
