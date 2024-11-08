@@ -26,7 +26,7 @@
     {# Section principale pour les dons #}
     <div class="max-w-7xl mx-auto px-6 py-10">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {% for d in dons %}
+            {% for d in dons|reverse %}
                 <div class="bg-[#DFE777] p-6 rounded-lg flex flex-col items-center text-center text-[#3B4419]">
                     {% if d.image %}
                         <img src="{{ asset('image/dons/' ~ d.image) }}" alt="{{ d.titre }}" class="w-full h-48 object-cover mb-4 rounded-lg">
