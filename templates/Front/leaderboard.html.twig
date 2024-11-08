@@ -1,23 +1,117 @@
-{# templates/Application/user/leaderboard.html.twig #}
+{% extends 'base.html.twig' %}
 
-<h1>Classement des 50 Meilleurs Utilisateurs</h1>
-<table class="table-auto w-full">
-    <thead>
-    <tr>
-        <th class="px-4 py-2">Position</th>
-        <th class="px-4 py-2">Nom d'utilisateur</th>
-        <th class="px-4 py-2">XP Total</th>
-        <th class="px-4 py-2">Niveau</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for user in topUsers %}
-    <tr>
-        <td class="border px-4 py-2">{{ loop.index }}</td>
-        <td class="border px-4 py-2">{{ user.nom }}  {{ user.prenom }}</td>
-        <td class="border px-4 py-2">{{ user.xpTotal }}</td>
-{#        <td class="border px-4 py-2">{{ user.level }}</td> #}{# Niveau calculé #}
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
+{% block title %}Classement des Utilisateurs{% endblock %}
+
+{% block body %}
+<div class="flex min-h-screen bg-[#B8BC86]">
+   
+    {# Main Content #}
+    <main class="flex-1 p-8">
+        <div class="mb-8 text-center">
+            <h1 class="text-4xl font-serif text-[#3B4419] mb-4 animate-fade-in">Classement des 50 Meilleurs Utilisateurs</h1>
+        </div>
+
+        {# Leaderboard Table #}
+        <div class="bg-[#3B4419] rounded-2xl overflow-hidden shadow-lg animate-slide-in">
+            <table class="w-full table-auto text-left">
+                <thead>
+                    <tr class="border-b border-[#4B5429] text-white">
+                        <th class="px-6 py-4 text-lg">Position</th>
+                        <th class="px-6 py-4 text-lg">Nom d'utilisateur</th>
+                        <th class="px-6 py-4 text-lg">XP Total</th>
+                        <th class="px-6 py-4 text-lg">Niveau</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in topUsers %}
+                        <tr class="
+                            border-b border-[#4B5429] text-white hover:bg-[#4B5429] transition-colors duration-300 ease-in-out 
+                            animate-fade-in-row
+                            {% if loop.index == 1 %} first-place {% elseif loop.index == 2 %} second-place {% elseif loop.index == 3 %} third-place {% endif %}
+                        ">
+                            <td class="px-6 py-4 font-bold">
+                                {{ loop.index }}
+                                {% if loop.index == 1 %}
+                                    🏆
+                                {% elseif loop.index == 2 %}
+                                    🥈
+                                {% elseif loop.index == 3 %}
+                                    🥉
+                                {% endif %}
+                            </td>
+                            <td class="px-6 py-4">{{ user.nom }} {{ user.prenom }}</td>
+                            <td class="px-6 py-4">{{ user.xpTotal }}</td>
+                            <td class="px-6 py-4">{{ user.level | default('N/A') }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="4" class="px-6 py-4 text-center text-white">Aucun utilisateur trouvé.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+
+{# Custom Animations #}
+<style>
+    /* Animation pour l'en-tête du classement */
+    .animate-fade-in {
+        animation: fadeIn 1s ease-out;
+    }
+
+    /* Animation pour chaque ligne du tableau */
+    .animate-fade-in-row {
+        animation: fadeInRow 0.5s ease-out forwards;
+        opacity: 0;
+    }
+
+    /* Animation pour le container principal */
+    .animate-slide-in {
+        animation: slideIn 1s ease-out;
+    }
+
+    /* Styles spécifiques pour les gagnants */
+    .first-place {
+        background-color: #ffd700; /* Or */
+        animation: pulse 1.5s infinite;
+    }
+    .second-place {
+        background-color: #c0c0c0; /* Argent */
+        animation: pulse 1.5s infinite;
+    }
+    .third-place {
+        background-color: #cd7f32; /* Bronze */
+        animation: pulse 1.5s infinite;
+    }
+
+    /* Keyframes for animations */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInRow {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideIn {
+        from { opacity: 0; transform: translateX(-50px); }
+        to { opacity: 1; transform: translateX(0); }
+    }
+
+    /* Animation de "pulse" pour les gagnants */
+    @keyframes pulse {
+        0%, 100% {
+            transform: scale(1);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        50% {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+        }
+    }
+</style>
+{% endblock %}

@@ -1,48 +1,97 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User index{% endblock %}
+{% block title %}Gestion des Utilisateurs{% endblock %}
 
 {% block body %}
-<div class="min-h-screen bg-gray-100 flex flex-col justify-center items-center">
-    <div class="bg-white shadow-md rounded-lg p-8 max-w-4xl w-full">
-        <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">User index</h1>
-
-        <div class="mb-4">
-            <a href="{{ path('app_admin_index') }}" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">Retour</a>
+<div class="flex min-h-screen bg-[#B8BC86]">
+    {# Sidebar #}
+    <aside class="w-64 bg-[#3B4419] text-white p-6">
+        <div class="mb-12">
+            <h1 class="text-2xl font-serif mb-4">Greenify</h1>
         </div>
-        <table class="min-w-full bg-white">
-            <thead>
-                <tr>
-                    <th class="py-2 px-4 bg-gray-200 text-gray-600 font-bold uppercase text-sm text-left">Nom</th>
-                    <th class="py-2 px-4 bg-gray-200 text-gray-600 font-bold uppercase text-sm text-left">Prenom</th>
-                    <th class="py-2 px-4 bg-gray-200 text-gray-600 font-bold uppercase text-sm text-left">Email</th>
-                    <th class="py-2 px-4 bg-gray-200 text-gray-600 font-bold uppercase text-sm text-left">Roles</th>
-                    <th class="py-2 px-4 bg-gray-200 text-gray-600 font-bold uppercase text-sm text-left">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for user in users %}
-                <tr class="border-b">
-                    <td class="py-2 px-4">{{ user.nom }}</td>
-                    <td class="py-2 px-4">{{ user.prenom }}</td>
-                    <td class="py-2 px-4">{{ user.email }}</td>
-                    <td class="py-2 px-4">{{ user.roles ? user.roles|json_encode : '' }}</td>
-                    <td class="py-2 px-4">
-                        <a href="{{ path('app_application_user_show', {'id': user.id}) }}" class="text-blue-500 hover:underline"><i class="fas fa-eye"></i></a>
-                        <a href="{{ path('app_application_user_edit', {'id': user.id}) }}" class="text-blue-500 hover:underline ml-2"><i class="fas fa-edit"></i></a>
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="8" class="py-2 px-4 text-center">No records found</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+        <nav class="space-y-4">
+            <a href="{{ path('app_application_quests_index') }}" class="block py-2 px-4 rounded hover:bg-[#4B5429] transition-colors">
+                Gestion des Quêtes
+            </a>
+            <a href="{{ path('app_application_day_quest_index') }}" class="block py-2 px-4 rounded hover:bg-[#4B5429] transition-colors">
+                Gestion des Quêtes journalières
+            </a>
+            <a href="{{ path('app_application_dons_index') }}" class="block py-2 px-4 rounded hover:bg-[#4B5429] transition-colors">
+                Gestion des Dons
+            </a>
+            <a href="{{ path('app_application_user_index') }}" class="block py-2 px-4 rounded bg-[#4B5429] transition-colors">
+                Gestion des Utilisateurs
+            </a>
+        </nav>
+    </aside>
 
-        <div class="mt-4">
-            <a href="{{ path('app_application_user_new') }}" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700"><i class="fas fa-plus"></i></a>
+    {# Main Content #}
+    <main class="flex-1 p-8">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-xl text-[#3B4419]">Admin {{ app.user.prenom }}</h2>
         </div>
-    </div>
+
+        <div class="mb-8">
+            <h1 class="text-4xl font-serif text-[#3B4419] mb-8">Utilisateurs</h1>
+
+            {# Users Table #}
+            <div class="bg-[#3B4419] rounded-2xl overflow-hidden">
+                <table class="w-full">
+                    <thead>
+                        <tr class="border-b border-[#4B5429]">
+                            <th class="py-4 px-6 text-white text-left">Nom</th>
+                            <th class="py-4 px-6 text-white text-left">Prénom</th>
+                            <th class="py-4 px-6 text-white text-left">Email</th>
+                            <th class="py-4 px-6 text-white text-left">XP Total</th>
+                            <th class="py-4 px-6 text-white text-left">Gestion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                            <tr class="border-b border-[#4B5429]">
+                                <td class="py-4 px-6 text-white">{{ user.nom }}</td>
+                                <td class="py-4 px-6 text-white">{{ user.prenom }}</td>
+                                <td class="py-4 px-6 text-white">{{ user.email }}</td>
+                                <td class="py-4 px-6 text-white">{{ user.xpTotal }}</td>
+                                <td class="py-4 px-6">
+                                    <div class="flex space-x-4">
+                                        <a href="{{ path('app_application_user_edit', {'id': app.user.id}) }}" class="text-white hover:text-gray-300 transition-colors">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                            </svg>
+                                        </a>
+                                        <form method="post" action="{{ path('app_application_user_delete', {'id': app.user.id}) }}" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ app.user.id) }}">
+                                            <button type="submit" class="text-white hover:text-gray-300 transition-colors">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        {# Bottom Navigation #}
+        <div class="flex justify-between items-center mt-8">
+            <button class="bg-[#3B4419] text-white p-3 rounded-full">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+            </button>
+
+            <a href="{{ path('app_application_user_new') }}" class="bg-[#3B4419] text-white p-3 rounded-full">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+            </a>
+        </div>
+    </main>
 </div>
 {% endblock %}
