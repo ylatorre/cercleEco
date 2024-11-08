@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Quetes{% endblock %}
+
+{% block body %}
+<div class="min-h-screen bg-gray-100 flex flex-col justify-center items-center">
+    <div class="bg-white shadow-md rounded-lg p-8 max-w-4xl w-full">
+        <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">Edit Quetes</h1>
+        <div class="mt-4 mb-4">
+            {{ include('application/quetes/_delete_form.html.twig') }}
+        </div>
+        {{ form_start(form, {'attr': {'class': 'space-y-6'}}) }}
+            <div>
+                {{ form_label(form.titre, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                {{ form_widget(form.titre, {'attr': {'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'}}) }}
+                {{ form_errors(form.titre) }}
+            </div>
+
+            <div>
+                {{ form_label(form.description, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                {{ form_widget(form.description, {'attr': {'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'}}) }}
+                {{ form_errors(form.description) }}
+            </div>
+
+            <div>
+                {{ form_label(form.titreQuestion, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                {{ form_widget(form.titreQuestion, {'attr': {'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'}}) }}
+                {{ form_errors(form.titreQuestion) }}
+            </div>
+
+            <div>
+                {{ form_label(form.xp, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                {{ form_widget(form.xp, {'attr': {'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'}}) }}
+                {{ form_errors(form.xp) }}
+            </div>
+
+            <div id="dynamic-fields" class="mt-4 space-y-4">
+                {% for k,reponse in reponses %}
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Titre</label>
+                        <input type="text" name="reponses[{{ k }}][titre]" value="{{ reponse.titre }}" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Is Good Reponse</label>
+                        <select name="reponses[{{ k }}][isGoodQuestion]" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            <option value="yes" {% if reponse.isGoodQuestion %}selected{% endif %}>Yes</option>
+                            <option value="no" {% if not reponse.isGoodQuestion %}selected{% endif %}>No</option>
+                        </select>
+                    </div>
+                {% endfor %}
+            </div><br>
+
+            <button type="button" id="add-field" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700">+</button><br>
+
+            <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">{{ button_label|default('Sauvegarder') }}</button>
+        {{ form_end(form) }}
+
+        <div class="mt-4">
+            <a href="{{ path('app_application_quetes_index') }}" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">Back to list</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('add-field').addEventListener('click', function() {
+                var container = document.getElementById('dynamic-fields');
+                var index = container.children.length / 2; // Diviser par 2 car chaque ajout crée deux enfants (titre et isGoodReponse)
+
+                var titreDiv = document.createElement('div');
+                var titreLabel = document.createElement('label');
+                titreLabel.className = 'block text-sm font-medium text-gray-700';
+                titreLabel.innerText = 'Titre';
+                var titreInput = document.createElement('input');
+                titreInput.type = 'text';
+                titreInput.name = 'reponses[' + index + '][titre]';
+                titreInput.className = 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm';
+                titreDiv.appendChild(titreLabel);
+                titreDiv.appendChild(titreInput);
+
+                var isGoodReponseDiv = document.createElement('div');
+                var isGoodReponseLabel = document.createElement('label');
+                isGoodReponseLabel.className = 'block text-sm font-medium text-gray-700';
+                isGoodReponseLabel.innerText = 'Is Good Reponse';
+                var isGoodReponseSelect = document.createElement('select');
+                isGoodReponseSelect.name = 'reponses[' + index + '][isGoodReponse]';
+                isGoodReponseSelect.className = 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm';
+                var optionYes = document.createElement('option');
+                optionYes.value = 'yes';
+                optionYes.innerText = 'Yes';
+                var optionNo = document.createElement('option');
+                optionNo.value = 'no';
+                optionNo.innerText = 'No';
+                isGoodReponseSelect.appendChild(optionYes);
+                isGoodReponseSelect.appendChild(optionNo);
+                isGoodReponseDiv.appendChild(isGoodReponseLabel);
+                isGoodReponseDiv.appendChild(isGoodReponseSelect);
+
+                container.appendChild(titreDiv);
+                container.appendChild(isGoodReponseDiv);
+            });
+        });
+    </script>
+{% endblock %}
