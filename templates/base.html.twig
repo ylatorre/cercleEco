@@ -39,7 +39,7 @@
 			<div class="flex items-center space-x-4">
 				{% if app.user %}
 					<a
-						href="{{ path('app_profil') }}" class="border border-white rounded-full px-4 py-2 text-white hover:bg-white hover:text-[#3B4419] transition-colors flex items-center space-x-4">
+						href="{{ path('app_profil') }}" class="border border-white rounded-full px-4 py-2 text-white hover:bg-white hover:text-[#3B4419] transition-colors flex items-centr space-x-4">
 
 						<!-- Light and Aesthetic Icon on the Left -->
 						<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[#DFE777]" fill="none" viewbox="0 0 24 24" stroke="currentColor">
@@ -48,8 +48,7 @@
 
 						<!-- Name and Surname Stacked to the Right of the Icon -->
 						<div class="text-center leading-tight">
-							<span class="block font-semibold">{{app.user.nom}}</span>
-							<span class="block text-sm">{{app.user.prenom}}</span>
+							<span class="block font-semibold">{{app.user.nom}} {{app.user.prenom}}</span>
 							{#                niveau user#}
 
 
@@ -85,11 +84,12 @@ console.error('Erreur lors de la récupération du niveau:', error);
 				{% endif %}
 
 
-				<a href="{{path('app_chatAi')}}" class="border border-white rounded-full px-4 py-2 text-white hover:bg-white hover:text-[#3B4419] transition-colors flex items-center justify-center">
-					<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewbox="0 0 24 24" stroke="currentColor">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8a9 9 0 100-18 9 9 0 000 18z"/>
-					</svg>
-				</a>
+				<a href="{{ path('app_chatAi') }}" class="border border-white rounded-full px-4 py-2 text-white hover:bg-white hover:text-[#3B4419] transition-colors flex items-center justify-center">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h8M8 14h5m-5 4h10a2 2 0 002-2V7a2 2 0 00-2-2H6a2 2 0 00-2 2v9a2 2 0 002 2h1l4 4v-4z" />
+    </svg>
+</a>
+
 
 			</div>
 
@@ -106,7 +106,8 @@ console.error('Erreur lors de la récupération du niveau:', error);
 				{# Logo Section #}
 				<div class="space-y-4">
 					<div class="text-2xl font-serif text-[#B8BC86]">Greenify</div>
-					<img src="{{ asset('image/logo.png') }}" alt="Greenify Leaf" class="w-21 h-22">
+					<img src="{{ asset('image/logo.png') }}" alt="Greenify Leaf" class="w-21 h-22 relative" style="transform: translate(-10px, -5px);">
+
 				</div>
 
 				{# Legal Information #}
