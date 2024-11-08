@@ -145,7 +145,6 @@ class FrontController extends AbstractController
                 $quete->setEtat(2);
             }
         }
-        
         $entityManager->persist($quete);
         $entityManager->persist($user);
         $entityManager->flush();
