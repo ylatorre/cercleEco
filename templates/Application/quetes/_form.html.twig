@@ -1,7 +1,7 @@
 {{ form_start(form, {'attr': {'class': 'space-y-6'}}) }}
     <div>
-        {{ form_label(form.titre, null, {'label_attr': {'class': 'block text-sm text-white  font-medium text-gray-700'}}) }}
-        {{ form_widget(form.titre, {'attr': {'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'}}) }}
+        {{ form_label(form.titre, null, {'label_attr': {'class': 'block text-sm text-white font-medium text-gray-700'}}) }}
+        {{ form_widget(form.titre, {'attr': {'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm', 'maxlength': '255'}}) }}
         {{ form_errors(form.titre) }}
     </div>
 
@@ -13,7 +13,7 @@
 
     <div>
         {{ form_label(form.titreQuestion, null, {'label_attr': {'class': 'block text-sm text-white font-medium text-gray-700'}}) }}
-        {{ form_widget(form.titreQuestion, {'attr': {'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'}}) }}
+        {{ form_widget(form.titreQuestion, {'attr': {'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm', 'maxlength': '255'}}) }}
         {{ form_errors(form.titreQuestion) }}
     </div>
 
