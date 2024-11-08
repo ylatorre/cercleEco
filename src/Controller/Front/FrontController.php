@@ -23,20 +23,19 @@ use App\Service\ChatGPTService;
 use App\Form\ChatGPTType;
 use App\Repository\Application\UserRepository;
 use App\Service\DayQuestService;
-
+use App\Repository\Application\DayQuestUserRepository;
+use App\Entity\Application\DayQuestUser;
 
 class FrontController extends AbstractController
 {
     private $chatGPTService;
     private $levelCalculator;
 
-    // Injection du service LevelCalculatorService
-    public function __construct(private Security $security,ChatGPTService $chatGPTService,LevelCalculatorService $levelCalculator)
+    public function __construct(private Security $security,ChatGPTService $chatGPTService, LevelCalculatorService $levelCalculator, EntityManagerInterface $entityManager)
     {
         $this->chatGPTService = $chatGPTService;
-
         $this->levelCalculator = $levelCalculator;
-
+        $this->entityManager = $entityManager;
     }
 
     #[Route('/', name: 'app_front')]
@@ -148,45 +147,107 @@ class FrontController extends AbstractController
         ]);
     }
     
-    /*
     #[Route('/quetes-journalières', name: 'app_day_quests')]
-    public function dayQuests(DayQuestRepository $dayQuestRepository): Response
-    {
-        // Appeler la méthode qui génère les quêtes journalières
-        $day_quests = $this->generateDailyQuests($dayQuestRepository);
-
-        // Rendre la vue avec les quêtes générées
-        return $this->render('Front/day_quest.html.twig', [
-            'day_quests' => $day_quests,
-        ]);
-    }
-
-    public function generateDailyQuests(DayQuestRepository $dayQuestRepository): array
-    {
-        // Récupérer toutes les quêtes puis en sélectionner 2 ou 3 aléatoirement
-        $allQuests = $dayQuestRepository->findAll();
-        $randomKeys = array_rand($allQuests, rand(3, 3));  // Sélectionner 2 ou 3 quêtes au hasard
-
-        if (!is_array($randomKeys)) {
-            $randomKeys = [$randomKeys];  // Si un seul élément est retourné, le convertir en tableau
-        }
-
-        return array_map(fn($key) => $allQuests[$key], $randomKeys);
-    }
-    */
-
-    #[Route('/quetes-journalières', name: 'app_day_quests')]
-    public function dayQuests(DayQuestService $dayQuestService): Response
+    public function dayQuests(DayQuestService $dayQuestService, DayQuestUserRepository $dayQuestUserRepository): Response
     {
         // Récupérer les quêtes journalières depuis le cache
         $day_quests = $dayQuestService->getDailyQuests();
 
+        // Récupérer l'utilisateur actuel
+        $user = $this->getUser();
+
+        // Vérifier si chaque quête est complétée par l'utilisateur
+        foreach ($day_quests as $quest) {
+            $dayQuestUser = $dayQuestUserRepository->findOneBy([
+                'user' => $user,
+                'dayQuest' => $quest,
+            ]);
+
+            // Ajouter un champ 'isCompleted' à chaque quête pour vérifier son statut
+            $quest->isCompleted = $dayQuestUser ? $dayQuestUser->getEtat() === 1 : false;
+        }
+
         // Rendre la vue avec les quêtes générées
         return $this->render('Front/day_quest.html.twig', [
             'day_quests' => $day_quests,
         ]);
     }
 
+    #[Route('/day-quest/{id}/complete', name: 'app_complete_quest', methods: ['POST'])]
+    public function completeQuest(
+        int $id,
+        DayQuestRepository $dayQuestRepository,
+        DayQuestUserRepository $dayQuestUserRepository,
+        EntityManagerInterface $entityManager
+    ): RedirectResponse {
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour terminer une quête.');
+        }
+
+        $dayQuest = $dayQuestRepository->find($id);
+        if (!$dayQuest) {
+            throw $this->createNotFoundException('Quête introuvable.');
+        }
+
+        $dayQuestUser = $dayQuestUserRepository->findOneBy(['user' => $user, 'dayQuest' => $dayQuest]);
+        if (!$dayQuestUser) {
+            $dayQuestUser = new DayQuestUser();
+            $dayQuestUser->setUser($user);
+            $dayQuestUser->setDayQuest($dayQuest);
+        }
+
+        $dayQuestUser->setEtat(1); // Marquer comme terminée
+        $entityManager->persist($dayQuestUser);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'La quête a été marquée comme terminée.');
+        return $this->redirectToRoute('app_day_quests');
+    }
+
+
+    #[Route('/marquer-quete/{questId}/terminee', name: 'app_day_quest_complete', methods: ['GET', 'POST'])]
+    public function dayQuestCompleted(
+        $questId,
+        DayQuestRepository $dayQuestRepository,
+        DayQuestUserRepository $dayQuestUserRepository,
+        Security $security,
+        EntityManagerInterface $entityManager,
+        Request $request
+    ): Response {
+        $user = $this->getUser();
+        $quest = $dayQuestRepository->find($questId);
+        
+        if (!$quest) {
+            throw $this->createNotFoundException('La quête n\'existe pas.');
+        }
+
+        // Vérifier si l'utilisateur a déjà effectué cette quête
+        $dayQuestUser = $dayQuestUserRepository->findOneBy([
+            'user' => $user,
+            'dayQuest' => $quest,
+        ]);
+
+        if (!$dayQuestUser) {
+            throw $this->createNotFoundException('Cette quête n\'a pas été assignée à cet utilisateur.');
+        }
+
+        // Marquer la quête comme terminée (status = 1)
+        $dayQuestUser->setEtat(1);
+
+        $this->ajouterXP($quest->getXp(), $security, $entityManager);
+
+
+        // Sauvegarder les modifications
+        $entityManager->persist($dayQuestUser);
+        $entityManager->flush();
+
+        // Message flash pour indiquer que la quête a été complétée
+        $this->addFlash('success', 'La quête a été complétée avec succès !');
+
+        // Rediriger vers la page des quêtes ou une autre page
+        return $this->redirectToRoute('app_day_quests'); // Ou toute autre page de votre choix
+    }
 
     #[Route('/chatAi', name: 'app_chatAi')]
     public function chatAi(Request $request): Response
@@ -205,7 +266,6 @@ class FrontController extends AbstractController
 
         ]);
     }
-
 
 //Gestion xp
 
