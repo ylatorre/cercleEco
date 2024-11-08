@@ -38,11 +38,11 @@
                         </tr>
                         <tr class="border-b border-[#4B5429]">
                             <th class="px-4 py-2 text-left text-white">Titre</th>
-                            <td class="px-4 py-2 text-white">{{ don.titre }}</td>
+                            <td class="px-4 py-2 text-white">{{ don.titre|length > 30 ? don.titre|slice(0, 30) ~ '...' : don.titre }}</td>
                         </tr>
                         <tr class="border-b border-[#4B5429]">
                             <th class="px-4 py-2 text-left text-white">Description</th>
-                            <td class="px-4 py-2 text-white">{{ don.description }}</td>
+                            <td class="px-4 py-2 text-white">{{ don.description|length > 30 ? don.description|slice(0, 30) ~ '...' : don.description }}</td>
                         </tr>
                         <tr class="border-b border-[#4B5429]">
                             <th class="px-4 py-2 text-left text-white">Image</th>
