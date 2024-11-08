@@ -8,7 +8,7 @@
     <aside class="w-64 bg-[#3B4419] text-white p-6">
         <div class="mb-12">
     <h1 class="text-2xl font-serif mb-4">
-        <img src="{{ asset('images/logo.png') }}" alt="Greenify Logo" class="h-10 inline-block">
+<img src="{{ asset('image/logo.png') }}" alt="Greenify Logo" class="inline-block" style="height: 8rem;">
     </h1>
         </div>
         <nav class="space-y-4">
@@ -30,7 +30,7 @@
     {# Main Content #}
     <main class="flex-1 p-8">
         <div class="flex justify-between items-center mb-8">
-            <h2 class="text-xl text-[#3B4419]">Admin {{ app.user.prenom }}</h2>
+            <h2 class="text-xl  text-black">Bonjour {{ app.user.prenom }}</h2>
         </div>
 
         <div class="mb-8">
@@ -57,11 +57,18 @@
                                 <td class="py-4 px-6 text-white">{{ user.xpTotal }}</td>
                                 <td class="py-4 px-6">
                                     <div class="flex space-x-4">
+
+                                    <a href="{{ path('app_application_user_show', {'id': app.user.id}) }}" class="text-white hover:text-gray-300 transition-colors">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12zM12 15a3 3 0 100-6 3 3 0 000 6z" />
+                                        </svg>
+                                    </a>
                                         <a href="{{ path('app_application_user_edit', {'id': app.user.id}) }}" class="text-white hover:text-gray-300 transition-colors">
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                                             </svg>
                                         </a>
+
                                         <form method="post" action="{{ path('app_application_user_delete', {'id': app.user.id}) }}" onsubmit="return confirm('Are you sure you want to delete this user?');">
                                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ app.user.id) }}">
                                             <button type="submit" class="text-white hover:text-gray-300 transition-colors">
@@ -87,7 +94,11 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
             </button>
-
+<div class="flex items-center space-x-4">
+                <button class="text-[#3B4419]">&lt;</button>
+                <span class="text-[#3B4419]">1/12</span>
+                <button class="text-[#3B4419]">&gt;</button>
+            </div>
             <a href="{{ path('app_application_user_new') }}" class="bg-[#3B4419] text-white p-3 rounded-full">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />

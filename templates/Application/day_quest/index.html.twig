@@ -7,7 +7,8 @@
     {# Sidebar #}
     <aside class="w-64 bg-[#3B4419] text-white p-6">
         <div class="mb-12">
-            <h1 class="text-2xl font-serif mb-4">Greenify</h1>
+            <img src="{{ asset('image/logo.png') }}" alt="Greenify Logo" class="inline-block" style="height: 8rem;">
+
         </div>
         <nav class="space-y-4">
             <a href="{{ path('app_application_quetes_index') }}" class="block py-2 px-4 rounded hover:bg-[#4B5429] transition-colors">
@@ -28,7 +29,7 @@
     {# Main Content #}
     <main class="flex-1 p-8">
         <div class="flex justify-between items-center mb-8">
-            <h2 class="text-xl text-[#3B4419]">Admin {{ app.user.prenom }}</h2>
+            <h2 class="text-xl text-[#3B4419]">Bonjour {{ app.user.prenom }}</h2>
         </div>
 
         <div class="mb-8">

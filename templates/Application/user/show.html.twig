@@ -3,44 +3,67 @@
 {% block title %}User{% endblock %}
 
 {% block body %}
-    <h1>User</h1>
+<div class="flex min-h-screen bg-[#B8BC86]">
+    {# Sidebar #}
+    <aside class="w-64 bg-[#3B4419] text-white p-6">
+        <div class="mb-12">
+            <img src="{{ asset('image/logo.png') }}" alt="Greenify Logo" class="inline-block" style="height: 8rem;">
+        </div>
+    </aside>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ user.email }}</td>
-            </tr>
-            <tr>
-                <th>Roles</th>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ user.password }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ user.nom }}</td>
-            </tr>
-            <tr>
-                <th>Prenom</th>
-                <td>{{ user.prenom }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+    {# Main Content #}
+    <main class="flex-1 p-8">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-xl text-[#3B4419]">Bonjour {{ app.user.prenom }}</h2>
+        </div>
 
-    <a href="{{ path('app_application_user_index') }}">back to list</a>
+        <div class="mb-8">
+            <h1 class="text-4xl font-serif text-[#3B4419] mb-8">User</h1>
 
-    <a href="{{ path('app_application_user_edit', {'id': user.id}) }}">edit</a>
+            <div class="bg-[#3B4419] rounded-2xl overflow-hidden p-8">
+                <table class="table-auto w-full mb-6">
+                    <tbody>
+                        <tr class="border-b border-[#4B5429]">
+                            <th class="px-4 py-2 text-left text-white">Id</th>
+                            <td class="px-4 py-2 text-white">{{ user.id }}</td>
+                        </tr>
+                        <tr class="border-b border-[#4B5429]">
+                            <th class="px-4 py-2 text-left text-white">Email</th>
+                            <td class="px-4 py-2 text-white">{{ user.email }}</td>
+                        </tr>
+                        <tr class="border-b border-[#4B5429]">
+                            <th class="px-4 py-2 text-left text-white">Roles</th>
+                            <td class="px-4 py-2 text-white">{{ user.roles ? user.roles|json_encode : '' }}</td>
+                        </tr>
+                        <tr class="border-b border-[#4B5429]">
+                            <th class="px-4 py-2 text-left text-white">Password</th>
+                            <td class="px-4 py-2 text-white">{{ user.password }}</td>
+                        </tr>
+                        <tr class="border-b border-[#4B5429]">
+                            <th class="px-4 py-2 text-left text-white">Nom</th>
+                            <td class="px-4 py-2 text-white">{{ user.nom }}</td>
+                        </tr>
+                        <tr class="border-b border-[#4B5429]">
+                            <th class="px-4 py-2 text-left text-white">Prenom</th>
+                            <td class="px-4 py-2 text-white">{{ user.prenom }}</td>
+                        </tr>
+                        <tr class="border-b border-[#4B5429]">
+                            <th class="px-4 py-2 text-left text-white">CreatedAt</th>
+                            <td class="px-4 py-2 text-white">{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
 
-    {{ include('Application/user/_delete_form.html.twig') }}
+                <div class="flex justify-between">
+                    <a href="{{ path('app_application_user_index') }}" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">Back to list</a> 
+                    <a href="{{ path('app_application_user_edit', {'id': user.id}) }}" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">Edit</a>
+                </div>
+
+                <div class="mt-4">
+                    {{ include('Application/user/_delete_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
 {% endblock %}
