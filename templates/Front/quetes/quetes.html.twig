@@ -47,7 +47,7 @@ console.error('Erreur lors de la récupération des données de niveau:', error)
         <section class="mb-12">
             <h2 class="text-2xl font-serif text-white mb-6">Quêtes quotidiennes</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {% for quest in quests %}
+                {# {% for quest in quests %} #}
                     <div class="bg-[#D5E1A3] rounded-lg p-6 flex flex-col">
                         <h3 class="text-xl font-bold mb-4">{ quest.titre }</h3>
                         <p class="text-sm mb-6 flex-grow">{ quest.description }</p>
@@ -64,7 +64,7 @@ console.error('Erreur lors de la récupération des données de niveau:', error)
                             Accéder à la quête
                         </a>
                     </div>
-                {% endfor %}
+                {# {% endfor %} #}
             </div>
         </section>
 
@@ -84,16 +84,28 @@ console.error('Erreur lors de la récupération des données de niveau:', error)
                                 <span>{{quest.xp}} XP</span>
                             </div>
                         </div>
-                        <a href="#" 
-                           class="block text-center py-2 px-4 rounded-full border border-[#3B4419] text-[#3B4419] hover:bg-[#3B4419] hover:text-white transition-colors">
-                            Accéder à la quête
-                        </a>
+                        {% if quest.etat == 1 %}
+                            <a href="#" 
+                            class="block text-center py-2 px-4 rounded-full border border-[#3B4419] text-[#3B4419]">
+                                ✔️ Quête réussie
+                            </a>
+                        {% elseif quest.etat == 2 %}
+                            <a href="{{path('app_front_quetes_play', {'id': quest.id})}}" 
+                            class="block text-center py-2 px-4 rounded-full border border-[#3B4419] text-[#3B4419] hover:bg-[#3B4419] hover:text-white transition-colors">
+                                ❌ Quête échouée
+                            </a>
+                        {% else %}
+                            <a href="{{path('app_front_quetes_play', {'id': quest.id})}}" 
+                            class="block text-center py-2 px-4 rounded-full border border-[#3B4419] text-[#3B4419] hover:bg-[#3B4419] hover:text-white transition-colors">
+                                Accéder à la quête
+                            </a>
+                        {% endif %}
                     </div>
                 {% endfor %}
             </div>
         </section>
 
-        {% if is_granted('ROLE_ADMIN') %}
+        {# {% if is_granted('ROLE_ADMIN') %}
             <div class="mt-8 flex justify-end">
                 <a href="#" 
                    class="inline-flex items-center justify-center rounded-full bg-[#3B4419] px-4 py-2 text-white hover:bg-[#4B5429] transition-colors">
@@ -103,7 +115,7 @@ console.error('Erreur lors de la récupération des données de niveau:', error)
                     Nouvelle quête
                 </a>
             </div>
-        {% endif %}
+        {% endif %} #}
     </main>
 </div>
 {% endblock %}
