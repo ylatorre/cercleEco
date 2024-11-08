@@ -10,48 +10,11 @@
             <img src="{{ asset('image/logo.png') }}" alt="Greenify Logo" class="inline-block" style="height: 8rem;">
         </div>
     </aside>
-            <div>
-                {{ form_label(form.description, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
-                {{ form_widget(form.description, {'attr': {'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'}}) }}
-                {{ form_errors(form.description) }}
-            </div>
 
-            <div>
-                {{ form_label(form.titreQuestion, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
-                {{ form_widget(form.titreQuestion, {'attr': {'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'}}) }}
-                {{ form_errors(form.titreQuestion) }}
-            </div>
-
-            <div>
-                {{ form_label(form.xp, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
-                {{ form_widget(form.xp, {'attr': {'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'}}) }}
-                {{ form_errors(form.xp) }}
-            </div>
-
-            <div id="dynamic-fields" class="mt-4 space-y-4">
-                {% for k,reponse in reponses %}
-                    <input type="hidden" name="reponsesOld[{{ k }}][id]" value="{{ reponse.id }}">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Titre{{k +1}}</label>
-                        <input type="text" name="reponsesOld[{{ k }}][titre]" value="{{ reponse.titre }}" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Is Good Reponse</label>
-                        <select name="reponsesOld[{{ k }}][isGoodQuestion]" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                            <option value="yes" {% if reponse.isGoodQuestion %}selected{% endif %}>Yes</option>
-                            <option value="no" {% if not reponse.isGoodQuestion %}selected{% endif %}>No</option>
-                        </select>
-                    </div>
-                {% endfor %}
-            </div><br>
-
-            <button type="button" id="add-field" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700">+</button><br>
-
-            <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">{{ button_label|default('Sauvegarder') }}</button>
-        {{ form_end(form) }}
-
-        <div class="mt-4">
-            <a href="{{ path('app_application_quetes_index') }}" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">Back to list</a>
+    {# Main Content #}
+    <main class="flex-1 p-8">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-xl text-[#3B4419]">Bonjour {{ app.user.prenom }}</h2>
         </div>
 
         <div class="mb-8">
