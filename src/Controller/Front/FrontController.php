@@ -33,11 +33,11 @@ class FrontController extends AbstractController
     }
 
     #[Route('/', name: 'app_front')]
-    public function index(): Response
+    public function index(QuetesRepository $quetesRepository): Response
     {
-        // $quests = $questsRepository->findAll();
+        $quests = $quetesRepository->findAll();
         return $this->render('Front/index.html.twig', [
-            // 'quests' => $quests,
+            'quests' => $quests,
         ]);
     }
 
