@@ -19,6 +19,8 @@ use App\Repository\Application\DayQuestUserRepository;
 use App\Entity\Application\DayQuestUser;
 use App\Entity\Application\Quetes;
 use App\Entity\Application\QuetesReponses;
+use App\Entity\Application\User;
+use App\Form\Front\UserTypeUser;
 
 class FrontController extends AbstractController
 {
@@ -29,7 +31,6 @@ class FrontController extends AbstractController
     {
         $this->chatGPTService = $chatGPTService;
         $this->levelCalculator = $levelCalculator;
-        $this->entityManager = $entityManager;
     }
 
     #[Route('/', name: 'app_front')]
@@ -335,6 +336,24 @@ class FrontController extends AbstractController
 
         return $this->render('Front/leaderboard.html.twig', [
             'topUsers' => $topUsers,
+        ]);
+    }
+
+    #[Route('/{id}/edit', name: 'app_front_user_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(UserTypeUser::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_profil', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('Front/modifProfil/modifProfil.html.twig', [
+            'user' => $user,
+            'form' => $form,
         ]);
     }
 }
