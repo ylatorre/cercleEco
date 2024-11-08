@@ -1,16 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Greenify - Accueil{% endblock %}
+{% block title %}Greenify - Mes Réservations{% endblock %}
 
 {% block body %}
 <div class="min-h-screen bg-[#3B4419]">
     {# Navigation #}
-   
 
-  {# Section de filtre #}
-
+    {# Section de filtre #}
     <div class="max-w-7xl space-x-4 mx-auto px-6 py-6 flex justify-end">
-        <a href="{{path('app_front_dons_new')}}" class="flex items-center bg-[#DFE777] text-[#3B4419] p-4 rounded-full hover:bg-[#B8BC86] transition">
+        <a href="{{ path('app_front_dons_new') }}" class="flex items-center bg-[#DFE777] text-[#3B4419] p-4 rounded-full hover:bg-[#B8BC86] transition">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
             </svg>
@@ -19,7 +17,13 @@
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11V7a4 4 0 10-8 0v4H3a1 1 0 00-1 1v10a1 1 0 001 1h18a1 1 0 001-1V12a1 1 0 00-1-1h-1V7a4 4 0 10-8 0v4h-2zm2 0h4V7a2 2 0 10-4 0v4zM6 7a2 2 0 114 0v4H6V7z" />
             </svg>
-            <span>Mes dons clôturés</span>
+            <span>Mes réservations clôturées</span>
+        </a>
+        <a href="{{ path('app_mes_reservations', {'token': app.user.token}) }}" class="flex items-center space-x-2 bg-[#DFE777] text-[#3B4419] px-4 py-2 rounded-full hover:bg-[#B8BC86] transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 000 2h18a1 1 0 100-2H3zm0 6a1 1 0 100 2h18a1 1 0 100-2H3zm0 6a1 1 0 000 2h18a1 1 0 100-2H3z" />
+            </svg>
+            <span>Toutes les réservations</span>
         </a>
         <a href="{{path('app_dons', {'tokenUser': app.user.token})}}" class="flex items-center space-x-2 bg-[#DFE777] text-[#3B4419] px-4 py-2 rounded-full hover:bg-[#B8BC86] transition">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -29,29 +33,29 @@
         </a>
     </div>
 
-    {# Section principale pour les dons #}
+    {# Section principale pour les réservations #}
     <div class="max-w-7xl mx-auto px-6 py-10">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {% for d in dons|reverse %}
+            {% for r in reservations|reverse %}
                 <div class="bg-[#DFE777] p-6 rounded-lg flex flex-col items-center text-center text-[#3B4419]">
-                    {% if d.image %}
-                        <img src="{{ asset('image/dons/' ~ d.image) }}" alt="{{ d.titre }}" class="w-full h-48 object-cover mb-4 rounded-lg">
+                    {% if r.image %}
+                        <img src="{{ asset('image/dons/' ~ r.image) }}" alt="{{ r.titre }}" class="w-full h-48 object-cover mb-4 rounded-lg">
                     {% endif %}
-                    <h2 class="text-2xl font-serif mb-4">{{ d.titre|length > 30 ? d.titre|slice(0, 30) ~ '...' : d.titre }}</h2>
-                    <p class="text-gray-700 mb-4">{{ d.description|length > 30 ? d.description|slice(0, 30) ~ '...' : d.description }}</p>
-                    <p class="text-gray-600 mb-4">Emplacement : {{ d.localisation ? d.localisation : 'Non spécifié' }}</p>
-                    {% if d.acheteur is not null %}
-                        <a href="{{ path('app_don_detail_acquisition', {'token': d.token}) }}" class="border border-[#3B4419] text-[#3B4419] rounded-full px-6 py-2 hover:bg-[#3B4419] hover:text-white transition-colors">
+                    <h2 class="text-2xl font-serif mb-4">{{ r.titre|length > 30 ? r.titre|slice(0, 30) ~ '...' : r.titre }}</h2>
+                    <p class="text-gray-700 mb-4">{{ r.description|length > 30 ? r.description|slice(0, 30) ~ '...' : r.description }}</p>
+                    <p class="text-gray-600 mb-4">Emplacement : {{ r.localisation ? r.localisation : 'Non spécifié' }}</p>
+                    {% if r.acheteur is not null %}
+                        <a href="{{ path('app_don_detail_acquisition', {'token': r.token}) }}" class="border border-[#3B4419] text-[#3B4419] rounded-full px-6 py-2 hover:bg-[#3B4419] hover:text-white transition-colors">
                             Voir l'acquisition
                         </a>
                     {% else %}
-                        <a href="{{ path('app_front_dons_edit', {'token': d.token}) }}" class="border border-[#3B4419] text-[#3B4419] rounded-full px-6 py-2 hover:bg-[#3B4419] hover:text-white transition-colors">
+                        <a href="{{ path('app_front_dons_edit', {'token': r.token}) }}" class="border border-[#3B4419] text-[#3B4419] rounded-full px-6 py-2 hover:bg-[#3B4419] hover:text-white transition-colors">
                             Modifier
                         </a>
                     {% endif %}
                 </div>
             {% else %}
-                <p class="text-center col-span-full text-gray-300">Aucun objet disponible pour le moment.</p>
+                <p class="text-center col-span-full text-gray-300">Aucune réservation disponible pour le moment.</p>
             {% endfor %}
         </div>
     </div>
