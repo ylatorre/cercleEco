@@ -67,10 +67,10 @@
                                 <input type="text" name="reponsesOld[{{ k }}][titre]" value="{{ reponse.titre }}" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-white">Is Good Reponse</label>
+                                <label class="block text-sm font-medium text-white">Bonne réponse</label>
                                 <select name="reponsesOld[{{ k }}][isGoodQuestion]" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                    <option value="yes" {% if reponse.isGoodQuestion %}selected{% endif %}>Yes</option>
-                                    <option value="no" {% if not reponse.isGoodQuestion %}selected{% endif %}>No</option>
+                                    <option value="yes" {% if reponse.isGoodQuestion %}selected{% endif %}>Oui</option>
+                                    <option value="no" {% if not reponse.isGoodQuestion %}selected{% endif %}>Non</option>
                                 </select>
                             </div>
                         {% endfor %}
