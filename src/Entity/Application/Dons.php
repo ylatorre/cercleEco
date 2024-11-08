@@ -35,6 +35,12 @@ class Dons
     #[ORM\Column(length: 255)]
     private ?string $token = null;
 
+    #[ORM\Column]
+    private ?int $etat = null;
+
+    #[ORM\ManyToOne(inversedBy: 'donsAcheteur')]
+    private ?User $acheteur = null;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -126,6 +132,30 @@ class Dons
     public function setToken(string $token): static
     {
         $this->token = $token;
+
+        return $this;
+    }
+
+    public function getEtat(): ?int
+    {
+        return $this->etat;
+    }
+
+    public function setEtat(int $etat): static
+    {
+        $this->etat = $etat;
+
+        return $this;
+    }
+
+    public function getAcheteur(): ?User
+    {
+        return $this->acheteur;
+    }
+
+    public function setAcheteur(?User $acheteur): static
+    {
+        $this->acheteur = $acheteur;
 
         return $this;
     }

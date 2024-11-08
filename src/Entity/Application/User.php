@@ -56,11 +56,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?int $xpTotal = null;
 
+    /**
+     * @var Collection<int, Dons>
+     */
+    #[ORM\OneToMany(targetEntity: Dons::class, mappedBy: 'acheteur')]
+    private Collection $donsAcheteur;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->dons = new ArrayCollection();
         $this->token = bin2hex(random_bytes(50));
+        $this->donsAcheteur = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -224,6 +231,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setXpTotal(?int $xpTotal): static
     {
         $this->xpTotal = $xpTotal;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Dons>
+     */
+    public function getDonsAcheteur(): Collection
+    {
+        return $this->donsAcheteur;
+    }
+
+    public function addDonsAcheteur(Dons $donsAcheteur): static
+    {
+        if (!$this->donsAcheteur->contains($donsAcheteur)) {
+            $this->donsAcheteur->add($donsAcheteur);
+            $donsAcheteur->setAcheteur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDonsAcheteur(Dons $donsAcheteur): static
+    {
+        if ($this->donsAcheteur->removeElement($donsAcheteur)) {
+            // set the owning side to null (unless already changed)
+            if ($donsAcheteur->getAcheteur() === $this) {
+                $donsAcheteur->setAcheteur(null);
+            }
+        }
 
         return $this;
     }
