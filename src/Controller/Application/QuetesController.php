@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/application/quetes')]
+#[Route('/Application/quetes')]
 final class QuetesController extends AbstractController
 {
     #[Route(name: 'app_application_quetes_index', methods: ['GET'])]
