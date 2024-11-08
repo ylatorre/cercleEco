@@ -18,19 +18,26 @@ class DonsType extends AbstractType
     {
         $builder
             ->add('titre', TextType::class, [
-                'label' => 'Titre',
+            'label' => 'Titre',
             ])
             ->add('description', TextareaType::class, [
-                'label' => 'Description',
+            'label' => 'Description',
             ])
             ->add('localisation')
             ->add('image', FileType::class, [
-                'label' => 'Image',
-                'data_class' => null,
+            'label' => 'Image',
+            'data_class' => null,
             ])
             ->add('user', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'nom',
+            'class' => User::class,
+            'choice_label' => 'nom',
+            'label' => 'Utilisateur',
+            'mapped' => false,
+            'required' => false,
+            'attr' => [
+                'class' => 'user-field',
+            ],
+            'data' => $options['user'] ?? null, // Set the current user if available
             ])
         ;
     }
@@ -39,6 +46,7 @@ class DonsType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Dons::class,
+            'user' => null,
         ]);
     }
 }
