@@ -26,17 +26,16 @@
                     {% for user in topUsers %}
                         <tr class="
                             border-b border-[#4B5429] text-white hover:bg-[#4B5429] transition-colors duration-300 ease-in-out 
-                            animate-fade-in-row
-                            {% if loop.index == 1 %} first-place {% elseif loop.index == 2 %} second-place {% elseif loop.index == 3 %} third-place {% endif %}
-                        ">
+                            animate-fade-in-row">
                             <td class="px-6 py-4 font-bold">
-                                {{ loop.index }}
                                 {% if loop.index == 1 %}
-                                    🏆
+                                    <span class="first-place">🏆</span>
                                 {% elseif loop.index == 2 %}
-                                    🥈
+                                    <span class="second-place">🥈</span>
                                 {% elseif loop.index == 3 %}
-                                    🥉
+                                    <span class="third-place">🥉</span>
+                                {% else %}
+                                    {{ loop.index }}
                                 {% endif %}
                             </td>
                             <td class="px-6 py-4">{{ user.nom }} {{ user.prenom }}</td>
