@@ -1,0 +1,70 @@
+{{ form_start(form, {'attr': {'class': 'space-y-6'}}) }}
+    <div>
+        {{ form_label(form.titre, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+        {{ form_widget(form.titre, {'attr': {'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'}}) }}
+        {{ form_errors(form.titre) }}
+    </div>
+
+    <div>
+        {{ form_label(form.description, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+        {{ form_widget(form.description, {'attr': {'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'}}) }}
+        {{ form_errors(form.description) }}
+    </div>
+
+    <div>
+        {{ form_label(form.titreQuestion, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+        {{ form_widget(form.titreQuestion, {'attr': {'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'}}) }}
+        {{ form_errors(form.titreQuestion) }}
+    </div>
+
+    <div>
+        {{ form_label(form.xp, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+        {{ form_widget(form.xp, {'attr': {'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'}}) }}
+        {{ form_errors(form.xp) }}
+    </div>
+
+    <div id="dynamic-fields" class="mt-4 space-y-4"></div><br>
+
+    <button type="button" id="add-field" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700">+</button><br>
+{{ form_end(form) }}
+
+{% block javascripts %}
+    <script>
+        document.getElementById('add-field').addEventListener('click', function() {
+            var container = document.getElementById('dynamic-fields');
+            var index = container.children.length / 2; // Diviser par 2 car chaque ajout crée deux enfants (titre et isGoodReponse)
+
+            var titreDiv = document.createElement('div');
+            var titreLabel = document.createElement('label');
+            titreLabel.className = 'block text-sm font-medium text-gray-700';
+            titreLabel.innerText = 'Titre';
+            var titreInput = document.createElement('input');
+            titreInput.type = 'text';
+            titreInput.name = 'reponses[' + index + '][titre]';
+            titreInput.className = 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm';
+            titreDiv.appendChild(titreLabel);
+            titreDiv.appendChild(titreInput);
+
+            var isGoodReponseDiv = document.createElement('div');
+            var isGoodReponseLabel = document.createElement('label');
+            isGoodReponseLabel.className = 'block text-sm font-medium text-gray-700';
+            isGoodReponseLabel.innerText = 'Is Good Reponse';
+            var isGoodReponseSelect = document.createElement('select');
+            isGoodReponseSelect.name = 'reponses[' + index + '][isGoodReponse]';
+            isGoodReponseSelect.className = 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm';
+            var optionYes = document.createElement('option');
+            optionYes.value = 'yes';
+            optionYes.innerText = 'Yes';
+            var optionNo = document.createElement('option');
+            optionNo.value = 'no';
+            optionNo.innerText = 'No';
+            isGoodReponseSelect.appendChild(optionYes);
+            isGoodReponseSelect.appendChild(optionNo);
+            isGoodReponseDiv.appendChild(isGoodReponseLabel);
+            isGoodReponseDiv.appendChild(isGoodReponseSelect);
+
+            container.appendChild(titreDiv);
+            container.appendChild(isGoodReponseDiv);
+        });
+    </script>
+{% endblock %}

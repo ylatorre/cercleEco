@@ -3,24 +3,17 @@
 namespace App\Controller\Front;
 
 
-use App\Entity\Application\User;
 use App\Repository\Application\DonsRepository;
-use App\Entity\Application\Quests;
-use App\Repository\Application\etatRepository;
-use App\Repository\Application\QuestsRepository;
-use App\Repository\Application\DayQuestRepository;
-use App\Entity\Application\DayQuest;
 use App\Service\LevelCalculatorService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
-use App\Entity\Application\Etat; 
+use Symfony\Component\Routing\Attribute\Route; 
 use App\Service\ChatGPTService;
 use App\Form\ChatGPTType;
+use App\Repository\Application\QuetesRepository;
 use App\Repository\Application\UserRepository;
 use App\Service\DayQuestService;
 
@@ -40,11 +33,11 @@ class FrontController extends AbstractController
     }
 
     #[Route('/', name: 'app_front')]
-    public function index(QuestsRepository $questsRepository): Response
+    public function index(): Response
     {
-        $quests = $questsRepository->findAll();
+        // $quests = $questsRepository->findAll();
         return $this->render('Front/index.html.twig', [
-            'quests' => $quests,
+            // 'quests' => $quests,
         ]);
     }
 
@@ -90,54 +83,49 @@ class FrontController extends AbstractController
     }
 
     #[Route('/front/quetes', name: 'app_quetes')]
-    public function quetes(QuestsRepository $questsRepository): Response
+    public function quetes(QuetesRepository $quetesRepository): Response
     {
-        $quests = $questsRepository->findBy([], ['ordre' => 'ASC']); // Tri par 'ordre'
+        $quests = $quetesRepository->findAll(['ordre' => 'ASC']);
 
         return $this->render('Front/quetes.html.twig', [
             'quests' => $quests,
         ]);
     }
 
-    #[Route('/quetes/{id}', name: 'app_quetes_show')]
-    public function QuetesShow(int $id, QuestsRepository $questsRepository, EtatRepository $etatRepository): Response
-    {
-        $quest = $questsRepository->find($id);
-        if (!$quest) {
-            throw $this->createNotFoundException('La quête demandée n\'existe pas.');
-        }
+    // #[Route('/quetes/{id}', name: 'app_quetes_show')]
+    // public function QuetesShow(int $id, QuestsRepository $questsRepository, EtatRepository $etatRepository): Response
+    // {
+    //     $quest = $questsRepository->find($id);
 
-        // Récupération de l'utilisateur connecté
-        $user = $this->security->getUser();
+    //     $user = $this->security->getUser();
 
-        // Rechercher l'état de la quête pour cet utilisateur (s'il existe)
-        $etat = $etatRepository->findOneBy(['quest' => $quest, 'user' => $user]);
+    //      $etat = $etatRepository->findOneBy(['quest' => $quest, 'user' => $user]);
 
-        return $this->render('Front/quetes_show.html.twig', [
-            'quest' => $quest,
-            'etat' => $etat, // On passe l'état à la vue
-        ]);
-    }
+    //      return $this->render('Front/quetes_show.html.twig', [
+    //         'quest' => $quest,
+    //          'etat' => $etat,
+    //      ]);
+    // }
 
 
-    #[Route('/quetes/{id}/repondre', name: 'app_quetes_repondre', methods: ['POST'])]
-    public function repondre(int $id, Request $request, QuestsRepository $questsRepository, EtatRepository $etatRepository): Response
-    {
-        $quest = $questsRepository->find($id);
-        if (!$quest) {
-            throw $this->createNotFoundException('Quête non trouvée.');
-        }
+    // #[Route('/quetes/{id}/repondre', name: 'app_quetes_repondre', methods: ['POST'])]
+    // public function repondre(int $id, Request $request, QuestsRepository $questsRepository, EtatRepository $etatRepository): Response
+    // {
+    //     $quest = $questsRepository->find($id);
+    //     if (!$quest) {
+    //         throw $this->createNotFoundException('Quête non trouvée.');
+    //     }
 
-        $reponse = $request->request->get('reponse');
-        $etat = new Etat();
-        $etat->setTitre($quest->getNom());
-        $etat->setCode($quest->getToken());
-        $etat->setFinish($reponse === $quest->getReponseCorrecte()); // Marque la quête comme terminée si la réponse est correcte
+    //     $reponse = $request->request->get('reponse');
+    //     $etat = new Etat();
+    //     $etat->setTitre($quest->getNom());
+    //     $etat->setCode($quest->getToken());
+    //     $etat->setFinish($reponse === $quest->getReponseCorrecte()); // Marque la quête comme terminée si la réponse est correcte
 
-        $etatRepository->save($etat, true);
+    //     $etatRepository->save($etat, true);
 
-        return $this->redirectToRoute('app_quetes_show', ['id' => $id]);
-    }
+    //     return $this->redirectToRoute('app_quetes_show', ['id' => $id]);
+    // }
 
 
     #[Route('/actualités', name: 'app_actualites')]
