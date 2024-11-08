@@ -72,6 +72,17 @@ class FrontController extends AbstractController
         ]);
     }
 
+    #[Route('/front/dons/cloture/{token}', name: 'app_dons_perso_cloture')]
+    public function donsCloture(Request $request, DonsRepository $donsRepository, UserRepository $userRepository): Response
+    {
+        $token = $request->get('token');
+        $user = $userRepository->findOneBy(['token' => $token]);
+        $dons = $donsRepository->findBy(['user' => $user, 'etat'=>2]); // Assuming 'etat' 2 means closed
+        return $this->render('Front/donsCloture.html.twig', [
+            'dons' => $dons
+        ]);
+    }
+
     #[Route('/front/donsdetail/{token}', name: 'app_don_detail')]
     public function donsDetail(Request $request, DonsRepository $donsRepository): Response
     {
@@ -81,6 +92,90 @@ class FrontController extends AbstractController
         return $this->render('Front/donsDetail.html.twig', [
             'don' => $don
         ]);
+    }
+
+    #[Route('/front/donsdetail/acquisition/{token}', name: 'app_don_detail_acquisition')]
+    public function donsDetailAcquisition(Request $request, DonsRepository $donsRepository): Response
+    {
+        $token = $request->get('token');
+        $don = $donsRepository->findOneBy(['token' => $token]);
+
+        return $this->render('Front/acquisition.html.twig', [
+            'don' => $don
+        ]);
+    }
+
+    #[Route('/front/donsdetail/changeStatus/{token}', name: 'app_don_detail_change_status')]
+    public function changeStatusDons(Request $request, DonsRepository $donsRepository, EntityManagerInterface $entityManager): Response
+    {
+        $token = $request->get('token');
+        $params = $request->request->all();
+        $userWhoReserve = $entityManager->getRepository(User::class)->findOneByToken(['token' => $params['user'][0]]);
+        $don = $donsRepository->findOneBy(['token' => $token]);
+        $don->setEtat(1);
+        $don->setAcheteur($userWhoReserve);
+
+        $entityManager->persist($don);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_dons');
+
+        // return $this->render('Front/donsDetail.html.twig', [
+        //     'don' => $don
+        // ]);
+    }
+
+    #[Route('/front/donsdetail/cloturer/{token}', name: 'app_don_detail_cloturer')]
+    public function cloturerAcquisition(Request $request, DonsRepository $donsRepository, EntityManagerInterface $entityManager): Response
+    {
+        $token = $request->get('token');
+        $don = $donsRepository->findOneBy(['token' => $token]);
+
+        if (!$don) {
+            throw $this->createNotFoundException('Don non trouvé.');
+        }
+
+        $don->setEtat(2); // Marquer comme clôturé
+        $entityManager->persist($don);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_dons');
+    }
+
+    #[Route('/front/donsdetail/annuler/{token}', name: 'app_don_detail_annuler')]
+    public function annulerAcquisition(Request $request, DonsRepository $donsRepository, EntityManagerInterface $entityManager): Response
+    {
+        $token = $request->get('token');
+        $don = $donsRepository->findOneBy(['token' => $token]);
+
+        if (!$don) {
+            throw $this->createNotFoundException('Don non trouvé.');
+        }
+
+        $don->setEtat(0); // Réinitialiser l'état
+        $don->setAcheteur(null); // Supprimer l'acheteur
+        $entityManager->persist($don);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_dons');
+    }
+
+    #[Route('/front/donsdetail/reopen/{token}', name: 'app_don_detail_reopen')]
+    public function reopenAcquisition(Request $request, DonsRepository $donsRepository, EntityManagerInterface $entityManager): Response
+    {
+        $token = $request->get('token');
+        $don = $donsRepository->findOneBy(['token' => $token]);
+
+        if (!$don) {
+            throw $this->createNotFoundException('Don non trouvé.');
+        }
+
+        $don->setEtat(0); // Réinitialiser l'état à ouvert
+        $don->setAcheteur(null);
+        $entityManager->persist($don);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_dons');
     }
 
     #[Route('/front/quetes', name: 'app_quetes')]

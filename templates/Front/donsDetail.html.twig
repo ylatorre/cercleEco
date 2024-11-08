@@ -3,41 +3,44 @@
 {% block title %}Greenify - Accueil{% endblock %}
 
 {% block body %}
-<div class="min-h-screen bg-[#3B4419] flex flex-col items-center justify-center">
-    <div class="max-w-7xl mx-auto px-6 py-10 w-full">
-        <div class="bg-[#DFE777] p-6 rounded-lg flex flex-col items-center text-center text-[#3B4419] w-full">
-            {% if don.image %}
-                <img src="{{ asset('image/dons/' ~ don.image) }}" alt="{{ don.titre }}" class="w-full h-auto mb-4 rounded-lg">
-            {% endif %}
-            <h2 class="text-2xl font-serif mb-4">{{ don.titre }}</h2>
-            <p class="text-gray-700 mb-4">{{ don.description }}</p>
-            <p class="text-gray-600 mb-4">Emplacement : {{ don.localisation ? don.localisation : 'Non spécifié' }}</p>
-            <p class="text-gray-600 mb-4">Vendeur : {{ don.user.nom }} {{ don.user.prenom }}</p>
-            <p class="text-gray-600 mb-4">Email : {{ don.user.email }}</p>
+<form method="post" action="{{ path('app_don_detail_change_status', {'token': don.token}) }}">
+    <input type="hidden" name="user[]" value="{{ app.user.token }}">
+    <div class="min-h-screen bg-[#3B4419] flex flex-col items-center justify-center">
+        <div class="max-w-7xl mx-auto px-6 py-10 w-full">
+            <div class="bg-[#DFE777] p-6 rounded-lg flex flex-col items-center text-center text-[#3B4419] w-full">
+                {% if don.image %}
+                    <img src="{{ asset('image/dons/' ~ don.image) }}" alt="{{ don.titre }}" class="w-full h-auto mb-4 rounded-lg">
+                {% endif %}
+                <h2 class="text-2xl font-serif mb-4">{{ don.titre }}</h2>
+                <p class="text-gray-700 mb-4">{{ don.description }}</p>
+                <p class="text-gray-600 mb-4">Emplacement : {{ don.localisation ? don.localisation : 'Non spécifié' }}</p>
+                <p class="text-gray-600 mb-4">Vendeur : {{ don.user.nom }} {{ don.user.prenom }}</p>
+                <p class="text-gray-600 mb-4">Email : {{ don.user.email }}</p>
 
 
-            {# <!-- Advantages Section -->
-            <h3 class="text-2xl font-semibold mb-4">Avantages :</h3>
-            <ul class="list-disc list-inside space-y-2 mb-8">
-                <li><strong>Esthétique Moderne</strong> : Idéale pour ceux qui apprécient l'ameublement moderne et design.</li>
-                <li><strong>Polyvalence</strong> : Parfaite pour le salon, les études, le café, et plus encore.</li>
-                <li><strong>Touche Contemporaine</strong> : Ajoute une touche contemporaine à votre cuisine ou espace de dégustation.</li>
-                <li><strong>Durabilité</strong> : Conçue pour durer, cette chaise résiste aux chocs et à l'usure quotidienne.</li>
-            </ul>
+                {# <!-- Advantages Section -->
+                <h3 class="text-2xl font-semibold mb-4">Avantages :</h3>
+                <ul class="list-disc list-inside space-y-2 mb-8">
+                    <li><strong>Esthétique Moderne</strong> : Idéale pour ceux qui apprécient l'ameublement moderne et design.</li>
+                    <li><strong>Polyvalence</strong> : Parfaite pour le salon, les études, le café, et plus encore.</li>
+                    <li><strong>Touche Contemporaine</strong> : Ajoute une touche contemporaine à votre cuisine ou espace de dégustation.</li>
+                    <li><strong>Durabilité</strong> : Conçue pour durer, cette chaise résiste aux chocs et à l'usure quotidienne.</li>
+                </ul>
 
-            <!-- Usage Section -->
-            <h3 class="text-2xl font-semibold mb-4">Utilisation :</h3>
-            <ul class="list-disc list-inside space-y-2 mb-8">
-                <li><strong>Petit-Déjeuner</strong> : Commencez votre journée avec style.</li>
-                <li><strong>Goûter</strong> : Parfaite pour une pause gourmande.</li>
-                <li><strong>Cadeau</strong> : Un excellent cadeau pour les amateurs de design et d'artisanat.</li> #}
-            </ul>
+                <!-- Usage Section -->
+                <h3 class="text-2xl font-semibold mb-4">Utilisation :</h3>
+                <ul class="list-disc list-inside space-y-2 mb-8">
+                    <li><strong>Petit-Déjeuner</strong> : Commencez votre journée avec style.</li>
+                    <li><strong>Goûter</strong> : Parfaite pour une pause gourmande.</li>
+                    <li><strong>Cadeau</strong> : Un excellent cadeau pour les amateurs de design et d'artisanat.</li> #}
+                </ul>
 
-            <!-- Add to Cart Button -->
-            <button class="mt-4 px-6 py-3 border border-[#3B4419] bg-transparent rounded-full text-[#3B4419] font-semibold hover:bg-white hover:text-[#DFE777] transition-colors">
-                Je réserve
-            </button>
+                <!-- Add to Cart Button -->
+                <button type="submit" class="mt-4 px-6 py-3 border border-[#3B4419] bg-transparent rounded-full text-[#3B4419] font-semibold hover:bg-white hover:text-[#DFE777] transition-colors">
+                    Je réserve
+                </button>
+            </div>
         </div>
     </div>
-</div>
+</form>
 {% endblock %}
