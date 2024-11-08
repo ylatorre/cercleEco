@@ -6,7 +6,7 @@
 <div class="flex min-h-screen bg-[#B8BC86]">
     <!-- Sidebar -->
     <aside class="w-64 bg-[#3B4419] text-white p-6">
-        <h1 class="text-2xl font-serif mb-6">Greenify</h1>
+<img src="{{ asset('image/logo.png') }}" alt="Greenify Logo" class="inline-block" style="height: 8rem;">
         <div class="w-12 h-12 mb-8">
             <!-- Replace with logo if needed -->
             {# <svg viewBox="0 0 24 24" fill="currentColor" class="text-green-400">
@@ -25,7 +25,7 @@
     <main class="flex-1 p-8">
         <!-- Header -->
         <div class="flex justify-between items-center mb-8">
-            <h2 class="text-xl text-[#3B4419]">Admin {{ app.user.prenom }}</h2>
+            <h2 class="text-xl text-[#3B4419]">Bonjour {{ app.user.prenom }}</h2>
         </div>
 
         <!-- Dons Section -->
@@ -49,6 +49,11 @@
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                         </svg>
                                     </a>
+                                     <a href="{{ path('app_application_dons_show', {'token': don.token}) }}" class="text-white hover:text-gray-300 transition-colors">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12zM12 15a3 3 0 100-6 3 3 0 000 6z" />
+                                            </svg>
+                                        </a>
                                     <a href="{{ path('app_application_dons_edit', {'token': don.token}) }}" class="text-white hover:text-gray-300 transition-colors">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />

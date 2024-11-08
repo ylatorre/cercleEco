@@ -3,57 +3,73 @@
 {% block title %}Quetes{% endblock %}
 
 {% block body %}
-<div class="min-h-screen bg-gray-100 flex flex-col justify-center items-center">
-    <div class="bg-white shadow-md rounded-lg p-8 max-w-4xl w-full">
-        <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">Quetes</h1>
+<div class="flex min-h-screen bg-[#B8BC86]">
+    {# Sidebar #}
+    <aside class="w-64 bg-[#3B4419] text-white p-6">
+        <div class="mb-12">
+            <img src="{{ asset('image/logo.png') }}" alt="Greenify Logo" class="inline-block" style="height: 8rem;">
+        </div>
+    </aside>
 
-        <table class="table-auto w-full mb-6">
-            <tbody>
-                <tr class="border-b">
-                    <th class="px-4 py-2 text-left text-gray-600">Id</th>
-                    <td class="px-4 py-2">{{ quete.id }}</td>
-                </tr>
-                <tr class="border-b">
-                    <th class="px-4 py-2 text-left text-gray-600">Titre</th>
-                    <td class="px-4 py-2">{{ quete.titre }}</td>
-                </tr>
-                <tr class="border-b">
-                    <th class="px-4 py-2 text-left text-gray-600">Description</th>
-                    <td class="px-4 py-2">{{ quete.description }}</td>
-                </tr>
-                <tr class="border-b">
-                    <th class="px-4 py-2 text-left text-gray-600">Etat</th>
-                    <td class="px-4 py-2">{{ quete.etat }}</td>
-                </tr>
-                <tr class="border-b">
-                    <th class="px-4 py-2 text-left text-gray-600">TitreQuestion</th>
-                    <td class="px-4 py-2">{{ quete.titreQuestion }}</td>
-                </tr>
-                <tr class="border-b">
-                    <th class="px-4 py-2 text-left text-gray-600">Xp</th>
-                    <td class="px-4 py-2">{{ quete.xp }}</td>
-                </tr>
-                {% for r in reponses %}
-                    <tr class="border-b">
-                        <th class="px-4 py-2 text-left text-gray-600">Reponse1</th>
-                        <td class="px-4 py-2">{{ r.titre }}</td>
-                    </tr>
-                    <tr class="border-b">
-                        <th class="px-4 py-2 text-left text-gray-600">Bonne reponse</th>
-                        <td class="px-4 py-2">{{ r.isGoodQuestion ? 'Oui' : 'Non' }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-
-        <div class="flex justify-between">
-            <a href="{{ path('app_application_quetes_index') }}" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">Back to list</a>
-            <a href="{{ path('app_application_quetes_edit', {'id': quete.id}) }}" class="bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-700">Edit</a>
+    {# Main Content #}
+    <main class="flex-1 p-8">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-xl text-[#3B4419]">Bonjour {{ app.user.prenom }}</h2>
         </div>
 
-        <div class="mt-4">
-            {{ include('application/quetes/_delete_form.html.twig') }}
+        <div class="mb-8">
+            <h1 class="text-4xl font-serif text-[#3B4419] mb-8">Quetes</h1>
+
+            <div class="bg-[#3B4419] rounded-2xl overflow-hidden p-8">
+                <table class="table-auto w-full mb-6">
+                    <tbody>
+                        <tr class="border-b border-[#4B5429]">
+                            <th class="px-4 py-2 text-left text-white">Id</th>
+                            <td class="px-4 py-2 text-white">{{ quete.id }}</td>
+                        </tr>
+                        <tr class="border-b border-[#4B5429]">
+                            <th class="px-4 py-2 text-left text-white">Titre</th>
+                            <td class="px-4 py-2 text-white">{{ quete.titre }}</td>
+                        </tr>
+                        <tr class="border-b border-[#4B5429]">
+                            <th class="px-4 py-2 text-left text-white">Description</th>
+                            <td class="px-4 py-2 text-white">{{ quete.description }}</td>
+                        </tr>
+                        <tr class="border-b border-[#4B5429]">
+                            <th class="px-4 py-2 text-left text-white">Etat</th>
+                            <td class="px-4 py-2 text-white">{{ quete.etat }}</td>
+                        </tr>
+                        <tr class="border-b border-[#4B5429]">
+                            <th class="px-4 py-2 text-left text-white">TitreQuestion</th>
+                            <td class="px-4 py-2 text-white">{{ quete.titreQuestion }}</td>
+                        </tr>
+                        <tr class="border-b border-[#4B5429]">
+                            <th class="px-4 py-2 text-left text-white">Xp</th>
+                            <td class="px-4 py-2 text-white">{{ quete.xp }}</td>
+                        </tr>
+                        {% for r in reponses %}
+                            <tr class="border-b border-[#4B5429]">
+                                <th class="px-4 py-2 text-left text-white">Reponse1</th>
+                                <td class="px-4 py-2 text-white">{{ r.titre }}</td>
+                            </tr>
+                            <tr class="border-b border-[#4B5429]">
+                                <th class="px-4 py-2 text-left text-white">Bonne reponse</th>
+                                <td class="px-4 py-2 text-white">{{ r.isGoodQuestion ? 'Oui' : 'Non' }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <div class="flex justify-between">
+                    <a href="{{ path('app_application_quetes_index') }}" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">Back to list</a> 
+                     <a href="{{ path('app_application_quetes_edit', {'id': quete.id}) }}" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700]">Edit</a> 
+                 </div>
+
+                <div class="mt-4">
+                    {{ include('application/quetes/_delete_form.html.twig') }}
+                </div>
+            </div>
         </div>
-    </div>
+    </main>
 </div>
 {% endblock %}
