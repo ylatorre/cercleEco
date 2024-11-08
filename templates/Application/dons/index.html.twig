@@ -52,7 +52,7 @@
                 <tbody>
                     {% for don in dons %}
                         <tr class="border-b border-[#4B5429]">
-                            <td class="py-4 px-6">{{ don.titre }}</td>
+                            <td class="py-4 px-6">{{ don.titre|length > 50 ? don.titre|slice(0, 50) ~ '...' : don.titre }}</td>
                             <td class="py-4 px-6">
                                 <div class="flex space-x-4">
                                  <a href="{{ path('app_application_dons_show', {'token': don.token}) }}" class="text-white hover:text-gray-300 transition-colors">

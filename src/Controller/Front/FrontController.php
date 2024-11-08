@@ -178,6 +178,21 @@ class FrontController extends AbstractController
         return $this->redirectToRoute('app_dons');
     }
 
+    #[Route('/front/mes-reservations/{token}', name: 'app_mes_reservations')]
+    public function mesReservations(DonsRepository $donsRepository): Response
+    {
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour voir vos réservations.');
+        }
+
+        $reservations = $donsRepository->findBy(['acheteur' => $user]);
+
+        return $this->render('Front/mesReservations.html.twig', [
+            'reservations' => $reservations,
+        ]);
+    }
+
     #[Route('/front/quetes', name: 'app_quetes')]
     public function quetes(QuetesRepository $quetesRepository): Response
     {

@@ -39,11 +39,11 @@
                         </tr>
                         <tr class="border-b border-[#4B5429]">
                             <th class="px-4 py-2 text-left text-white">Titre</th>
-                            <td class="px-4 py-2 text-white">{{ quete.titre }}</td>
+                            <td class="px-4 py-2 text-white">{{ quete.description|length > 30 ? quete.description|slice(0, 30) ~ '...' : quete.description }}</td>
                         </tr>
                         <tr class="border-b border-[#4B5429]">
                             <th class="px-4 py-2 text-left text-white">Description</th>
-                            <td class="px-4 py-2 text-white">{{ quete.description }}</td>
+                            <td class="px-4 py-2 text-white">{{ quete.description|length > 30 ? quete.description|slice(0, 30) ~ '...' : quete.description }}</td>
                         </tr>
                         <tr class="border-b border-[#4B5429]">
                             <th class="px-4 py-2 text-left text-white">Etat</th>
@@ -51,7 +51,7 @@
                         </tr>
                         <tr class="border-b border-[#4B5429]">
                             <th class="px-4 py-2 text-left text-white">TitreQuestion</th>
-                            <td class="px-4 py-2 text-white">{{ quete.titreQuestion }}</td>
+                            <td class="px-4 py-2 text-white">{{ quete.titreQuestion|length > 30 ? quete.titreQuestion|slice(0, 30) ~ '...' : quete.titreQuestion }}</td>
                         </tr>
                         <tr class="border-b border-[#4B5429]">
                             <th class="px-4 py-2 text-left text-white">Xp</th>
@@ -60,7 +60,7 @@
                         {% for k,r in reponses %}
                             <tr class="border-b border-[#4B5429]">
                                 <th class="px-4 py-2 text-left text-white">Reponse {{k +1}}</th>
-                                <td class="px-4 py-2 text-white">{{ r.titre }}</td>
+                                <td class="px-4 py-2 text-white">{{ r.titre|length > 30 ? r.titre|slice(0, 30) ~ '...' : r.titre }}</td>
                             </tr>
                             <tr class="border-b border-[#4B5429]">
                                 <th class="px-4 py-2 text-left text-white">Bonne reponse</th>

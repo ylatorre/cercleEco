@@ -33,6 +33,7 @@ final class DonsController extends AbstractController
         $entityManager->persist($don);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $don->setEtat(0);
             $imageFile = $form->get('image')->getData();
 
             if ($imageFile) {
