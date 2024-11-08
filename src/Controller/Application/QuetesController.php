@@ -18,7 +18,7 @@ final class QuetesController extends AbstractController
     #[Route(name: 'app_application_quetes_index', methods: ['GET'])]
     public function index(QuetesRepository $quetesRepository): Response
     {
-        return $this->render('application/quetes/index.html.twig', [
+        return $this->render('Application/quetes/index.html.twig', [
             'quetes' => $quetesRepository->findAll(),
         ]);
     }
@@ -56,7 +56,7 @@ final class QuetesController extends AbstractController
             return $this->redirectToRoute('app_application_quetes_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('application/quetes/new.html.twig', [
+        return $this->render('Application/quetes/new.html.twig', [
             'quete' => $quete,
             'form' => $form,
         ]);
@@ -66,7 +66,7 @@ final class QuetesController extends AbstractController
     public function show(Quetes $quete, EntityManagerInterface $entityManager): Response
     {
         $quetesReponses = $entityManager->getRepository(QuetesReponses::class)->findByQuete($quete);
-        return $this->render('application/quetes/show.html.twig', [
+        return $this->render('Application/quetes/show.html.twig', [
             'quete' => $quete,
             'reponses' => $quetesReponses,
         ]);
@@ -114,7 +114,7 @@ final class QuetesController extends AbstractController
 
             return $this->redirectToRoute('app_application_quetes_index', [], Response::HTTP_SEE_OTHER);
         }
-        return $this->render('application/quetes/edit.html.twig', [
+        return $this->render('Application/quetes/edit.html.twig', [
             'quete' => $quete,
             'form' => $form,
             'reponses' => $reponses,
