@@ -41,7 +41,7 @@ final class QuetesController extends AbstractController
                     $quetesReponses = new QuetesReponses();
                     $quetesReponses->setQuete($quete);
                     $quetesReponses->setTitre($p['titre']);
-                    if($p['isGoodQuestion'] == 'yes'){
+                    if($p['isGoodReponse'] == 'yes'){
                         $quetesReponses->setIsGoodQuestion(1);
                     }else{
                         $quetesReponses->setIsGoodQuestion(0);
@@ -85,12 +85,25 @@ final class QuetesController extends AbstractController
         $params = $request->request->all();
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // dump($params);die();
+            if(array_key_exists('reponsesOld', $params)){
+                foreach($params['reponsesOld'] as $p){
+                    $quetesReponses = $entityManager->getRepository(QuetesReponses::class)->findOneById($p['id']);
+                    $quetesReponses->setTitre($p['titre']);
+                    if($p['isGoodQuestion'] == 'yes'){
+                        $quetesReponses->setIsGoodQuestion(1);
+                    }else{
+                        $quetesReponses->setIsGoodQuestion(0);
+                    }
+                    $entityManager->persist($quetesReponses);
+                }
+            }
             if(array_key_exists('reponses', $params)){
                 foreach($params['reponses'] as $p){
                     $quetesReponses = new QuetesReponses();
                     $quetesReponses->setQuete($quete);
                     $quetesReponses->setTitre($p['titre']);
-                    if($p['isGoodQuestion'] == 'yes'){
+                    if($p['isGoodReponse'] == 'yes'){
                         $quetesReponses->setIsGoodQuestion(1);
                     }else{
                         $quetesReponses->setIsGoodQuestion(0);

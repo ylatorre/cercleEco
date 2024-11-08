@@ -33,9 +33,9 @@
                     <th class="px-4 py-2 text-left text-gray-600">Xp</th>
                     <td class="px-4 py-2">{{ quete.xp }}</td>
                 </tr>
-                {% for r in reponses %}
+                {% for k,r in reponses %}
                     <tr class="border-b">
-                        <th class="px-4 py-2 text-left text-gray-600">Reponse1</th>
+                        <th class="px-4 py-2 text-left text-gray-600">Reponse{{k +1}}</th>
                         <td class="px-4 py-2">{{ r.titre }}</td>
                     </tr>
                     <tr class="border-b">

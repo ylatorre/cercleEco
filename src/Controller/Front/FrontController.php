@@ -18,6 +18,8 @@ use App\Repository\Application\UserRepository;
 use App\Service\DayQuestService;
 use App\Repository\Application\DayQuestUserRepository;
 use App\Entity\Application\DayQuestUser;
+use App\Entity\Application\Quetes;
+use App\Entity\Application\QuetesReponses;
 
 class FrontController extends AbstractController
 {
@@ -86,46 +88,72 @@ class FrontController extends AbstractController
     {
         $quests = $quetesRepository->findAll(['ordre' => 'ASC']);
 
-        return $this->render('Front/quetes.html.twig', [
+        return $this->render('Front/quetes/quetes.html.twig', [
             'quests' => $quests,
         ]);
     }
 
-    // #[Route('/quetes/{id}', name: 'app_quetes_show')]
-    // public function QuetesShow(int $id, QuestsRepository $questsRepository, EtatRepository $etatRepository): Response
-    // {
-    //     $quest = $questsRepository->find($id);
+    #[Route('/front/{id}', name: 'app_front_quetes_play', methods: ['GET'])]
+    public function show(Quetes $quete, EntityManagerInterface $entityManager): Response
+    {
+        $checkbox = false;
+        $counter = 0;
+        $quetesReponses = $entityManager->getRepository(QuetesReponses::class)->findByQuete($quete);
+        foreach($quetesReponses as $reponse){
+            if($reponse->getIsGoodQuestion() == 1){
+                $counter+=1;
+            }
+        }
+        if($counter > 1){
+            $checkbox = true;
+        }
+        return $this->render('Front/quetes/queteQuizz.html.twig', [
+            'quete' => $quete,
+            'reponses' => $quetesReponses,
+            'checkbox' => $checkbox,
+            'counter' => $counter
+        ]);
+    }
 
-    //     $user = $this->security->getUser();
+    #[Route('/front/reponse/{id}', name: 'app_front_quetes_reponse', methods: ['GET', 'POST'])]
+    public function reponse(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $params = $request->request->all();
+        $user = $this->getUser();
+        if(array_key_exists('checkbox', $params) && $params['checkbox'][0] == 'true' && array_key_exists('counter', $params)){
+            $counterReponse = 0;
+            foreach($params['reponses'] as $r){
+                $reponse = $entityManager->getRepository(QuetesReponses::class)->findById($r);
+                if($reponse[0]->getIsGoodQuestion() == 1){
+                    $counterReponse++;
+                }
+            }
+            $quete = $reponse[0]->getQuete();
+            if($counterReponse == $params['counter'][0]){
+                $quete->setEtat(1);
+                $user->setXpTotal($user->getXpTotal() + $quete->getXp());
+            }else{
+                $quete->setEtat(2);
+            }
+        }else{
+            $reponse = $entityManager->getRepository(QuetesReponses::class)->findOneById($params['reponse']);
+            $quete = $reponse->getQuete();
+            if($reponse->getIsGoodQuestion() == 1){
+                $quete->setEtat(1);
+                $user->setXpTotal($user->getXpTotal() + $quete->getXp());
+            }else{
+                $quete->setEtat(2);
+            }
+        }
+        
+        $entityManager->persist($quete);
+        $entityManager->persist($user);
+        $entityManager->flush();
+        return $this->redirectToRoute('app_quetes');
+        // return $this->render('Front/quetes/queteQuizz.html.twig', [
 
-    //      $etat = $etatRepository->findOneBy(['quest' => $quest, 'user' => $user]);
-
-    //      return $this->render('Front/quetes_show.html.twig', [
-    //         'quest' => $quest,
-    //          'etat' => $etat,
-    //      ]);
-    // }
-
-
-    // #[Route('/quetes/{id}/repondre', name: 'app_quetes_repondre', methods: ['POST'])]
-    // public function repondre(int $id, Request $request, QuestsRepository $questsRepository, EtatRepository $etatRepository): Response
-    // {
-    //     $quest = $questsRepository->find($id);
-    //     if (!$quest) {
-    //         throw $this->createNotFoundException('Quête non trouvée.');
-    //     }
-
-    //     $reponse = $request->request->get('reponse');
-    //     $etat = new Etat();
-    //     $etat->setTitre($quest->getNom());
-    //     $etat->setCode($quest->getToken());
-    //     $etat->setFinish($reponse === $quest->getReponseCorrecte()); // Marque la quête comme terminée si la réponse est correcte
-
-    //     $etatRepository->save($etat, true);
-
-    //     return $this->redirectToRoute('app_quetes_show', ['id' => $id]);
-    // }
-
+        // ]);
+    }
 
     #[Route('/actualités', name: 'app_actualites')]
     public function actualites(): Response

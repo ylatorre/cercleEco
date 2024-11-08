@@ -36,13 +36,14 @@
 
             <div id="dynamic-fields" class="mt-4 space-y-4">
                 {% for k,reponse in reponses %}
+                    <input type="hidden" name="reponsesOld[{{ k }}][id]" value="{{ reponse.id }}">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">Titre</label>
-                        <input type="text" name="reponses[{{ k }}][titre]" value="{{ reponse.titre }}" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        <label class="block text-sm font-medium text-gray-700">Titre{{k +1}}</label>
+                        <input type="text" name="reponsesOld[{{ k }}][titre]" value="{{ reponse.titre }}" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Is Good Reponse</label>
-                        <select name="reponses[{{ k }}][isGoodQuestion]" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        <select name="reponsesOld[{{ k }}][isGoodQuestion]" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                             <option value="yes" {% if reponse.isGoodQuestion %}selected{% endif %}>Yes</option>
                             <option value="no" {% if not reponse.isGoodQuestion %}selected{% endif %}>No</option>
                         </select>
