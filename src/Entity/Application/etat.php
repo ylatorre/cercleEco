@@ -22,10 +22,6 @@ class etat
     #[ORM\Column]
     private ?bool $isFinish = null;
 
-    // Dans l'entité Etat
-    #[ORM\ManyToOne(targetEntity: Quests::class)]
-    private ?Quests $quest = null;
-
     #[ORM\ManyToOne(targetEntity: User::class)]
     private ?User $user = null;
 

@@ -4,60 +4,29 @@
 
 {% block body %}
 <div class="min-h-screen bg-[#3B4419]">
-    {# Navigation #}
-     {# <nav class="px-6 py-4">
-        <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <a href="{{ path('app_front') }}" class="text-2xl font-serif text-white">
-                Greenify
-            </a>
-
-            <div class="hidden md:flex items-center space-x-8 text-white">
-                <a href="{{ path('app_front') }}" class="hover:text-gray-300">Accueil</a>
-
-                <a href="{{ path('app_dons') }}" class="hover:text-gray-300">Dons</a>
-                <a href="{{ path('app_quetes') }}" class="hover:text-gray-300">Quêtes</a>
-                <a href="{{ path('app_actualites') }}" class="hover:text-gray-300">Actualités</a>
-            </div>
-
-            
-        <div class="flex items-center space-x-4">
-    <a href="{{ path('app_login') }}" class="border border-white rounded-full px-4 py-2 text-white hover:bg-white hover:text-[#3B4419] transition-colors flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-        </svg>
-    </a>
-
-    <a href="{{ path('app_chatAi') }}" class="border border-white rounded-full px-4 py-2 text-white hover:bg-white hover:text-[#3B4419] transition-colors flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8a9 9 0 100-18 9 9 0 000 18z" />
-        </svg>
-    </a>
-
-</div>
-
-    </nav> #}
+   
 
     {# Hero Section #}
     <div class="max-w-7xl mx-auto px-6 py-20">
         <h1 class="text-5xl md:text-7xl text-white font-serif text-center leading-tight mb-20">
-            Trouvez la mission<br>qui vous correspond
+            Trouvez la quête<br>qui vous correspond
         </h1>
 
         {# Cards Grid #}
         <div class="relative">
             <div id="cards-container" class="flex space-x-8 overflow-x-auto scroll-smooth">
                 {# ECOLO JUNIOR Card #}
-                {% for q in quests|slice(0, 10) %}
+                {# {% for q in quests|slice(0, 10) %} #}
                     <div class="bg-[#DFE777] p-8 rounded-lg flex flex-col items-center text-center min-w-[300px]">
-                        <h2 class="text-2xl font-serif mb-6">{{q.nom}}</h2>
+                        <h2 class="text-2xl font-serif mb-6"></h2> {# {{q.nom}} #}
                         <p class="text-gray-700 mb-8">
-                            {{q.description}}
+                            {# {{q.description}} #}
                         </p>
                         <a href="{{ path('app_front') }}" class="border border-[#3B4419] text-[#3B4419] rounded-full px-6 py-2 hover:bg-[#3B4419] hover:text-white transition-colors">
                             PARCOUREZ NOS MISSIONS
                         </a>
                     </div>
-                {% endfor %}
+                {# {% endfor %} #}
             </div>
             <button id="scroll-left" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-[#3B4419] text-white p-4 rounded-full">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

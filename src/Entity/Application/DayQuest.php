@@ -8,6 +8,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+use App\Entity\Application\User;
+
 #[ORM\Entity(repositoryClass: DayQuestRepository::class)]
 class DayQuest
 {
@@ -121,5 +123,17 @@ class DayQuest
         }
 
         return $this;
+    }
+
+    public function isCompleted(User $user): bool
+    {
+        // On accède à la table de liaison entre User et DayQuest (assurez-vous que le repository existe et contient une méthode pour récupérer la quête liée à un utilisateur)
+        $dayQuestUser = $this->getDayQuestUserRepository()->findOneBy([
+            'user' => $user,
+            'dayQuest' => $this,
+        ]);
+
+        // Retourne vrai si le champ "completed" est true, sinon false
+        return $dayQuestUser !== null && $dayQuestUser->getCompleted() === true;
     }
 }

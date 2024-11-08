@@ -1,46 +1,91 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Dons index{% endblock %}
+{% block title %}Gestion des Dons{% endblock %}
 
 {% block body %}
-<div class="min-h-screen bg-gray-100 flex flex-col justify-center items-center">
-    <div class="bg-white shadow-md rounded-lg p-8 max-w-4xl w-full">
-        <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">Dons index</h1>
-
-        <div class="mb-4">
-            <a href="{{ path('app_admin_index') }}" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">Retour</a>
+<div class="flex min-h-screen bg-[#B8BC86]">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-[#3B4419] text-white p-6">
+        <img src="{{ asset('image/logo.png') }}" alt="Greenify Logo" class="inline-block" style="height: 8rem;">
+        <div class="w-12 h-12 mb-8">
+            <!-- Replace with logo if needed -->
+            {# <svg viewBox="0 0 24 24" fill="currentColor" class="text-green-400">
+                <path d="M12 2L4.5 9.5C3 11 2 13 2 15c0 3.9 3.1 7 7 7 2 0 4-1 5-2.5C15 21 17 22 19 22c3.9 0 7-3.1 7-7 0-2-1-4-2.5-5.5L12 2z"/>
+            </svg> #}
         </div>
-        <table class="min-w-full bg-white">
-            <thead>
-                <tr>
-                    <th class="py-2 px-4 bg-gray-200 text-gray-600 font-bold uppercase text-sm text-left">Titre</th>
-                    <th class="py-2 px-4 bg-gray-200 text-gray-600 font-bold uppercase text-sm text-left">Localisation</th>
-                    <th class="py-2 px-4 bg-gray-200 text-gray-600 font-bold uppercase text-sm text-left">CreatedAt</th>
-                    <th class="py-2 px-4 bg-gray-200 text-gray-600 font-bold uppercase text-sm text-left">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for don in dons %}
-                <tr class="border-b">
-                    <td class="py-2 px-4">{{ don.titre }}</td>
-                    <td class="py-2 px-4">{{ don.localisation }}</td>
-                    <td class="py-2 px-4">{{ don.createdAt ? don.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                    <td class="py-2 px-4">
-                        <a href="{{ path('app_application_dons_show', {'token': don.token}) }}" class="text-blue-500 hover:underline"><i class="fas fa-eye"></i></a>
-                        <a href="{{ path('app_application_dons_edit', {'token': don.token}) }}" class="text-blue-500 hover:underline ml-2"><i class="fas fa-edit"></i></a>
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="8" class="py-2 px-4 text-center">No records found</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+        <nav class="space-y-4">
+            <a href="{{ path('app_application_quetes_index') }}" class="block py-2 px-4 rounded hover:bg-[#4B5429] transition-colors">Gestion des Quêtes</a>
+            <a href="{{ path('app_application_day_quest_index') }}" class="block py-2 px-4 rounded hover:bg-[#4B5429] transition-colors">Gestion des Quêtes journalière</a>
+            <a href="{{ path('app_application_dons_index') }}" class="block py-2 px-4 rounded bg-[#4B5429] transition-colors">Gestion des Dons</a>
+            <a href="{{ path('app_application_user_index') }}" class="block py-2 px-4 rounded hover:bg-[#4B5429] transition-colors">Gestion des Utilisateurs</a>
+        </nav>
+    </aside>
 
-        <div class="mt-4">
-            <a href="{{ path('app_application_dons_new') }}" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700"><i class="fas fa-plus"></i></a>
+    <!-- Main Content -->
+    <main class="flex-1 p-8">
+        <!-- Header -->
+        
+
+        <!-- Dons Section -->
+        <h1 class="text-4xl font-serif text-[#3B4419] mb-8">Dons</h1>
+         <!-- Pagination & Search -->
+        <div class="flex justify-between items-center mt-8">
+            
+
+            <a href="{{ path('app_application_dons_new') }}" class="bg-[#3B4419] text-white p-3 rounded-full">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+            </a>
         </div>
-    </div>
+
+          <div class="flex justify-between items-center mb-8">
+        </div>
+
+        <div class="bg-[#3B4419] rounded-2xl overflow-hidden">
+            <table class="w-full text-white">
+                <thead>
+                    <tr class="border-b border-[#4B5429]">
+                        <th class="py-4 px-6 text-left">Dons</th>
+                        <th class="py-4 px-6 text-left">Gestion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for don in dons %}
+                        <tr class="border-b border-[#4B5429]">
+                            <td class="py-4 px-6">{{ don.titre }}</td>
+                            <td class="py-4 px-6">
+                                <div class="flex space-x-4">
+                                 <a href="{{ path('app_application_dons_show', {'token': don.token}) }}" class="text-white hover:text-gray-300 transition-colors">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12zM12 15a3 3 0 100-6 3 3 0 000 6z" />
+                                            </svg>
+                                        </a>
+                                        <a href="{{ path('app_application_dons_edit', {'token': don.token}) }}" class="text-white hover:text-gray-300 transition-colors">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                        </svg>
+                                    </a>
+                                    <a href="{{ path('app_application_dons_delete', {'token': don.token}) }}" class="text-white hover:text-gray-300 transition-colors">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                        </svg>
+                                    </a>
+                                    
+                                    
+                                </div>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="2" class="py-4 px-6 text-center">Aucun don trouvé</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+     
+    </main>
 </div>
 {% endblock %}

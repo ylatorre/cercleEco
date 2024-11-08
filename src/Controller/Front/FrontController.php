@@ -3,43 +3,42 @@
 namespace App\Controller\Front;
 
 
-use App\Entity\Application\User;
 use App\Repository\Application\DonsRepository;
-use App\Entity\Application\Quests;
-use App\Repository\Application\etatRepository;
-use App\Repository\Application\QuestsRepository;
-use App\Repository\Application\DayQuestRepository;
-use App\Entity\Application\DayQuest;
+use App\Service\LevelCalculatorService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
-use App\Entity\Application\Etat; 
+use Symfony\Component\Routing\Attribute\Route; 
 use App\Service\ChatGPTService;
 use App\Form\ChatGPTType;
+use App\Repository\Application\QuetesRepository;
 use App\Repository\Application\UserRepository;
 use App\Service\DayQuestService;
-
+use App\Repository\Application\DayQuestUserRepository;
+use App\Entity\Application\DayQuestUser;
+use App\Entity\Application\Quetes;
+use App\Entity\Application\QuetesReponses;
 
 class FrontController extends AbstractController
 {
     private $chatGPTService;
+    private $levelCalculator;
 
-    public function __construct(private Security $security,ChatGPTService $chatGPTService)
+    public function __construct(private Security $security,ChatGPTService $chatGPTService, LevelCalculatorService $levelCalculator, EntityManagerInterface $entityManager)
     {
         $this->chatGPTService = $chatGPTService;
-
+        $this->levelCalculator = $levelCalculator;
+        $this->entityManager = $entityManager;
     }
 
     #[Route('/', name: 'app_front')]
-    public function index(QuestsRepository $questsRepository): Response
+    public function index(): Response
     {
-        $quests = $questsRepository->findAll();
+        // $quests = $questsRepository->findAll();
         return $this->render('Front/index.html.twig', [
-            'quests' => $quests,
+            // 'quests' => $quests,
         ]);
     }
 
@@ -85,55 +84,75 @@ class FrontController extends AbstractController
     }
 
     #[Route('/front/quetes', name: 'app_quetes')]
-    public function quetes(QuestsRepository $questsRepository): Response
+    public function quetes(QuetesRepository $quetesRepository): Response
     {
-        $quests = $questsRepository->findBy([], ['ordre' => 'ASC']); // Tri par 'ordre'
+        $quests = $quetesRepository->findAll(['ordre' => 'ASC']);
 
-        return $this->render('Front/quetes.html.twig', [
+        return $this->render('Front/quetes/quetes.html.twig', [
             'quests' => $quests,
         ]);
     }
 
-    #[Route('/quetes/{id}', name: 'app_quetes_show')]
-    public function QuetesShow(int $id, QuestsRepository $questsRepository, EtatRepository $etatRepository): Response
+    #[Route('/front/{id}', name: 'app_front_quetes_play', methods: ['GET'])]
+    public function show(Quetes $quete, EntityManagerInterface $entityManager): Response
     {
-        $quest = $questsRepository->find($id);
-        if (!$quest) {
-            throw $this->createNotFoundException('La quête demandée n\'existe pas.');
+        $checkbox = false;
+        $counter = 0;
+        $quetesReponses = $entityManager->getRepository(QuetesReponses::class)->findByQuete($quete);
+        foreach($quetesReponses as $reponse){
+            if($reponse->getIsGoodQuestion() == 1){
+                $counter+=1;
+            }
         }
-
-        // Récupération de l'utilisateur connecté
-        $user = $this->security->getUser();
-
-        // Rechercher l'état de la quête pour cet utilisateur (s'il existe)
-        $etat = $etatRepository->findOneBy(['quest' => $quest, 'user' => $user]);
-
-        return $this->render('Front/quetes_show.html.twig', [
-            'quest' => $quest,
-            'etat' => $etat, // On passe l'état à la vue
+        if($counter > 1){
+            $checkbox = true;
+        }
+        return $this->render('Front/quetes/queteQuizz.html.twig', [
+            'quete' => $quete,
+            'reponses' => $quetesReponses,
+            'checkbox' => $checkbox,
+            'counter' => $counter
         ]);
     }
 
-
-    #[Route('/quetes/{id}/repondre', name: 'app_quetes_repondre', methods: ['POST'])]
-    public function repondre(int $id, Request $request, QuestsRepository $questsRepository, EtatRepository $etatRepository): Response
+    #[Route('/front/reponse/{id}', name: 'app_front_quetes_reponse', methods: ['GET', 'POST'])]
+    public function reponse(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $quest = $questsRepository->find($id);
-        if (!$quest) {
-            throw $this->createNotFoundException('Quête non trouvée.');
+        $params = $request->request->all();
+        $user = $this->getUser();
+        if(array_key_exists('checkbox', $params) && $params['checkbox'][0] == 'true' && array_key_exists('counter', $params)){
+            $counterReponse = 0;
+            foreach($params['reponses'] as $r){
+                $reponse = $entityManager->getRepository(QuetesReponses::class)->findById($r);
+                if($reponse[0]->getIsGoodQuestion() == 1){
+                    $counterReponse++;
+                }
+            }
+            $quete = $reponse[0]->getQuete();
+            if($counterReponse == $params['counter'][0]){
+                $quete->setEtat(1);
+                $user->setXpTotal($user->getXpTotal() + $quete->getXp());
+            }else{
+                $quete->setEtat(2);
+            }
+        }else{
+            $reponse = $entityManager->getRepository(QuetesReponses::class)->findOneById($params['reponse']);
+            $quete = $reponse->getQuete();
+            if($reponse->getIsGoodQuestion() == 1){
+                $quete->setEtat(1);
+                $user->setXpTotal($user->getXpTotal() + $quete->getXp());
+            }else{
+                $quete->setEtat(2);
+            }
         }
+        $entityManager->persist($quete);
+        $entityManager->persist($user);
+        $entityManager->flush();
+        return $this->redirectToRoute('app_quetes');
+        // return $this->render('Front/quetes/queteQuizz.html.twig', [
 
-        $reponse = $request->request->get('reponse');
-        $etat = new Etat();
-        $etat->setTitre($quest->getNom());
-        $etat->setCode($quest->getToken());
-        $etat->setFinish($reponse === $quest->getReponseCorrecte()); // Marque la quête comme terminée si la réponse est correcte
-
-        $etatRepository->save($etat, true);
-
-        return $this->redirectToRoute('app_quetes_show', ['id' => $id]);
+        // ]);
     }
-
 
     #[Route('/actualités', name: 'app_actualites')]
     public function actualites(): Response
@@ -143,45 +162,107 @@ class FrontController extends AbstractController
         ]);
     }
     
-    /*
     #[Route('/quetes-journalières', name: 'app_day_quests')]
-    public function dayQuests(DayQuestRepository $dayQuestRepository): Response
-    {
-        // Appeler la méthode qui génère les quêtes journalières
-        $day_quests = $this->generateDailyQuests($dayQuestRepository);
-
-        // Rendre la vue avec les quêtes générées
-        return $this->render('Front/day_quest.html.twig', [
-            'day_quests' => $day_quests,
-        ]);
-    }
-
-    public function generateDailyQuests(DayQuestRepository $dayQuestRepository): array
-    {
-        // Récupérer toutes les quêtes puis en sélectionner 2 ou 3 aléatoirement
-        $allQuests = $dayQuestRepository->findAll();
-        $randomKeys = array_rand($allQuests, rand(3, 3));  // Sélectionner 2 ou 3 quêtes au hasard
-
-        if (!is_array($randomKeys)) {
-            $randomKeys = [$randomKeys];  // Si un seul élément est retourné, le convertir en tableau
-        }
-
-        return array_map(fn($key) => $allQuests[$key], $randomKeys);
-    }
-    */
-
-    #[Route('/quetes-journalières', name: 'app_day_quests')]
-    public function dayQuests(DayQuestService $dayQuestService): Response
+    public function dayQuests(DayQuestService $dayQuestService, DayQuestUserRepository $dayQuestUserRepository): Response
     {
         // Récupérer les quêtes journalières depuis le cache
         $day_quests = $dayQuestService->getDailyQuests();
 
+        // Récupérer l'utilisateur actuel
+        $user = $this->getUser();
+
+        // Vérifier si chaque quête est complétée par l'utilisateur
+        foreach ($day_quests as $quest) {
+            $dayQuestUser = $dayQuestUserRepository->findOneBy([
+                'user' => $user,
+                'dayQuest' => $quest,
+            ]);
+
+            // Ajouter un champ 'isCompleted' à chaque quête pour vérifier son statut
+            $quest->isCompleted = $dayQuestUser ? $dayQuestUser->getEtat() === 1 : false;
+        }
+
         // Rendre la vue avec les quêtes générées
         return $this->render('Front/day_quest.html.twig', [
             'day_quests' => $day_quests,
         ]);
     }
 
+    #[Route('/day-quest/{id}/complete', name: 'app_complete_quest', methods: ['POST'])]
+    public function completeQuest(
+        int $id,
+        DayQuestRepository $dayQuestRepository,
+        DayQuestUserRepository $dayQuestUserRepository,
+        EntityManagerInterface $entityManager
+    ): RedirectResponse {
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour terminer une quête.');
+        }
+
+        $dayQuest = $dayQuestRepository->find($id);
+        if (!$dayQuest) {
+            throw $this->createNotFoundException('Quête introuvable.');
+        }
+
+        $dayQuestUser = $dayQuestUserRepository->findOneBy(['user' => $user, 'dayQuest' => $dayQuest]);
+        if (!$dayQuestUser) {
+            $dayQuestUser = new DayQuestUser();
+            $dayQuestUser->setUser($user);
+            $dayQuestUser->setDayQuest($dayQuest);
+        }
+
+        $dayQuestUser->setEtat(1); // Marquer comme terminée
+        $entityManager->persist($dayQuestUser);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'La quête a été marquée comme terminée.');
+        return $this->redirectToRoute('app_day_quests');
+    }
+
+
+    #[Route('/marquer-quete/{questId}/terminee', name: 'app_day_quest_complete', methods: ['GET', 'POST'])]
+    public function dayQuestCompleted(
+        $questId,
+        DayQuestRepository $dayQuestRepository,
+        DayQuestUserRepository $dayQuestUserRepository,
+        Security $security,
+        EntityManagerInterface $entityManager,
+        Request $request
+    ): Response {
+        $user = $this->getUser();
+        $quest = $dayQuestRepository->find($questId);
+        
+        if (!$quest) {
+            throw $this->createNotFoundException('La quête n\'existe pas.');
+        }
+
+        // Vérifier si l'utilisateur a déjà effectué cette quête
+        $dayQuestUser = $dayQuestUserRepository->findOneBy([
+            'user' => $user,
+            'dayQuest' => $quest,
+        ]);
+
+        if (!$dayQuestUser) {
+            throw $this->createNotFoundException('Cette quête n\'a pas été assignée à cet utilisateur.');
+        }
+
+        // Marquer la quête comme terminée (status = 1)
+        $dayQuestUser->setEtat(1);
+
+        $this->ajouterXP($quest->getXp(), $security, $entityManager);
+
+
+        // Sauvegarder les modifications
+        $entityManager->persist($dayQuestUser);
+        $entityManager->flush();
+
+        // Message flash pour indiquer que la quête a été complétée
+        $this->addFlash('success', 'La quête a été complétée avec succès !');
+
+        // Rediriger vers la page des quêtes ou une autre page
+        return $this->redirectToRoute('app_day_quests'); // Ou toute autre page de votre choix
+    }
 
     #[Route('/chatAi', name: 'app_chatAi')]
     public function chatAi(Request $request): Response
@@ -200,7 +281,6 @@ class FrontController extends AbstractController
 
         ]);
     }
-
 
 //Gestion xp
 
@@ -222,5 +302,40 @@ class FrontController extends AbstractController
         $entityManager->flush();
 
         return $this->redirectToRoute('app_quetes');
+    }
+
+//    #[Route('/levelUser', name: 'app_application_user_show_level', methods: ['GET'])]
+//    public function getLevel(): Response
+//    {
+//        $user = $this->getUser();
+//        $niveau = $this->levelCalculator->calculerNiveau($user->getXpTotal());
+//
+//        return $this->render('Components/xpcalcul.html.twig', [
+//            'niveau' => $niveau,
+//        ]);
+//    }
+    #[Route('/levelUser', name: 'app_application_user_show_level', methods: ['GET'])]
+    public function getLevel(): Response
+    {
+        $user = $this->getUser();
+        $niveau = $this->levelCalculator->calculerNiveau($user->getXpTotal());
+        $xpTotal = $user->getXpTotal();
+        $xpSeuil = $this->levelCalculator->getXpSeuil($niveau); // méthode pour obtenir l'XP nécessaire pour atteindre le niveau suivant
+
+        return $this->json([
+            'niveau' => $niveau,
+            'xpTotal' => $xpTotal,
+            'xpSeuil' => $xpSeuil,
+        ]);
+    }
+    #[Route('/leaderboard', name: 'app_application_user_leaderboard', methods: ['GET'])]
+    public function leaderboard(UserRepository $userRepository): Response
+    {
+        // Récupérer les 50 meilleurs utilisateurs triés par XP
+        $topUsers = $userRepository->findTopUsersByXp(50);
+
+        return $this->render('Front/leaderboard.html.twig', [
+            'topUsers' => $topUsers,
+        ]);
     }
 }
