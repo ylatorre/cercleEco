@@ -55,14 +55,28 @@
             </div>
         </div>
         {# {/* Profile Actions */} #}
+        {# {/* Profile Actions */} #}
         <div class="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-4 mb-6">
-            <a href="{{ path('app_application_user_edit', {'id': app.user.id}) }}" 
-               class="bg-[#D5E1A3] text-[#3B4419] px-4 py-2 rounded-md hover:bg-[#C1CD91] transition-colors text-center">
-                Modifier Profil
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('app_application_user_edit', {'id': app.user.id}) }}" 
+                class="bg-[#D5E1A3] text-[#3B4419] px-4 py-2 rounded-md hover:bg-[#C1CD91] transition-colors text-center">
+                    Modifier Profil
+                </a>
+            {% else %}
+                <a href="{{ path('app_front_user_edit', {'id': app.user.id}) }}" 
+                class="bg-[#D5E1A3] text-[#3B4419] px-4 py-2 rounded-md hover:bg-[#C1CD91] transition-colors text-center">
+                    Modifier Profil
+                </a>
+            {% endif %}
+            
+            <a href="{{ path('app_logout') }}" 
+            class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors text-center">
+                Déconnexion
             </a>
+
             <form method="post" action="{{ path('app_application_user_delete', {'id': app.user.id}) }}" 
-                  onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce profil ?');" 
-                  class="inline">
+                onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce profil ?');" 
+                class="inline">
                 <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ app.user.id) }}" />
                 <button type="submit" 
                         class="w-full sm:w-auto bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors">
@@ -70,6 +84,7 @@
                 </button>
             </form>
         </div>
+
 
         {# {/* Additional Information Section */} #}
         <div class="bg-white shadow-md rounded-lg overflow-hidden p-6">
