@@ -27,13 +27,23 @@
 
     {# Main Content #}
     <main class="flex-1 p-8">
-        <div class="flex justify-between items-center mb-8">
-            <h2 class="text-xl text-[#3B4419]">Bonjour {{ app.user.prenom }}</h2>
-        </div>
+         
 
         <div class="mb-8">
             <h1 class="text-4xl font-serif text-[#3B4419] mb-8">Quêtes</h1>
+<!-- Pagination & Search -->
+        <div class="flex justify-between items-center mt-8">
+            
 
+            <a href="{{ path('app_application_dons_new') }}" class="bg-[#3B4419] text-white p-3 rounded-full">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+            </a>
+        </div>
+
+          <div class="flex justify-between items-center mb-8">
+        </div>
             {# Quests Table #}
             <div class="bg-[#3B4419] rounded-2xl overflow-hidden">
                 <table class="w-full">
@@ -89,24 +99,7 @@
             </div>
         </div>
 
-        {# Bottom Navigation #}
-        <div class="flex justify-between items-center mt-8">
-            <button class="bg-[#3B4419] text-white p-3 rounded-full">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-            </button>
-            <div class="flex items-center space-x-4">
-                <button class="text-[#3B4419]">&lt;</button>
-                <span class="text-[#3B4419]">1/12</span>
-                <button class="text-[#3B4419]">&gt;</button>
-            </div>
-            <a href="{{ path('app_application_quetes_new') }}" class="bg-[#3B4419] text-white p-3 rounded-full">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                </svg>
-            </a>
-        </div>
+      
     </main>
 </div>
 {% endblock %}
