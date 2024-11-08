@@ -36,13 +36,12 @@
                 <h1 class="text-4xl font-serif text-[#3B4419] mb-8">Create new Quetes</h1>
 
                 <div class="bg-[#3B4419] rounded-2xl overflow-hidden p-8">
-                    {{ include('application/quetes/_form.html.twig') }}<br>
-
-                    <button type="submit" class="bg-[#B8BC7F] text-white py-2 px-4 rounded hover:bg-[#A8AD6F]">{{ button_label|default('Sauvegarder') }}</button>
-
-                    <div class="mt-4">
-                        <a href="{{ path('app_application_quetes_index') }}" class="bg-[#B8BC7F] text-white py-2 px-4 rounded hover:bg-[#A8AD6F]">Back to list</a>
+                    <div class="flex justify-between mb-4">
+                        <a href="{{ path('app_application_quetes_index') }}" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">Back to list</a>
+                        <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">{{ button_label|default('Sauvegarder') }}</button>
                     </div>
+
+                    {{ include('application/quetes/_form.html.twig') }}<br>
                 </div>
             </div>
         </main>
