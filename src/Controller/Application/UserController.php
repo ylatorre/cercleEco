@@ -2,7 +2,9 @@
 
 namespace App\Controller\Application;
 
+use App\Entity\Application\Dons;
 use App\Entity\Application\User;
+use App\Entity\Application\Quetes;
 use App\Form\Application\UserType;
 use App\Repository\Application\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -14,6 +16,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/administration/user')]
 final class UserController extends AbstractController
 {
+    
     #[Route(name: 'app_application_user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {
@@ -42,6 +45,9 @@ final class UserController extends AbstractController
             'form' => $form,
         ]);
     }
+
+
+
 
     #[Route('/{id}', name: 'app_application_user_show', methods: ['GET'])]
     public function show(User $user): Response
@@ -72,11 +78,20 @@ final class UserController extends AbstractController
     #[Route('/{id}', name: 'app_application_user_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+            // Récupérer et supprimer les dons de l'utilisateur
+            $dons = $entityManager->getRepository(Dons::class)->findBy(['user' => $user]);
+            foreach ($dons as $don) {
+                $entityManager->remove($don);
+            }
             $entityManager->remove($user);
+    
+            // Flusher les changements
             $entityManager->flush();
         }
 
         return $this->redirectToRoute('app_application_user_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
 }

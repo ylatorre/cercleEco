@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Quêtes disponibles
+{% endblock %}
+
+{% block body %}
+	<div
+		class="min-h-screen bg-[#B8BC86]">
+		{# {/* Main Content */} #}
+		<main class="max-w-7xl mx-auto px-6 py-8">
+			{# {/* Level Bar */} #}
+			<h1 class="text-4xl font-serif text-[#3B4419] mb-8 text-center">{{quete.titre}}</h1>
+			{% if checkbox != true %}
+				<form action="{{path('app_front_quetes_reponse', {'id':quete.id})}}" method="post">
+					<input type="hidden" name="checkbox[]" value="false">
+					{{quete.titreQuestion}}
+					{% for r in reponses %}
+						<div class="flex">
+							<input type="radio" id="reponse{{r.id}}" name="reponse" value="{{r.id}}">
+							<label for="reponse{{r.id}}" class="ml-2">{{r.titre}}</label>
+						</div>
+					{% endfor %}
+					<button type="submit" class="bg-[#3B4419] text-white px-4 py-2 mt-4">Valider</button>
+				</form>
+			{% else %}
+				<form action="{{path('app_front_quetes_reponse', {'id':quete.id})}}" method="post">
+				<input type="hidden" name="checkbox[]" value="true">
+				<input type="hidden" name="counter[]" value="{{counter}}">
+					{{quete.titreQuestion}}
+					{% for r in reponses %}
+						<div class="flex">
+							<input type="checkbox" id="reponse{{r.id}}" name="reponses[]" value="{{r.id}}">
+							<label for="reponse{{r.id}}" class="ml-2">{{r.titre}}</label>
+						</div>
+					{% endfor %}
+					<button type="submit" class="bg-[#3B4419] text-white px-4 py-2 mt-4">Valider</button>
+				</form>
+			{% endif %}
+        </main>
+    </div>
+{% endblock %}

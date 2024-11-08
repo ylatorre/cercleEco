@@ -57,4 +57,12 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     //            ->getOneOrNullResult()
     //        ;
     //    }
+    public function findTopUsersByXp(int $limit = 50): array
+    {
+        return $this->createQueryBuilder('u')
+            ->orderBy('u.xpTotal', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
 }
