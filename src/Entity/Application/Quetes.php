@@ -37,9 +37,13 @@ class Quetes
     #[ORM\Column]
     private ?int $xp = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $token = null;
+
     public function __construct()
     {
         $this->quetesReponses = new ArrayCollection();
+        $this->token = bin2hex(random_bytes(50));
     }
 
     public function getId(): ?int
@@ -133,6 +137,18 @@ class Quetes
     public function setXp(int $xp): static
     {
         $this->xp = $xp;
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(string $token): static
+    {
+        $this->token = $token;
 
         return $this;
     }
