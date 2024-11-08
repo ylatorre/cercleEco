@@ -52,7 +52,7 @@ class AppCustomAuthenticator extends AbstractLoginFormAuthenticator
         // For example:
         foreach($token->getUser()->getRoles() as $role){
             if($role == 'ROLE_ADMIN'){
-                return new RedirectResponse($this->urlGenerator->generate('app_admin_index'));
+                return new RedirectResponse($this->urlGenerator->generate('app_application_quetes_index'));
             }
         }
         return new RedirectResponse($this->urlGenerator->generate('app_front'));
