@@ -2,22 +2,22 @@
 
 namespace App\Repository\Application;
 
-use App\Entity\Application\QuestContent;
+use App\Entity\Application\QuetesReponses;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<QuestContent>
+ * @extends ServiceEntityRepository<QuetesReponses>
  */
-class QuestContentRepository extends ServiceEntityRepository
+class QuetesReponsesRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, QuestContent::class);
+        parent::__construct($registry, QuetesReponses::class);
     }
 
     //    /**
-    //     * @return QuestContent[] Returns an array of QuestContent objects
+    //     * @return QuetesReponses[] Returns an array of QuetesReponses objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +31,7 @@ class QuestContentRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?QuestContent
+    //    public function findOneBySomeField($value): ?QuetesReponses
     //    {
     //        return $this->createQueryBuilder('q')
     //            ->andWhere('q.exampleField = :val')
