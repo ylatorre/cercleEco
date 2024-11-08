@@ -85,7 +85,6 @@ final class QuetesController extends AbstractController
         $params = $request->request->all();
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // dump($params);die();
             if(array_key_exists('reponsesOld', $params)){
                 foreach($params['reponsesOld'] as $p){
                     $quetesReponses = $entityManager->getRepository(QuetesReponses::class)->findOneById($p['id']);
@@ -125,7 +124,11 @@ final class QuetesController extends AbstractController
     #[Route('/{id}', name: 'app_application_quetes_delete', methods: ['POST'])]
     public function delete(Request $request, Quetes $quete, EntityManagerInterface $entityManager): Response
     {
+        $quetesReponses = $entityManager->getRepository(QuetesReponses::class)->findByQuete($quete);
         if ($this->isCsrfTokenValid('delete'.$quete->getId(), $request->getPayload()->getString('_token'))) {
+            foreach($quetesReponses as $reponse){
+                $entityManager->remove($reponse);
+            }
             $entityManager->remove($quete);
             $entityManager->flush();
         }
