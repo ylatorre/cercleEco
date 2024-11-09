@@ -197,7 +197,6 @@ class FrontController extends AbstractController
     public function quetes(QuetesRepository $quetesRepository): Response
     {
         $quests = $quetesRepository->findAll(['ordre' => 'ASC']);
-
         return $this->render('Front/quetes/quetes.html.twig', [
             'quests' => $quests,
         ]);
@@ -232,9 +231,11 @@ class FrontController extends AbstractController
         $user = $this->getUser();
         if(array_key_exists('checkbox', $params) && $params['checkbox'][0] == 'true' && array_key_exists('counter', $params)){
             $counterReponse = 0;
+            $reponseCoche = 0;
             foreach($params['reponses'] as $r){
+                $reponseCoche++;
                 $reponse = $entityManager->getRepository(QuetesReponses::class)->findById($r);
-                if($reponse[0]->getIsGoodQuestion() == 1){
+                if($counterReponse == $params['counter'][0] && $reponseCoche == $params['counter'][0]){
                     $counterReponse++;
                 }
             }
