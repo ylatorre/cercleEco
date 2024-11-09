@@ -197,6 +197,7 @@ class FrontController extends AbstractController
     public function quetes(QuetesRepository $quetesRepository): Response
     {
         $quests = $quetesRepository->findAll(['ordre' => 'ASC']);
+
         return $this->render('Front/quetes/quetes.html.twig', [
             'quests' => $quests,
         ]);
@@ -235,12 +236,12 @@ class FrontController extends AbstractController
             foreach($params['reponses'] as $r){
                 $reponseCoche++;
                 $reponse = $entityManager->getRepository(QuetesReponses::class)->findById($r);
-                if($counterReponse == $params['counter'][0] && $reponseCoche == $params['counter'][0]){
+                if($reponse[0]->getIsGoodQuestion() == 1){
                     $counterReponse++;
                 }
             }
             $quete = $reponse[0]->getQuete();
-            if($counterReponse == $params['counter'][0]){
+            if($counterReponse == $params['counter'][0] && $reponseCoche == $params['counter'][0]){
                 $quete->setEtat(1);
                 $user->setXpTotal($user->getXpTotal() + $quete->getXp());
             }else{
