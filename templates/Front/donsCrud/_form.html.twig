@@ -1,30 +1,30 @@
 {{ form_start(form, {'attr': {'class': 'space-y-6'}}) }}
     <div>
-        {{ form_label(form.titre, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+        {{ form_label(form.titre, null, {'label_attr': {'class': 'block text-sm text-white font-medium text-gray-700'}}) }}
         {{ form_widget(form.titre, {'attr': {'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'}}) }}
         {{ form_errors(form.titre) }}
     </div>
 
     <div>
-        {{ form_label(form.description, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+        {{ form_label(form.description, null, {'label_attr': {'class': 'block text-sm text-white font-medium text-gray-700'}}) }}
         {{ form_widget(form.description, {'attr': {'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'}}) }}
         {{ form_errors(form.description) }}
     </div>
 
     <div>
-        {{ form_label(form.localisation, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+        {{ form_label(form.localisation, null, {'label_attr': {'class': 'block text-sm text-white font-medium text-gray-700'}}) }}
         {{ form_widget(form.localisation, {'attr': {'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'}}) }}
         {{ form_errors(form.localisation) }}
     </div>
 
     <div>
-        {{ form_label(form.image, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+        {{ form_label(form.image, null, {'label_attr': {'class': 'block text-sm text-white font-medium text-gray-700'}}) }}
         {{ form_widget(form.image, {'attr': {'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'}}) }}
     </div>
 
     <div>
-        {{ form_label(form.user, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
-        {{ form_widget(form.user, {'attr': {'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'}}) }}
+        {{ form_label(form.user, null, {'label_attr': {'class': 'block text-sm text-white font-medium text-gray-700'}}) }}
+        {{ form_widget(form.user, {'attr': {'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm', 'disabled': 'disabled'}}) }}
         {{ form_errors(form.user) }}
     </div>
 

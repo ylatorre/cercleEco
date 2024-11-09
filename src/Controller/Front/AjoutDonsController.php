@@ -20,12 +20,16 @@ final class AjoutDonsController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $don = new Dons();
-        $form = $this->createForm(DonsType::class, $don);
+        $form = $this->createForm(DonsType::class, $don, [
+            'user' => $this->getUser(), // Pass the current user to the form
+        ]);
         $form->handleRequest($request);
         $entityManager->persist($don);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $imageFile = $form->get('image')->getData();
+            $don->setEtat(0);
+            $don->setUser($this->getUser());
 
             if ($imageFile) {
                 $newFilename = $don->getToken().'.'.$imageFile->guessExtension();
@@ -59,7 +63,9 @@ final class AjoutDonsController extends AbstractController
     public function edit(Request $request, EntityManagerInterface $entityManager): Response
     {
         $don = $entityManager->getRepository(Dons::class)->findOneBy(['token' => $request->get('token')]);
-        $form = $this->createForm(DonsType::class, $don);
+        $form = $this->createForm(DonsType::class, $don, [
+            'user' => $this->getUser(), // Pass the current user to the form
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
